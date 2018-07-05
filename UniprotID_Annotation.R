@@ -132,7 +132,7 @@ for(i in 1:nrow(annots)){
 
 
                                   
-# Here I merge all rows with the same Uniprot IDs as one. If a Uniprot ID has multiple rows, 
+### Here I merge all rows with the same Uniprot IDs as one. If a Uniprot ID has multiple rows, 
 #     the value in each row for a particular column will be separated by ';'.
 annots <- annots %>% group_by(Majority.protein.IDs) %>%
                      summarise(transcript_id = paste0(unique(transcript_id), collapse=";"),
