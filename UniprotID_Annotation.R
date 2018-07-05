@@ -40,10 +40,10 @@ markers <- readRDS("~/Desktop/pQTL_Project/data/islet_proteins_qtl/marker_grid_0
 
 
 
-### Line 47: Removing the last ';' at the end of each ENSEMBL.ID
+### Line 47: Remove the last ';' at the end of each ENSEMBL.ID
 ### Line 49: Create a new row for each transcript ID in the ENSEMBL.ID column
-### Line 51: Removing brackets and words in between the brackets if it is next to the transcript ID
-### Line 54: Removing trailing white spaces
+### Line 51: Remove brackets and words in between the brackets if it is next to the transcript ID
+### Line 54: Remove trailing white spaces
 uniprot_file$ENSEMBL.ID <- substr(uniprot_file$ENSEMBL.ID, 1, nchar(uniprot_file$ENSEMBL.ID)-1)
 
 uniprot_file <- uniprot_file %>% separate_rows('ENSEMBL.ID', sep = ';')
@@ -132,8 +132,8 @@ for(i in 1:nrow(annots)){
 
 
                                   
-# Here I collapse all information back to one Uniprot ID. If the Uniprot ID has multiple values,
-#     in the same column, they will be separated by ';'.
+# Here I merge all rows with the same Uniprot IDs as one. If a Uniprot ID has multiple rows, 
+#     the value in each row for a particular column will be separated by ';'.
 annots <- annots %>% group_by(Majority.protein.IDs) %>%
                      summarise(transcript_id = paste0(unique(transcript_id), collapse=";"),
                                 protein_id = paste0(unique(protein_id), collapse=";"),
