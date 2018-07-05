@@ -36,7 +36,7 @@ setwd("~/Desktop/pQTL_Project/data/")
 
 ### Read in the Uniprot ID and markers file
 uniprot_file <- read.table('~/Desktop/pQTL_Project/data/UniprotID_to_ENSMBL.txt', sep = '\t', na.strings = 'N/A', header = TRUE)
-markers = readRDS("~/Desktop/pQTL_Project/data/islet_proteins_qtl/marker_grid_0.02cM_plus.rds")
+markers <- readRDS("~/Desktop/pQTL_Project/data/islet_proteins_qtl/marker_grid_0.02cM_plus.rds")
 
 
 
@@ -131,6 +131,7 @@ for(i in 1:nrow(annots)){
 }
 
 
+                                  
 # Here I collapse all information back to one Uniprot ID. If the Uniprot ID has multiple values,
 #     in the same column, they will be separated by ';'.
 annots <- annots %>% group_by(Majority.protein.IDs) %>%
