@@ -30,7 +30,7 @@ library(data.table)
 options(stringsAsFactors = FALSE)
 
 
-### Set a directory to save the data
+### Set a directory to save the data (optional)
 setwd("~/Desktop/pQTL_Project/data/")
 
 
@@ -153,11 +153,14 @@ annots <- annots %>% group_by(Majority.protein.IDs) %>%
 
 
 
-# Replacing character "NA" with NA and keeping the information before ;NA
+### Replacing character "NA" with NA and keeping the information before ;NA
 #   Example: "protein_id1;NA" -> protein_id1
 annots <- as.data.frame(annots)
 annots[annots == "NA"] <- NA
 annots <- as.data.frame(apply(annots, 2, FUN = function(x) gsub(';NA','',as.character(x))))
-save.image('Annotated_UniprotID.RData')
+                              
+                              
+### Save the data to .rds file                         
+saveRDS(annots, 'annotated_uniprotID.rds')
 
 
