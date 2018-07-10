@@ -147,10 +147,9 @@ annots <- annots %>% group_by(Majority.protein.IDs) %>%
                                 nearest.marker.id = paste0(unique(nearest.marker.id), collapse=";"))
 
 
-# Removing unnecessary data
-rm(uniprot_file, ensembl_cds,ensembl_g,ensembl_t,hub,anno_hub, markers, submarkers, i, min_marker_index)
 
 # Stores the annoted dataframe to current working directory.
 annots <- as.data.frame(annots)
 annots[annots == "NA"] <- NA
-save.image('Annotated_UniprotID.RData')
+saveRDS(annots, 'annotated_uniprotID.rds')
+
