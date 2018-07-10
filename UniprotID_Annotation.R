@@ -158,6 +158,12 @@ annots <- annots %>% group_by(Majority.protein.IDs) %>%
 annots <- as.data.frame(annots)
 annots[annots == "NA"] <- NA
 annots <- as.data.frame(apply(annots, 2, FUN = function(x) gsub(';NA','',as.character(x))))
+        
+                              
+                              
+### Removing unnecessary data
+rm(uniprot_file, ensembl_cds,ensembl_g,ensembl_t,hub,anno_hub, markers, submarkers, i, min_marker_index)
+                              
                               
                               
 ### Save the data to .rds file                         
