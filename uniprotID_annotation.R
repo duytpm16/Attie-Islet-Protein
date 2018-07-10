@@ -1,12 +1,12 @@
 ### This script takes the Attie Uniprot ID and ensembl transcript ID file
 #       and converts them to gene_id/protein_id. Additional columns such as 
 #       strand, chr, start, end, middle, symbol, nearest.marker.id are also included.
-
+#
 ### Input: Attie's 'UniprotID_to_ENSMBL.txt' file.
 #          A marker file. I used "marker_grid_0.02cM_plus.rds"
-
+#
 ### Output: RData file containing the information listed above for each Uniprot and transcript id.
-
+#
 ### Author: Duy Pham
 ### Date:   July 5, 2018
 ####################################################################################################
