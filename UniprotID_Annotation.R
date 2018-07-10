@@ -122,11 +122,16 @@ for(i in 1:nrow(annots)){
   
   ### If there are no markers, store NA to the i-th row in the 'neareast.marker.id' column
   #     else, store the marker ID with the minimum distance to the middle point.
+  
   if(nrow(submarkers) == 0){
+    
     annots[i,'nearest.marker.id'] <- NA   
+    
   }else{
+    
     min_marker_index <- which.min(abs(annots[i,'middle'] - submarkers$pos))
     annots[i,'nearest.marker.id'] <- submarkers[min_marker_index,'marker']
+    
   }
 }
 
