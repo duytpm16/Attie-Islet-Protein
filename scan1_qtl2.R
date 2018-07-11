@@ -52,7 +52,8 @@ should.rankz <- as.logical(args[6])
 
 
 ### Check to see if required data are loaded
-stopifnot(c("norm", "pheno.dict", "genoprobs", "K", "map", "covar", "covar.factors", "samples", "rankz", "raw") %in% ls())
+stopifnot(c("norm", "pheno.dict", "genoprobs", "K", "map", "markers", "covar", 
+            "covar.factors", "samples", "rankz", "raw","datatype","display.name") %in% ls())
 
 
 
