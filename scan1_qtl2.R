@@ -8,7 +8,11 @@
 #         If you do not want to run in chunks, set chunk_size to 5433 and chunk_num to 1.
 #
 ### Input: 
-#     2.) qtl2 Rdata file generated from 
+#     1.) qtl2 Rdata file generated from 
+#     2.) a prefix name for the output file
+#     3.) chunk size to run
+#     4.) chunk number
+#     5.) number of cores
 #
 ### Output: 
 #     1.) Dataframe of the LOD scoress for each of the proteins that was given to scan1.
