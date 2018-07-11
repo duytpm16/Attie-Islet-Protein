@@ -7,9 +7,11 @@
 #
 #         If you do not want to run in chunks, set chunk_size to 5433 and chunk_num to 1.
 #
-### Input: qtl2 data file generated from:
+### Input: 
+#     2.) qtl2 Rdata file generated from 
 #
-### Output: Dataframe of the LOD scoress for each of the proteins that was given to scan1.
+### Output: 
+#     1.) Dataframe of the LOD scoress for each of the proteins that was given to scan1.
 #
 ### Author: Duy Pham, 'phenotype range run' was taken from Dan Gatti
 ### Date:   July 10, 2018
