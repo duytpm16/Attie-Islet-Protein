@@ -64,7 +64,12 @@ gathered_data <- paste0(prefix,"_qtl2_input.Rdata")        # Rdata file name to 
 
 
 # Preparing pheno.dict names
-pheno.dict[!pheno.dict$is_pheno,] <- apply(pheno.dict[!pheno.dict$is_pheno,], 2, FUN = function(x) gsub('_','.', x))
+for(i in 1:ncol(pheno.dict)){
+  if(is.logical(pheno.dict[,i])){
+    break
+  }
+  pheno.dict[!pheno.dict$is_pheno,i] <- gsub('_','.', pheno.dict[!pheno.dict$is_pheno,i])
+}
 pheno.dict[pheno.dict == 'Mouse.ID'] <- 'mouse.id'
 
 
