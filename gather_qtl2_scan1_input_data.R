@@ -59,7 +59,7 @@ gathered_data <- "attie_islet_proteins_qtl2_input.Rdata"   # Rdata file name to 
 
 
 # Preparing pheno.dict names
-pheno.dict[1:13,'data_name'] <- gsub('_','.', pheno.dict[1:13,'data_name','short_name','R_name'])
+pheno.dict[1:13,c('data_name','short_name','R_name')] <- gsub('_','.', pheno.dict[1:13,c('data_name','short_name','R_name')])
 pheno.dict[pheno.dict == 'Mouse.ID'] <- 'mouse.id'
 
 
