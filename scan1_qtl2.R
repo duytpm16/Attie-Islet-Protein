@@ -1,11 +1,5 @@
 ### This script reads in the required data file to run the qtl2 scan1 function.
-#   The proteins can be ran in 'chunks' or all at once.
-#     Example for chunk size/number: 
-#         There should be 5433 protein columns. If chunk size is 1000, then there should be 6 scan1 runs, 
-#         with the chunk_number value being 1-6 to get the column numbers:
-#         1-1000,1001-2000,2001-3000,3001-4000,4001-5000,5001-5433, respectively.
 #
-#         If you do not want to run in chunks, set chunk_size to 5433 and chunk_num to 1.
 #
 ### Input: qtl2 data file generated from:
 #
@@ -34,20 +28,16 @@ library(dplyr)
 
 
 ### Command line arguments.
-# 1: input.file:    Prefix of qtl2 input data
+# 1: input.file:    Prefix of qtl2 input data. If the file is not in the same directory use path to dir and prefix.
 # 2: output.prefix: File prefix name to save the output of scan1
-# 3: chunk_size:    Integer that is the chunk size.
-# 4: chunk_number:  Integer that is the chunk number to run.
-# 5: num_cores:     Number of cores to run
-# 6: should.rankz:  Logical value to use the rankz dataset instead of normalized
+# 3: num_cores:     Number of cores to run
+# 4: should.rankz:  Logical value to use the rankz dataset instead of normalized
 args = commandArgs(trailingOnly = TRUE)
 
 load(paste0(args[1],"_qtl2_input.Rdata"))
 output.prefix <- args[2]
-chunk_size <- as.numeric(args[3])
-chunk_number <- as.numeric(args[4])
-num_cores <- as.numeric(args[5])
-should.rankz <- as.logical(args[6])
+num_cores <- as.numeric(args[3])
+should.rankz <- as.logical(args[4])
 
 
 
@@ -67,23 +57,6 @@ if(should.rankz){
   expr <- norm
   
 }
-
-
-
-
-### Calculate the phenotype range to run. 
-max_col = ncol(expr)
-expr.rng = ((chunk_number - 1) * chunk_size + 1):(chunk_number * chunk_size)
-
-if(expr.rng[length(expr.rng)] > max_col) {
-  
- expr.rng <- expr.rng[1]:max_col
-  
-} 
-
-print(paste("Mapping columns:", expr.rng[1], "to", expr.rng[length(expr.rng)]))
-
-
 
 
 ### Qtl2 scan1 run
