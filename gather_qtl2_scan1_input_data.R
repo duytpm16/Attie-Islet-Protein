@@ -48,7 +48,7 @@ options(stringsAsFactors = F)
 raw <- readRDS("attie_islet_protein_filtered_raw.rds")     # Raw protein levels
 norm <- readRDS("attie_islet_protein_normalized.rds")      # Normalized protein levels by comBat
 rankz <- readRDS("attie_islet_protein_rZ_normalized.rds")  # RankZ normalized protein levels
-pheno.dict <- read.delim("~/Desktop/pQTL_Project/data/islet_proteins_pheno_dict.txt")  # Islet phenotype data dictionary
+pheno.dict <- read.delim("islet_proteins_pheno_dict.txt")  # Islet phenotype data dictionary
 genoprobs <- readRDS("attie_DO500_genoprobs_20180303.rds") # Genoprobs data
 markers <- readRDS("marker_grid_0.02cM_plus.rds")          # Marker data
 samples <- readRDS("attie_samples_annot.rds")              # Samples annotation data
