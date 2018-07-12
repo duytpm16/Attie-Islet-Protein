@@ -71,7 +71,7 @@ for(i in 1:ncol(pheno.dict)){
   pheno.dict[!pheno.dict$is_pheno,i] <- gsub('_','.', pheno.dict[!pheno.dict$is_pheno,i])
 }
 pheno.dict[pheno.dict == 'Mouse.ID'] <- 'mouse.id'
-
+samples <- samples[,match(colnames(samples), pheno.dict[!pheno.dict$is_pheno, 'data_name'])]
 
 ### Checking if colnames in protein abundance and sample data matches the data dictionary (pheno.dict)
 stopifnot(sum(ncol(samples),ncol(norm)) == nrow(pheno.dict))
