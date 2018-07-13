@@ -11,7 +11,7 @@ QTL2 pipeline for the Attie Islet Protein project.
 Be consistent with ____prefix____ variable. Use the same prefix in the normalization.R file with the other scripts.  
   
   
-### Filter and Normalization. 
+### 1. Filter and Normalization. 
 Filter the raw data as needed. (Ex. remove data with _x_ number of NAs)  
 Input missing values by PCA and normalize the data by comBat normalization.  
   
@@ -21,9 +21,9 @@ Modify the _normalization.R_ file to save 4 output rds files:
  3. _prefix_normalized.rds_   
  4. _prefix_rZ_normalized.rds_ 
  
-### Gather Data for Scan1. 
+### 2. Gather Data for Scan1. 
  
-### Run Scan1. 
+### 3. Run Scan1. 
 
-### Find LOD Peaks and Allele Effects. 
+### 4. Find LOD Peaks and Allele Effects. 
 
