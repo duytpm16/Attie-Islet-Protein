@@ -12,17 +12,18 @@ Be consistent with ____prefix____ variable. Use the same prefix in the normaliza
   
   
 ### Filter and Normalization. 
+Filter the raw data as needed. (Ex. remove data with _x_ number of NAs)  
+Input missing values by PCA and normalize the data by comBat normalization.  
+  
 Modify the _normalization.R_ file to save 4 output rds files:  
  1. _prefix_samples_annotation.rds_   
  2. _prefix_filtered_raw.rds_       
  3. _prefix_normalized.rds_   
  4. _prefix_rZ_normalized.rds_ 
  
-### Prepare Data for Scan1. 
-  
+### Gather Data for Scan1. 
+ 
 ### Run Scan1. 
-
-### Gather the Scan1 Chunks. 
 
 ### Find LOD Peaks and Allele Effects. 
 
