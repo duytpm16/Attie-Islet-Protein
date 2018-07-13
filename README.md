@@ -12,7 +12,7 @@ Be consistent with the ___prefix___ variable. Use the same ___prefix___ in the n
   
   
 ### 1. Filter and Normalization. 
-Filter the raw data as needed. (Ex. remove data with _x_ number of NAs)  
+Filter the raw data as needed. (Ex. remove data with _x_ number of _NA_s)  
 Input missing values by PCA and normalize the data by comBat normalization.  
   
 Modify the _normalization.R_ file to save 4 output rds files:  
