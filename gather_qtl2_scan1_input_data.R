@@ -18,7 +18,7 @@
 #    10.) Rdata file name to store all the data 
 #
 ### Output:
-#     1.) Rdata file of all data above.
+#     1.) Rdata file of all data above, except the genoprobs.
 # 
 ### Author: Duy Pham and Dan Gatti
 ### Date:   July 11, 2018
@@ -45,12 +45,12 @@ options(stringsAsFactors = F)
 
   
 ### Variables to change 
-prefix <- "~/Desktop/Plasma_Metabolites/attie_plasma_metabolite"                            # Prefix of the new raw, normalized, rank Z normalized, and samples rds file
-pheno.dict <- read.delim("~/Desktop/Plasma_Metabolites/plasma_metabolites_pheno_dict.txt")  # Phenotype data dictionary
-genoprobs <- readRDS("~/Desktop/pQTL_Project/data/attie_DO500_genoprobs_20180303.rds")    # Genoprobs data
-markers <- readRDS("~/Desktop/pQTL_Project/data/marker_grid_0.02cM_plus.rds")             # Marker data
-datatype <- "mRNA"                                                                        # Datatype for QTL viewer
-display.name <- "Attie Plasma Metabolite"                                                # Display name for QTL viewer
+prefix <- "attie_plasma_metabolite"                            # Prefix of the new raw, normalized, rank Z normalized, and samples rds file
+pheno.dict <- read.delim("plasma_metabolites_pheno_dict.txt")  # Phenotype data dictionary
+genoprobs <- readRDS("attie_DO500_genoprobs_20180303.rds")     # Genoprobs data
+markers <- readRDS("marker_grid_0.02cM_plus.rds")              # Marker data
+datatype <- "mRNA"                                             # Datatype for QTL viewer
+display.name <- "Attie Plasma Metabolite"                      # Display name for QTL viewer
 
 
 
@@ -72,6 +72,8 @@ for(i in 1:ncol(pheno.dict)){
 }
 pheno.dict[pheno.dict == 'Mouse.ID'] <- 'mouse.id'
 samples <- samples[,match(colnames(samples), pheno.dict[!pheno.dict$is_pheno, 'data_name'])]
+
+
 
 ### Checking if colnames in protein abundance and sample data matches the data dictionary (pheno.dict)
 stopifnot(sum(ncol(samples),ncol(norm)) == nrow(pheno.dict))
@@ -132,10 +134,13 @@ covar <- model.matrix(f, data = samples)[,-1]
 K = calc_kinship(probs = genoprobs, type = "loco", quiet = FALSE, cores = 4)
 
 
+
 ### Removing some data
 rm(f, i, mouse.samples, prefix)
 
-### Save to *.Rdata file.
+
+
+### Save to *.Rdata file except for genoprobs data.
 rm(genoprobs)
 save(norm, pheno.dict, K, map, markers, covar, covar.factors, samples, raw, rankz, datatype, display.name,
      file =  gathered_data)
