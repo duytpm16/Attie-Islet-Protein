@@ -7,11 +7,16 @@
 #
 #         If you do not want to run in chunks, set chunk_size to 5433 and chunk_num to 1.
 #
-### Input: qtl2 data file generated from:
+### Input: 
+#     1.) Prefix to the qtl2 input data file
+#     2.) genoprobs file
+#     3.) Number of cores to run
+#     4.) TRUE or FALSE to indicate whether or not to use the rankz data 
 #
-### Output: Dataframe of the LOD scoress for each of the proteins that was given to scan1.
+### Output:
+#.    1.) Scan1 matrix of the LOD scores for the data that was given to scan1.
 #
-### Author: Duy Pham, 'phenotype range run' was taken from Dan Gatti
+### Author: Duy Pham, and Dan Gatti
 ### Date:   July 10, 2018
 ### E-mail: duy.pham@jax.org
 ####################################################################################################################
@@ -34,9 +39,10 @@ library(dplyr)
 
 
 ### Command line arguments.
-# 1: input.file:    Prefix of qtl2 input data
-# 3: num_cores:     Number of cores to run
-# 4: should.rankz:  Logical value to use the rankz dataset instead of normalized
+# 1: input.file:     Prefix of qtl2 input data
+# 2: genoprobs file: Name of the genoprobs file. If not in the directory use full path
+# 3: num_cores:      Number of cores to run
+# 4: should.rankz:   Logical value to use the rankz dataset instead of normalized
 args = commandArgs(trailingOnly = TRUE)
 
 load(paste0(args[1],"_qtl2_input.Rdata"))
