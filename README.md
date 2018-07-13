@@ -8,7 +8,7 @@ QTL2 pipeline for the Attie Islet Protein project.
  3. sample ChrM_Y info csv file: "attie_sample_info_ChrM_Y.csv"  
  4. rds dataframe of marker map: "marker_grid_0.02cM_plus.rds"  
   
-Be consistent with ____prefix____ variable. Use the same prefix in the normalization.R file with the other scripts.  
+Be consistent with ____prefix____ variable. Use the same __prefix__ in the normalization.R file with other scripts.  
   
   
 ### 1. Filter and Normalization. 
