@@ -27,3 +27,5 @@ Modify the _normalization.R_ file to save 4 output rds files:
 
 ### 4. Find LOD Peaks and Allele Effects. 
 
+### 5. Format Data for QTL Viewer
+
