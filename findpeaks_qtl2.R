@@ -1,7 +1,16 @@
-################################################################################
-# Returns a find_peaks dataframe consisting of LOD peaks above a given threshold.
-# 
-### Author: Duy Pham
+### Returns a find_peaks dataframe consisting of LOD peaks above a given threshold and allele effects.
+#
+### Input: 
+#      1.) Prefix to qtl2 input RData. If not in the directory, use full path to directory and prefix
+#      2.) Genoprobs file
+#      3.) Threshold value
+#      4.) Number of cores to run on
+#      5.) TRUE or FALSE value to use the rankz data
+#
+### Output:
+#      1.) rds file that contains a dataframe with lod peaks above the given threshold and allele effects.
+#
+### Author: Duy Pham and Dan Gatti
 ### Date:   July 11, 2018
 ### E-mail: duy.pham@jax.org
 ################################################################################
