@@ -2,10 +2,9 @@
 #
 ### Input: 
 #      1.) Prefix to qtl2 input RData. If not in the directory, use full path to directory and prefix
-#      2.) Genoprobs file
-#      3.) Threshold value
-#      4.) Number of cores to run on
-#      5.) TRUE or FALSE value to use the rankz data
+#      2.) Threshold value
+#      3.) Number of cores to run on
+#      4.) TRUE or FALSE value to use the rankz data
 #
 ### Output:
 #      1.) rds file that contains a dataframe with lod peaks above the given threshold and allele effects.
@@ -29,13 +28,14 @@ options(scipen = 999)
 #         AND 
 #             large scan1 LOD matrix. Assuming they are store in the same directory
 #     2. Threshold value for LOD peaks.
+#     3. Number of cores
+#     4. TRUE or FALSE value to use rankz data instead
 #args = commandArgs(trailingOnly = TRUE)
 
 prefix = args[1]
-genoprobs <- readRDS(args[2])
-threshold = readRDSic(args[3])
-num_cores = as.numeric(args[4])
-should_rankz = as.logical(args[5])
+threshold = as.numeric(args[2])
+num_cores = as.numeric(args[3])
+should_rankz = as.logical(args[4])
 
 
 ### Load in the data
