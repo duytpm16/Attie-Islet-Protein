@@ -9,9 +9,8 @@
 #
 ### Input: 
 #     1.) Prefix to the qtl2 input data file
-#     2.) genoprobs file
-#     3.) Number of cores to run
-#     4.) TRUE or FALSE to indicate whether or not to use the rankz data 
+#     2.) Number of cores to run
+#     3.) TRUE or FALSE to indicate whether or not to use the rankz data 
 #
 ### Output:
 #.    1.) Scan1 matrix of the LOD scores for the data that was given to scan1.
@@ -40,15 +39,13 @@ library(dplyr)
 
 ### Command line arguments.
 # 1: input.file:     Prefix of qtl2 input data
-# 2: genoprobs file: Name of the genoprobs file. If not in the directory use full path
-# 3: num_cores:      Number of cores to run
-# 4: should.rankz:   Logical value to use the rankz dataset instead of normalized
+# 2: num_cores:      Number of cores to run
+# 3: should.rankz:   Logical value to use the rankz dataset instead of normalized
 args = commandArgs(trailingOnly = TRUE)
 
 load(paste0(args[1],"_qtl2_input.Rdata"))
-genoprobs <- readRDS(args[2])
-num_cores <- as.numeric(args[3])
-should.rankz <- as.logical(args[4])
+num_cores <- as.numeric(args[2])
+should.rankz <- as.logical(args[3])
 
 
 
