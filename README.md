@@ -22,7 +22,7 @@ Modify the _normalization.R_ file to save 4 output rds files:
  4. _prefix_rZ_normalized.rds_ 
  
 ### 2. Gather Data for Scan1. 
- 
+
 ### 3. Run Scan1. 
 
 ### 4. Find LOD Peaks and Allele Effects. 
