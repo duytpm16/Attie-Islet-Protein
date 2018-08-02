@@ -1,4 +1,4 @@
-# Attie-Islet-Protein  
+# Attie - Islet Protein, Lipids, and Metabolites Dataset
   
 QTL2 pipeline for the Attie Islet Protein project.  
 
