@@ -206,8 +206,3 @@ saveRDS(samples, samples_file)
 
 
 
-### Remove other data
-rm(chr_m_y,ctrl,data.cb,mod,pc.data,batch,chg,dupl,i,rankZ,
-   iter,keep,miss,prop.missing,sample,unique.samples, data.compl, wh, norm_file, norm_rz_file, raw_file, samples_file)
-
-
