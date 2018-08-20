@@ -1,17 +1,10 @@
 ### This script reads in the required data file to run the qtl2 scan1 function.
-#   The proteins can be ran in 'chunks' or all at once.
-#     Example for chunk size/number: 
-#         There should be 5433 protein columns. If chunk size is 1000, then there should be 6 scan1 runs, 
-#         with the chunk_number value being 1-6 to get the column numbers:
-#         1-1000,1001-2000,2001-3000,3001-4000,4001-5000,5001-5433, respectively.
 #
-#         If you do not want to run in chunks, set chunk_size to 5433 and chunk_num to 1.
+### Input: qtl2 data file generated
 #
-### Input: qtl2 data file generated from:
+### Output: A scan1 matrix of LOD scores for each of the proteins that was given to scan1.
 #
-### Output: Dataframe of the LOD scoress for each of the proteins that was given to scan1.
-#
-### Author: Duy Pham, 'phenotype range run' was taken from Dan Gatti
+### Author: Duy Pham
 ### Date:   July 10, 2018
 ### E-mail: duy.pham@jax.org
 ####################################################################################################################
