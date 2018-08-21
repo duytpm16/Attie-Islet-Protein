@@ -1,21 +1,20 @@
-### This script gathers the Attie expression data (raw filtered, normalized, and rankz normalized), 
-#    marker maps, genoprobs, and phenotype dictionary files. 
-#    Addtionally, this script create objects will be inputted into qtl2 for mapping and QTL Viewer including:
+### This script gathers the Attie expression data (raw filtered, normalized, and rankz normalized),
+#    samples dataframe, marker maps, genoprobs, and phenotype dictionary files. 
+#    Addtionally, this script will create 3 new objects:
 #         covar: data matrix containing covariates
 #         K: list containing kinship matrices, one per chromosome.
 #         map: list of marker positions, one per chromosome.
+#    All of these objects will be saved as a .RData file used for the scan1 function in the qtl2 package.
 #
 ### Input:
-#     1.) filtered raw  data
-#     2.) normalized islet data by pca and comBat
-#     3.) rankz of the normalized islet data
-#     4.) phenotype dictionary
-#     5.) genoprobs data
-#     6.) markers dataframe
-#     7.) samples annotation data
-#     8.) datatype: Should be "protein" or "mRNA"
-#     9.) display.name: Name to display on QTL viewer
-#    10.) Rdata file name to store all the data 
+#     1.) Prefix name that was given in the normalization script to get the 
+#             filtered raw, normalized, rankz, and samples dataframe.
+#         This prefix name will also be used to save the output .RData file as prefix + '_qtl2_input.RData'
+#     2.) phenotype dictionary file
+#     3.) genoprobs data file
+#     4.) markers dataframe file
+#     5.) datatype: Should be "protein" or "mRNA"
+#     6.) display.name: Name to display on QTL viewer
 #
 ### Output:
 #     1.) Rdata file of all data above, except the genoprobs.
@@ -54,12 +53,17 @@ display.name <- "Attie Plasma Metabolite"                      # Display name fo
 
 
 
+### Creating name to save the output .RData file
+gathered_data <- paste0(prefix,"_qtl2_input.Rdata")        # Rdata file name to store all data
+
+
+
 ### Load in the other data.
 raw <- readRDS(paste0(prefix,"_filtered_raw.rds"))         # Raw protein levels
 norm <- readRDS(paste0(prefix,"_normalized.rds"))          # Normalized protein levels by comBat
 rankz <- readRDS(paste0(prefix, "_rZ_normalized.rds"))     # RankZ normalized protein levels
 samples <- readRDS(paste0(prefix, "_samples_annot.rds"))   # Samples annotation data
-gathered_data <- paste0(prefix,"_qtl2_input.Rdata")        # Rdata file name to store all data
+
 
 
 
