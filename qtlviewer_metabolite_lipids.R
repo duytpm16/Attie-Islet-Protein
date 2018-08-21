@@ -1,8 +1,33 @@
+#######################################################################################################################
+# This script generates dataset.* for QTL viewer for both the attie metabolite and lipid datasets.
+#
+# Input:
+#    1.) Path to .RData file generated from qtl2_gather_scan1_input_data.R
+#    2.) Path to lod peaks .rds file generated from qtl2_findpeaks_scan1blup.R
+#    3.) Datatype as character. Should be 'phenotype' as required by QTL viewer.
+#    4.) Name for the dataset.* list.
+#
+# Output:
+#    1.) A .RData file containing the dataset.*, genoprobs, markers, map, and kinship matrix
+#
+# Author: Duy Pham
+# E-mail: duy.pham@jax.org
+# Date: 
+######################################################################################################################
+
+
+
 ### Read in the required data
+#    1.) Path to .RData file generated from qtl2_gather_scan1_input_data.R
+#    2.) Path to lod peaks .rds file generated from qtl2_findpeaks_scan1blup.R
+#    3.) Datatype as character. Should be 'phenotype' as required by QTL viewer.
+#    4.) Name for the dataset.* list.
 load("~/Desktop/Attie/Lipids/Cecum_Lipids/attie_cecum_lipid_qtl2_input.Rdata")
 lod.peaks <- readRDS("~/Desktop/Attie/Lipids/Cecum_Lipids/attie_cecum_lipid_rZ_lod_peaks_6.rds")
 datatype <- 'phenotype'
 dataset_name <- 'dataset.cecum.lipids'
+
+
 
 ### Formatiting the covar.factors 
 covar.factors <- data.frame(column.names = covar.factors)
