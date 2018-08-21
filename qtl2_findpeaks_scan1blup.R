@@ -28,7 +28,7 @@ options(scipen = 999)
 #     1. Prefix to .RData file containing: 
 #             norm, raw, rankz, covar, covar.factors, genoprobs, samples, map, marker_map, K, datatype,  and pheno.dict
 #         AND 
-#             large scan1 LOD matrix. Assuming they are store in the same directory
+#             large scan1 LOD matrix. Assuming they are stored in the same directory
 #     2. Threshold value for LOD peaks.
 #     3. Number of cores to run
 #     4. TRUE or FALSE value to use the rankz data 
