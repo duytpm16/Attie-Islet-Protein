@@ -1,8 +1,9 @@
-### This script reads in the required data file to run the qtl2 scan1 function.
+### This script reads in the data file generated from gather_qtl2_scan1_input_data.R
+#      to run the qtl2 scan1 function.
 #
-### Input: qtl2 data file generated
+### Input: qtl2 .RData file generated from gather_qtl2_scan1_input_data.R
 #
-### Output: A scan1 matrix of LOD scores for each of the proteins that was given to scan1.
+### Output: A scan1 matrix of LOD scores for each of the phenotype/traits at each marker
 #
 ### Author: Duy Pham
 ### Date:   July 10, 2018
