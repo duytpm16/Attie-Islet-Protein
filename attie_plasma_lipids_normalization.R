@@ -3,13 +3,10 @@
 #     Additionally, a samples dataframe is created by reading two additional files below.
 #
 ### Input:
-#     1.) raw Attie plasma lipids file: FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt
-#     2.) Attie sample annotation file: attie_DO_sample_annot.txt
-#     3.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
-#     4.) Name to store the filtered raw data as rds file
-#     5.) Name to store the normalized data as rds file
-#     6.) Name to store the normalized rank z data as rds file
-#     7.) Name to store the new sample annotation data as rds file
+#     1.) Prefix name to save the output files below.
+#     2.) raw Attie plasma lipids file: FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt
+#     3.) Attie sample annotation file: attie_DO_sample_annot.txt
+#     4.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
 #
 ### Output:
 #     1.) Filtered raw data file as rds file
