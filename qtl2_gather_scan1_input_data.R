@@ -17,7 +17,7 @@
 #     6.) display.name: Name to display on QTL viewer
 #
 ### Output:
-#     1.) Rdata file of all data above, except the genoprobs.
+#     1.) Rdata file of all data above
 # 
 ### Author: Duy Pham and Dan Gatti
 ### Date:   July 11, 2018
