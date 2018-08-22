@@ -1,9 +1,14 @@
 ### This script reads in the data file generated from gather_qtl2_scan1_input_data.R
 #      to run the qtl2 scan1 function.
 #
-### Input: qtl2 .RData file generated from gather_qtl2_scan1_input_data.R
+### Input: 
+#      1.) Path + prefix to .RData file generated from gather_qtl2_scan1_input_data.R
+#      2.) Number of cores to run
+#      3.) TRUE or FALSE to use the rankz expression matrix
+#      4.) TRUE or FALSE to use sex as an interaction term
 #
-### Output: A scan1 matrix of LOD scores for each of the phenotype/traits at each marker
+### Output: 
+#      1.) A scan1 matrix of LOD scores for each of the phenotype/traits at each marker
 #
 ### Author: Duy Pham
 ### Date:   July 10, 2018
@@ -27,15 +32,17 @@ library(RSQLite, lib.loc = '~/Rlibs')
 
 
 ### Command line arguments.
-# 1: input.file:    Prefix of qtl2 input data
-# 3: num_cores:     Number of cores to run
-# 4: should.rankz:  Logical value to use the rankz dataset instead of normalized
+# 1: input.file:     Prefix of qtl2 input data
+# 2: num_cores:      Number of cores to run
+# 3: should_rankz:   Logical value to use the rankz dataset instead of normalized
+# 4: use_sexint:     Logical value to use sex as an interaction term
+# 5: int_covar_name: Name of the column for sex in samples dataframe (Line 70). Don't need to specify if 4 is FALSE
 args = commandArgs(trailingOnly = TRUE)
 
 load(paste0(args[1],"_qtl2_input.Rdata"))
 num_cores <- as.numeric(args[2])
-should.rankz <- as.logical(args[3])
-use.diff <- as.logical(args[4])
+should_rankz <- as.logical(args[3])
+use_sexint <- as.logical(args[4])
 
 
 
@@ -46,7 +53,7 @@ stopifnot(c("norm", "pheno.dict", "genoprobs", "K", "map", "markers", "covar",
 
 
 ### If should.rankz is true used the normalized rankz dataset instead, else use the normalized dataset.
-if(should.rankz){
+if(should_rankz){
   
   expr <- rankz
   
@@ -59,7 +66,7 @@ if(should.rankz){
 
 
 ### If use.diff (sex interaction) create a new model.matrix for sex which will be used for the intcovar parameter in scan1
-if(use.diff){
+if(use_diff){
  int_covar_name <- args[5]
  formula <- as.formula(paste0('~', int_covar_name))
  int_mat <- model.matrix(formula, data = samples)[,-1]
@@ -82,14 +89,14 @@ class(qtl) = c("scan1", "matrix")
 
 
 ### Save output of scan1 to current directory
-if(use.diff){
-   if(should.rankz){
+if(use_diff){
+   if(should_rankz){
       saveRDS(qtl, file = paste0(args[1], "_sexint_rZ_qtl_lod.rds"))
    }else{
       saveRDS(qtl, file = paste0(args[1], "_sexint_qtl_lod.rds"))
    }
 }else{
-   if(should.rankz){
+   if(should_rankz){
       saveRDS(qtl, file = paste0(args[1], "_rZ_qtl_lod.rds"))
    }else{
       saveRDS(qtl, file = paste0(args[1], "_qtl_lod.rds"))
