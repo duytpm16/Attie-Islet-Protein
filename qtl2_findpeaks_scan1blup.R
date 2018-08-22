@@ -32,13 +32,15 @@ options(scipen = 999)
 #             large scan1 LOD matrix. Assuming they are stored in the same directory
 #     2. Threshold value for LOD peaks.
 #     3. Number of cores to run
-#     4. TRUE or FALSE value to use the rankz data 
+#     4. TRUE or FALSE value to use the rankz data
+#     5. TRUE or FALSE value to use the scan1 matrix with sex as an interaction term
 args = commandArgs(trailingOnly = TRUE)
 
 prefix <- args[1]
 threshold <- as.numeric(args[2])
 num_cores <- as.numeric(args[3])
-should_rankz <- as.logical(args[4]) 
+should_rankz <- as.logical(args[4])
+use_sexint <- as.logical(args[5])
 
 
 
@@ -46,13 +48,22 @@ should_rankz <- as.logical(args[4])
 if(should_rankz){
   
   load(paste0(prefix,"_qtl2_input.Rdata"))
-  scan1_data <- readRDS(paste0(prefix,"_rZ_qtl_lod.rds"))
+  
+  if(use_sexint){
+    scan1_data <- readRDS(paste0(prefix,"_sexint_rZ_qtl_lod.rds"))
+  }else{
+    scan1_data <- readRDS(paste0(prefix,"_rZ_qtl_lod.rds"))
+  }
   
 }else{
   
   load(paste0(prefix,"_qtl2_input.Rdata"))
-  scan1_data <- readRDS(paste0(prefix,"_qtl_lod.rds"))
   
+  if(use_sexint){
+    scan1_data <- readRDS(paste0(prefix,"_sexint_norm_qtl_lod.rds"))
+  }else{
+    scan1_data <- readRDS(paste0(prefix,"_norm_qtl_lod.rds"))
+  }
 }
 
 
@@ -90,29 +101,40 @@ lod.peaks = cbind(lod.peaks, matrix(0, nrow = nrow(lod.peaks), ncol = 8,
 
 
 # BLUP mapping.
-for(i in 1:nrow(lod.peaks)) {
-  
-  chr  = lod.peaks$chr[i]
-  mkr  = lod.peaks$marker.id[i]
-  gene = lod.peaks$annot.id[i]
-  
-  # Scans.
-  gp = genoprobs[,chr]
-  gp[[1]] = gp[[1]][,,mkr,drop=FALSE]
-  blup = scan1blup(genoprobs = gp, pheno = expr[,gene, drop = FALSE],
-                   kinship = K[[chr]], addcovar = covar, cores = num_cores)
-  lod.peaks[i,6:13] = blup[1,1:8]
-  
-  
-}
+if(use_sexint == FALSE){
+    for(i in 1:nrow(lod.peaks)){
 
+      chr  = lod.peaks$chr[i]
+      mkr  = lod.peaks$marker.id[i]
+      gene = lod.peaks$annot.id[i]
+
+      # Scans.
+      gp = genoprobs[,chr]
+      gp[[1]] = gp[[1]][,,mkr,drop=FALSE]
+      blup = scan1blup(genoprobs = gp, pheno = expr[,gene, drop = FALSE],
+                       kinship = K[[chr]], addcovar = covar, cores = num_cores)
+      lod.peaks[i,6:13] = blup[1,1:8]
+    }
+}
 
 
 # Save the output of the find_peaks function
 rm(scan1_data, annot.id, marker.id, i, mkr, gene, chr, gp, blup)
 
 if(should_rankz){
-  saveRDS(lod.peaks,file = paste0(prefix,'_rZ_lod_peaks_',threshold,'.rds'))
+  
+  if(use_sexint){
+    saveRDS(lod.peaks,file = paste0(prefix,'_sexint_rZ_lod_peaks_',threshold,'.rds'))
+  else{
+    saveRDS(lod.peaks,file = paste0(prefix,'_rZ_lod_peaks_',threshold,'.rds'))
+  }
+    
 }else{
-  saveRDS(lod.peaks,file = paste0(prefix,'_lod_peaks_',threshold,'.rds'))
+    
+  if(use_sexint){
+    saveRDS(lod.peaks,file = paste0(prefix,'_sexint_norm_lod_peaks_',threshold,'.rds'))
+  }else{
+    saveRDS(lod.peaks,file = paste0(prefix,'_norm_lod_peaks_',threshold,'.rds'))
+  }
+    
 }
