@@ -6,6 +6,7 @@
 #      2.) Number of cores to run
 #      3.) TRUE or FALSE to use the rankz expression matrix
 #      4.) TRUE or FALSE to use sex as an interaction term
+#      5.) Name of the interaction column in the samples dataframe
 #
 ### Output: 
 #      1.) A scan1 matrix of LOD scores for each of the phenotype/traits at each marker
@@ -66,12 +67,16 @@ if(should_rankz){
 
 
 ### If use.diff (sex interaction) create a new model.matrix for sex which will be used for the intcovar parameter in scan1
-if(use_diff){
+if(use_sexint){
+            
  int_covar_name <- args[5]
  formula <- as.formula(paste0('~', int_covar_name))
  int_mat <- model.matrix(formula, data = samples)[,-1]
+            
 }else{
+            
  int_mat <- NULL
+            
 }
 
 
@@ -89,16 +94,20 @@ class(qtl) = c("scan1", "matrix")
 
 
 ### Save output of scan1 to current directory
-if(use_diff){
+if(use_sexint){
+            
    if(should_rankz){
       saveRDS(qtl, file = paste0(args[1], "_sexint_rZ_qtl_lod.rds"))
    }else{
-      saveRDS(qtl, file = paste0(args[1], "_sexint_qtl_lod.rds"))
+      saveRDS(qtl, file = paste0(args[1], "_sexint_norm_qtl_lod.rds"))
    }
+            
 }else{
+            
    if(should_rankz){
       saveRDS(qtl, file = paste0(args[1], "_rZ_qtl_lod.rds"))
    }else{
-      saveRDS(qtl, file = paste0(args[1], "_qtl_lod.rds"))
+      saveRDS(qtl, file = paste0(args[1], "_norm_qtl_lod.rds"))
    }
+            
 }   
