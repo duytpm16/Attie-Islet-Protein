@@ -56,6 +56,9 @@ if(should.rankz){
   
 }
 
+
+
+### If use.diff (sex interaction) create a new model.matrix for sex which will be used for the intcovar parameter in scan1
 if(use.diff){
  int_covar_name <- args[5]
  formula <- as.formula(paste0('~', int_covar_name))
@@ -63,6 +66,8 @@ if(use.diff){
 }else{
  int_mat <- NULL
 }
+
+
 
 ### Qtl2 scan1 run
 qtl <- scan1(genoprobs = genoprobs, 
