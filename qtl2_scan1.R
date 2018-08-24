@@ -12,10 +12,11 @@
 #       1: input.file:    Path + prefix to the qtl2 input data generated from gather_qtl2_scan1_input_data.R
 #       2: num_cores:     Number of cores to run
 #       3: should_rankz:  Logical value to use the rankz dataset instead of normalized
-#       4: use_sexint:    Logical value to use sex as an interaction term
-#       5: use_chunks:    Logical value to run QTL scans in chunks
+#       4: use_chunks:    Logical value to run QTL scans in chunks
+#       5: use_int:       Logical value to use an interaction term
 #       6: chunk_number:  Numeric value of the chunk number. Not needed if use_chunks is FALSE
 #       7: chunk_size:    Numeric value of chunk size. Should be consistent. Not needed if use_chunks is FALSE
+#       8: int_name:      Name of the interaction term. Not needed if use_int is FALSE
 #
 ### Output: 
 #       1: Matrix containing LOD scoress for each of the phenotype that was given to scan1 at each marker.
@@ -52,7 +53,7 @@ args = commandArgs(trailingOnly = TRUE)
 
 load(paste0(args[1],"_qtl2_input.RData"))
 num_cores <- as.numeric(args[2])
-should.rankz <- as.logical(args[3])
+should_rankz <- as.logical(args[3])
 use_chunks <- as.logical(args[4])
 use_sexint <- as.logical(args[5])
 
