@@ -43,18 +43,18 @@ library(RSQLite)
 # 1: input.file:    Path + prefix to the qtl2 input data generated from gather_qtl2_scan1_input_data.R
 # 2: num_cores:     Number of cores to run
 # 3: should_rankz:  Logical value to use the rankz dataset instead of normalized
-# 4: use_int:       Logical value to use an interaction term
-# 5: use_chunks:    Logical value to run QTL scans in chunks
-# 6: int_name:      Name of the interaction term
-# 7: chunk_number:  Numeric value of the chunk number. Not needed if use_chunks is FALSE
-# 8: chunk_size:    Numeric value of chunk size. Should be consistent. Not needed if use_chunks is FALSE
+# 4: use_chunks:    Logical value to run QTL scans in chunks
+# 5: use_int:       Logical value to use an interaction term
+# 6: chunk_number:  Numeric value of the chunk number. Not needed if use_chunks is FALSE
+# 7: chunk_size:    Numeric value of chunk size. Should be consistent. Not needed if use_chunks is FALSE
+# 8: int_name:      Name of the interaction term. Not needed if use_int is FALSE
 args = commandArgs(trailingOnly = TRUE)
 
 load(paste0(args[1],"_qtl2_input.RData"))
 num_cores <- as.numeric(args[2])
 should.rankz <- as.logical(args[3])
-use_sexint <- as.logical(args[4])
-use_chunks <- as.logical(args[5])
+use_chunks <- as.logical(args[4])
+use_sexint <- as.logical(args[5])
 
 
 
@@ -74,9 +74,17 @@ if(should_rankz){
 
 
 
+### If running qtl scans by chunks, get chunk size and chunk number
+if(use_chunks){
+  chunk_number <- as.numeric(args[6])
+  chunk_size <- as.numeric(args[7])
+}
+
+
+
 ### If sex should be used as an interaction term
 if(use_int){
- int_name <- args[6]
+ int_name <- args[8]
  formula <- as.formula(paste0('~', int_name))
  int_mat <- model.matrix(formula, data = samples)[,-1]
   
@@ -84,13 +92,6 @@ if(use_int){
  int_mat <- NULL
 }
 
-
-
-### If running qtl scans by chunks, get chunk size and chunk number
-if(use_chunks){
-  chunk_number <- as.numeric(args[7])
-  chunk_size <- as.numeric(args[8])
-}
 
 
 ### Running QTL2 scan1 function
