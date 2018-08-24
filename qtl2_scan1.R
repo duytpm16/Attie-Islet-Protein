@@ -83,12 +83,20 @@ if(use_chunks){
 
 
 ### If sex should be used as an interaction term
-if(use_int){
+if(use_int & use_chunks){
  int_name <- args[8]
  formula <- as.formula(paste0('~', int_name))
  int_mat <- model.matrix(formula, data = samples)[,-1]
-  
-}else{
+}
+
+if(use_int == TRUE & use_chunks == FALSE){
+ int_name <- args[6]
+ formula <- as.formula(paste0('~', int_name))
+ int_mat <- model.matrix(formula, data = samples)[,-1]        
+            
+}
+
+if(use_int == FALSE){
  int_mat <- NULL
 }
 
