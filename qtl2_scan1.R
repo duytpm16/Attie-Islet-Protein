@@ -36,9 +36,7 @@
 
 ### Load required library packages
 library(qtl2) 
-library(qtl2convert)
 library(RSQLite)
-
 
 
 ### Command line arguments / Variables to change
@@ -59,6 +57,7 @@ use_sexint <- as.logical(args[4])
 use_chunks <- as.logical(args[5])
 
 
+
 ### Check to see if required data are loaded
 stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
             "covar.factors", "samples", "rankz", "raw","datatype") %in% ls())
@@ -67,28 +66,25 @@ stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers
 
 ### If should_rankz is true used the normalized rankz dataset, else use the normalized dataset.
 if(should_rankz){
-  
   expr <- rankz
-  
-} else{
-  
+            
+}else{
   expr <- norm
-  
 }
+
 
 
 ### If sex should be used as an interaction term
 if(use_int){
-  
  int_name <- args[6]
  formula <- as.formula(paste0('~', int_name))
  int_mat <- model.matrix(formula, data = samples)[,-1]
   
 }else{
-  
  int_mat <- NULL
-  
 }
+
+
 
 ### If running qtl scans by chunks, get chunk size and chunk number
 if(use_chunks){
