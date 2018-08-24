@@ -95,8 +95,7 @@ if(use_chunks){
 
 ### Running QTL2 scan1 function
 if(use_chunks == FALSE){
-  
-    ### qtl2 scan1 without chunks
+    # qtl2 scan1 without chunks
     qtl <- scan1(genoprobs = genoprobs, 
                  pheno = expr,
                  kinship = K, 
@@ -104,9 +103,11 @@ if(use_chunks == FALSE){
                  intcovar = int_mat, 
                  cores = num_cores)
     
+    # Set class of qtl matrix
     class(qtl) = c("scan1", "matrix")
 
-    ### Save output of scan1 to current directory
+            
+    # Save output of scan1 to current directory
     if(use_int){
        if(should_rankz){
           saveRDS(qtl, file = paste0(args[1], "_",int_name,"_int_rZ_qtl_lod.rds"))
@@ -122,7 +123,6 @@ if(use_chunks == FALSE){
     }
     
 }else{
-   
    # Get chunk range
    max_col = ncol(expr)
    pheno.rng = ((chunk_number - 1) * chunk_size + 1):(chunk_number * chunk_size)
@@ -130,10 +130,11 @@ if(use_chunks == FALSE){
 
       pheno.rng = pheno.rng[1]:max_col
 
-   } # if(pheno.rng[length(pheno.rng)] > max_col)
-
+   }
    print(paste("Mapping columns:", pheno.rng[1], "to", pheno.rng[length(pheno.rng)]))
 
+            
+            
    # Run QTL scan with chunks
    qtl <- scan1(genoprobs = genoprobs,
              pheno = expr[,pheno.rng,drop = FALSE],
@@ -142,22 +143,23 @@ if(use_chunks == FALSE){
              intcovar = int_mat,
              cores = num_cores)
 
+            
+            
    # Save the QTL chunk scan
    if(use_int){
-     
       if(should_rankz){
          saveRDS(qtl, file = paste0(args[1], "_",int_name,"_int_rZ_qtl_lod_chunk_",chunk_numer,".rds"))
+      
       }else{
          saveRDS(qtl, file = paste0(args[1], "_",int_name,"_int_norm_qtl_lod_chunk_",chunk_number,".rds"))
       }
      
    }else{
-     
       if(should_rankz){
          saveRDS(qtl, file = paste0(args[1], "_rZ_qtl_lod_chunk_",chunk_number,".rds"))
+      
       }else{
          saveRDS(qtl, file = paste0(args[1], "_norm_qtl_lod_chunk_",chunk_number,".rds"))
       }
-     
    }		   
 }
