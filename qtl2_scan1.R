@@ -55,7 +55,7 @@ load(paste0(args[1],"_qtl2_input.RData"))
 num_cores <- as.numeric(args[2])
 should_rankz <- as.logical(args[3])
 use_chunks <- as.logical(args[4])
-use_sexint <- as.logical(args[5])
+use_int <- as.logical(args[5])
 
 
 
