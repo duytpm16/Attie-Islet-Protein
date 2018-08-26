@@ -44,7 +44,7 @@ use_int <- as.logical(args[5])
 
 ### Load in the data
 if(use_int){
-  
+  # If using interaction scan
   int_name <- args[6]
 
   load(paste0(prefix,"_qtl2_input.RData"))
@@ -62,10 +62,10 @@ if(use_int){
   }
   
 }else{
-  
+  # If using additive scan
   load(paste0(prefix,"_qtl2_input.Rdata"))
     
-  ### Check to see if required QTL2 data are loaded
+  # Check to see if required QTL2 data are loaded
   stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
             "covar.factors", "samples", "rankz", "raw","datatype") %in% ls()
   )
@@ -80,6 +80,7 @@ if(use_int){
 }
 
 
+
 ### Run the find_peaks function and stores the output to a variable called "lod.peaks"
 lod.peaks <- find_peaks(scan1_output =  scan1_data, map = map, threshold = threshold, cores = num_cores)
 
@@ -87,7 +88,6 @@ lod.peaks <- find_peaks(scan1_output =  scan1_data, map = map, threshold = thres
 
 ### Setting up the lod.peaks dataframe in QTL Viewer format.
 marker.id <- paste0(as.character(lod.peaks$chr), '_', round(lod.peaks$pos * 1000000))
-
 annot.id <- lod.peaks[,'lodcolumn']
 lod.peaks <- cbind(annot.id, marker.id, lod.peaks[,c('lod','chr','pos')])
 lod.peaks$chr <- as.character(lod.peaks$chr)
@@ -99,6 +99,8 @@ if(use_int == FALSE){
    lod.peaks = cbind(lod.peaks, matrix(0, nrow = nrow(lod.peaks), ncol = 8, 
                                        dimnames = list(NULL, LETTERS[1:8])))
 }
+
+
 
 if(use_int == FALSE){
    # BLUP mapping.
