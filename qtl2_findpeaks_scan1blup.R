@@ -49,6 +49,10 @@ if(use_int){
 
   load(paste0(prefix,"_qtl2_input.RData"))
   
+    stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
+            "covar.factors", "samples", "rankz", "raw","datatype") %in% ls()
+  )
+  
   if(should_rankz){
     scan1_data <- readRDS(paste0(prefix,"_",int_name,"_int_rZ_qtl_lod.rds"))
     expr <- rankz
@@ -60,6 +64,11 @@ if(use_int){
 }else{
   
   load(paste0(prefix,"_qtl2_input.Rdata"))
+    
+  ### Check to see if required QTL2 data are loaded
+  stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
+            "covar.factors", "samples", "rankz", "raw","datatype") %in% ls()
+  )
   
   if(should_rankz){
     scan1_data <- readRDS(paste0(prefix,"_rZ_qtl_lod.rds"))
@@ -69,13 +78,6 @@ if(use_int){
     expr <- norm
   }
 }
-
-
-### Check to see if required QTL2 data are loaded
-stopifnot(c("genoprobs", "K", "map", "markers", "covar", 
-            "covar.factors", "samples", "rankz", "raw","datatype") %in% ls()
-)
-
 
 
 ### Run the find_peaks function and stores the output to a variable called "lod.peaks"
@@ -92,10 +94,11 @@ lod.peaks$chr <- as.character(lod.peaks$chr)
 
 
 
-### Adding 8 more columns to lod.peaks for BLUP mapping
-lod.peaks = cbind(lod.peaks, matrix(0, nrow = nrow(lod.peaks), ncol = 8, 
-                                    dimnames = list(NULL, LETTERS[1:8])))
-
+### Adding 8 more columns to lod.peaks for BLUP mapping on additive scans only
+if(use_int == FALSE){
+   lod.peaks = cbind(lod.peaks, matrix(0, nrow = nrow(lod.peaks), ncol = 8, 
+                                       dimnames = list(NULL, LETTERS[1:8])))
+}
 
 if(use_int == FALSE){
    # BLUP mapping.
