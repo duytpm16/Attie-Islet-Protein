@@ -1,6 +1,16 @@
-################################################################################
-# Returns a find_peaks dataframe consisting of LOD peaks above a given threshold.
-# 
+### This script finds LOD peaks above a given threshold 
+#     and computes the allele effects.
+#
+### Input:
+#       1.) Path + prefix to .RData file generarted from: qtl2_gather_scan1_input.R and .rds file from qtl2_scan1.R.
+#             Asssuming both are in the same directory.
+#       2.) Numeric threshold used to find QTLs with LODs score above.
+#       3.) Number of cores to run
+#       4.) TRUE or FALSE value to use rank Z data.
+#
+### Output:
+#       1.) RDS data containing the lod peaks above threshold and allele effects.
+#
 ### Author: Duy Pham
 ### Date:   July 11, 2018
 ### E-mail: duy.pham@jax.org
