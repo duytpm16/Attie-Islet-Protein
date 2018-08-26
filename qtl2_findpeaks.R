@@ -1,15 +1,16 @@
 ### This script finds LOD peaks above a given threshold 
-#     and computes the allele effects.
+#     and computes the allele effects at each QTL for additive scans only.
 #
 ### Input:
-#       1.) Path + prefix to .RData file generarted from: qtl2_gather_scan1_input.R and .rds file from qtl2_scan1.R.
-#             Asssuming both are in the same directory.
-#       2.) Numeric threshold used to find QTLs with LODs score above.
+#       1.) Path + prefix to .RData file generarted from: qtl2_gather_scan1_input.R
+#       2.) Numeric LOD threshold used to find significant QTLs.
 #       3.) Number of cores to run
 #       4.) TRUE or FALSE value to use rank Z data.
+#       5.) TRUE or FALSE to use interaction lod scan data.
+#       6.) Name of the interaction term used. Not needed if 5 is FALSE
 #
 ### Output:
-#       1.) RDS data containing the lod peaks above threshold and allele effects.
+#       1.) .rds file containing the lod peaks above threshold and allele effects at QTLS (Only if 5 in Input is FALSE).
 #
 ### Author: Duy Pham
 ### Date:   July 11, 2018
@@ -25,11 +26,12 @@ options(scipen = 999)
 
 
 ### Variables to change
-#     1. Prefix to Rdata file containing: 
-#             norm, raw, rankz, covar, covar.factors, genoprobs, samples, map, marker_map, K, datatype,  and pheno.dict
-#         AND 
-#             large scan1 LOD matrix. Assuming they are store in the same directory
-#     2. Threshold value for LOD peaks.
+#       1.) Path + prefix to .RData file generarted from: qtl2_gather_scan1_input.R
+#       2.) Numeric LOD threshold used to find significant QTLs.
+#       3.) Number of cores to run
+#       4.) TRUE or FALSE value to use rank Z data.
+#       5.) TRUE or FALSE to use interaction lod scan data.
+#       6.) Name of the interaction term used. Not needed if 5 is FALSE
 args = commandArgs(trailingOnly = TRUE)
 
 prefix <- args[1]
