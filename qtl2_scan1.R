@@ -33,7 +33,7 @@
 # library(devtools)
 # install_github("rqtl/qtl2", "rqtl/qtl2convert")
 
-
+options(stringAsFactors = FALSE)
 
 ### Load required library packages
 library(qtl2) 
