@@ -22,8 +22,8 @@
 #    2.) Path to lod peaks .rds file generated from qtl2_findpeaks_scan1blup.R
 #    3.) Datatype as character. Should be 'phenotype' as required by QTL viewer.
 #    4.) Name for the dataset.* list.
-load("~/Desktop/Attie/Lipids/Cecum_Lipids/attie_cecum_lipid_qtl2_input.Rdata")
-lod.peaks <- readRDS("~/Desktop/Attie/Lipids/Cecum_Lipids/attie_cecum_lipid_rZ_lod_peaks_6.rds")
+load("~/Desktop/Attie/Lipids/Cecum_Lipids/attie_cecum_lipid_qtl2_input.RData")
+lod.peaks <- readRDS("~/Desktop/Attie/Lipids/Cecum_Lipids/attie_cecum_lipid_rZ_lodpeaks_6.rds")
 datatype <- 'phenotype'
 dataset_name <- 'dataset.cecum.lipids'
 
