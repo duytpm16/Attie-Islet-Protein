@@ -1,6 +1,6 @@
-# Attie - Islet Protein, Lipids, and Metabolites Dataset
-  
-QTL2 pipeline for the Attie Islet Proteins and Cecum, Liver, and Plasma Lipids/Metabolites data.  
+# Attie - Islet Protein, Lipid, and Metabolite Data Sets
+
+QTL2 pipeline for the Attie Islet Protein and Cecum, Liver, and Plasma Lipid/Metabolite data.  
 
 ### Required original files:  
  1. raw protein/metabolite/lipid text file: "DO_islet_proteomics_non_normalized.txt"
