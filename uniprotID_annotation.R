@@ -129,7 +129,7 @@ for(i in 1:nrow(annots)){
     
   }else{
     
-    min_marker_index <- which.min(abs(annots[i,'middle'] - submarkers$pos))
+    min_marker_index <- which.min(abs(annots[i,'start'] - submarkers$pos))
     annots[i,'nearest.marker.id'] <- submarkers[min_marker_index,'marker']
     
   }
