@@ -54,7 +54,7 @@ display.name <- "Attie Plasma Metabolite"                      # Display name fo
 
 
 ### Creating name to save the output .RData file
-gathered_data <- paste0(prefix,"_qtl2_input.Rdata")        # Rdata file name to store all data
+gathered_data <- paste0(prefix,"_qtl2_input.RData")        # Rdata file name to store all data
 
 
 
