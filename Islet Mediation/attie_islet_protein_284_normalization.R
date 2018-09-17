@@ -1,4 +1,4 @@
-load("~/Desktop/Attie/Attie_rZ_QTL_Viewer_V3.RData")
+load("~/Desktop/Attie/Attie_rZ_QTL_Viewer_V2.RData")
 
 intersect.samples <- intersect(rownames(dataset.islet.rnaseq$expr), rownames(dataset.islet.proteins$expr))
 saveRDS(intersect.samples,'Attie_islet_intersect_samples.rds')
