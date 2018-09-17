@@ -116,13 +116,13 @@ expr.annots <- expr.annots[,c(3:ncol(expr.annots),1,2)]
 
 
 ### Add gene.symbol, gene.chr, gene.start, gene.end, and cis to lod.peaks data.frame
-colnames(lod.peaks)[colnames(lod.peaks) %in% c('lod','chr','pos')] <- c('qtl.lod','qtl.chr','qtl.pos')
+colnames(lod.peaks)[colnames(lod.peaks) %in% c('chr','pos')] <- c('qtl.chr','qtl.pos')
 lod.peaks <- merge(lod.peaks, expr.annots[,c('protein_id','symbol','chr','start','end')], 
                    by.x = 'annot.id', by.y = 'protein_id', sort = FALSE)
 colnames(lod.peaks)[colnames(lod.peaks) %in% c('symbol','chr','start','end')] <- c('gene.symbol','gene.chr','gene.start','gene.end')
 
 lod.peaks = lod.peaks %>% mutate(cis = (gene.chr == qtl.chr) & (abs(gene.start - qtl.pos) <= 4))
-lod.peaks <- lod.peaks[,c('annot.id','marker.id','qtl.lod','qtl.chr','qtl.pos','gene.chr','gene.start','gene.end', 'gene.symbol','cis','A','B','C','D','E','F','G','H')]
+lod.peaks <- lod.peaks[,c('annot.id','marker.id','lod','qtl.chr','qtl.pos','gene.chr','gene.start','gene.end', 'gene.symbol','cis','A','B','C','D','E','F','G','H')]
 
 
 ### Removing unnecessary data
