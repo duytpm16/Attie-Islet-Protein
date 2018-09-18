@@ -1,3 +1,21 @@
+#####################################################################################################
+# 
+#  This scripts contains two functions. One to find nearest marker id and the second function to do
+#     cis qtl scan
+#
+#  Input:
+#     1.) Annotation dataframe containing protein/gene id, start column, and nearest.marker.id column (optional)
+#     2.) Markers dataframe (optional if you already have nearest.marker.id column)
+#     3.) data for qtl2 scan1 function. See ?scan1 in library qtl2
+#
+#  Output:
+#     1.) Dataframe of cis lod scores
+#     2.) A list containing dataframe of cis lod scores and new annotation dataframe with nearest marker id
+#           if there are no nearest.marker.id initially
+#
+#  Author: Duy Pham
+#  E-mail: duy.pham@jax.org
+#####################################################################################################
 library(qtl2)
 library(qtl2convert)
 library(dplyr)
@@ -124,9 +142,9 @@ expr.mrna <- get(mrna)$expr
 covar.protein <- get(protein)$covar
 covar.mrna <- get(mrna)$covar
 
+
+
 protein_cis_lod <- cis_scan1(id = 'protein_id', annots = annot.id.protein, genoprobs = genoprobs, pheno = expr.protein, kinship = K, addcovar = covar.protein, markers_df = markers)
-
-
 mrna_cis_lod <- cis_scan1(id = 'gene_id', annots = annot.id.mrna, genoprobs = genoprobs, pheno = expr.mrna, kinship = K, addcovar = covar.mrna, markers_df = markers)
 
 
