@@ -54,7 +54,7 @@ display.name <- "Attie Islet mRNA 284"                                          
 
 ### Load in the other data.
 raw <- readRDS(paste0(prefix,"_filtered_raw.rds"))         # Raw protein levels
-norm <- readRDS(paste0(prefix,"_normalized.rds"))          # Normalized protein levels by comBat
+norm <- readRDS(paste0(prefix,"_normalized.rds"))          # Normalized expression levels 
 rankz <- readRDS(paste0(prefix, "_rZ_normalized.rds"))     # RankZ normalized protein levels
 samples <- readRDS(paste0(prefix, "_samples_annot.rds"))   # Samples annotation data
 gathered_data <- paste0(prefix,"_qtl2_input.RData")        # Rdata file name to store all data
