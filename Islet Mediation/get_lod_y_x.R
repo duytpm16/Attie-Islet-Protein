@@ -39,7 +39,9 @@ colnames(protein_on_mrna_lod) <- c('protein_on_mRNA')
 
 for(i in 1:nrow(annot.id.protein)){
     if(proteins_gene_id[i] %in% annot.id.mrna$gene_id){
-       protein_on_mrna_lod[i,] <- regressionget_lod(expr.protein[,protein_id[i], drop = FALSE], expr.mrna[,proteins_gene_id[i],drop = FALSE], covar.protein)
+       protein_on_mrna_lod[i,] <- regressionget_lod(y = expr.protein[,protein_id[i], drop = FALSE], 
+                                                    x = expr.mrna[,proteins_gene_id[i],drop = FALSE], 
+                                                    covar = covar.protein)
     }
 }
 rownames(protein_on_mrna_lod) <- protein_id
@@ -61,7 +63,9 @@ for(i in 1:nrow(annot.id.mrna)){
        
        temp <- numeric(length = length(med))
        for(j in 1:length(med)){
-           temp[j] <- regressionget_lod(expr.mrna[,gene_id[i], drop = FALSE], expr.protein[,med[j],drop = FALSE], covar.mrna)
+           temp[j] <- regressionget_lod(y = expr.mrna[,gene_id[i], drop = FALSE], 
+                                        x = expr.protein[,med[j],drop = FALSE], 
+                                        covar = covar.mrna)
        }
        
       mrna_on_protein_lod[i,] <- cbind(paste0(med, collapse = ','), paste0(temp, collapse = ','))
