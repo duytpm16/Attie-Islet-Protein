@@ -1,3 +1,9 @@
+### Load in data that is in QTL Viewer format
+load("~/Desktop/Islet Mediation/attie_islet_rZ_qtl_viewer_284.RData")
+
+
+
+### Extract required data
 mrna <- 'dataset.islet.mrna'
 protein <- 'dataset.islet.proteins'
 
@@ -15,18 +21,23 @@ covar.mrna <- get(mrna)$covar
 
 
 
+
+
 ### Protein cis mediation and inverse mediation with mRNA
 # 
 #   Extracting some columns from protein annots so the code doesn't look messy
-protein_id <- annot.id.protein$protein_id
-proteins_gene_id <- annot.id.protein$gene_id
-chr = annot.id.protein$chr
-nearest.marker <- annot.id.protein$nearest.marker.id
-ids <- annot.id.protein[,'protein_id',drop = TRUE]
+protein_id <- annot.id.protein$protein_id                  # The protein id
+proteins_gene_id <- annot.id.protein$gene_id               # The gene id of the protein
+chr = annot.id.protein$chr                                 # Chromosome of the protein location
+nearest.marker <- annot.id.protein$nearest.marker.id       # Nearest marker to location of protein
 
+
+#   Make a new dataframe to contain protein mediation LOD scores
 protein_cis_med_lod <- as.data.frame(matrix(NA, nrow = nrow(annot.id.protein), ncol = 2))
 colnames(protein_cis_med_lod) <- c('cis_mediator_mRNA','cis_inv_mediation_mRNA')
 
+
+#   Mediation begin
 for(i in 1:nrow(annot.id.protein)){
   
     if(proteins_gene_id[i] %in% annot.id.mrna$gene_id){
@@ -37,7 +48,7 @@ for(i in 1:nrow(annot.id.protein)){
                               qtl.geno = genoprobs[[chr[i]]][,,nearest.marker[i]],
                               covar = covar.protein)
        
-       
+       # Inverse mediation
        temp.inv <- mediation.scan(target = expr.mrna[, proteins_gene_id[i], drop = FALSE],
                                   mediator = expr.protein[, protein_id[i], drop = FALSE],
                                   annotation = annot.id.protein[protein_id[i],],
@@ -58,18 +69,21 @@ saveRDS(protein_cis_med_lod, file = 'attie_islet_protein_cis_mediation_lod_284.r
 ### mRNA cis mediation and inverse mediation with mrna
 # 
 #   Extracting some columns from mrna annots so the code doesn't look messy
-gene_id <- annot.id.mrna$gene_id
-chr = annot.id.mrna$chr
-nearest.marker <- annot.id.mrna$nearest.marker.id
-ids <- annot.id.mrna[,'gene_id',drop = TRUE]
+gene_id <- annot.id.mrna$gene_id                       # Gene Id of mRNA
+chr = annot.id.mrna$chr                                # Chromosome of mRNA location
+nearest.marker <- annot.id.mrna$nearest.marker.id      # Nearest marker to location of mRNA
 
+
+#   Creating dataframe to hold mRNA mediation LOD scores
 mrna_cis_med_lod <- as.data.frame(matrix(NA, nrow = nrow(annot.id.mrna), ncol = 3))
 colnames(mrna_cis_med_lod) <- c('mediator_protein','cis_mediator_protein','cis_inv_mediation_protein')
 
+
+#   Mediation begin
 for(i in 1:nrow(annot.id.mrna)){
   
     if(gene_id[i] %in% annot.id.protein$gene_id){
-        med <- annot.id.protein[which(gene_id[i] == annot.id.protein$gene_id), 'protein_id']
+        med <- annot.id.protein[which(gene_id[i] == annot.id.protein$gene_id), 'protein_id']  # There can be more than one protein_id for a mRNA
         temp <- mediation.scan(target = expr.mrna[, gene_id[i], drop = FALSE],
                                mediator = expr.protein[, med, drop = FALSE],
                                annotation = annot.id.protein[med,],
@@ -77,16 +91,19 @@ for(i in 1:nrow(annot.id.mrna)){
                                covar = covar.mrna)
       
       
+        # Inverse mediation
         temp.inv <- as.data.frame(matrix(NA, nrow = length(med), ncol = 10))
         for(j in 1:length(med)){
             temp.inv[j,] <- mediation.scan(target = expr.protein[, med[j], drop = FALSE],
-                                       mediator = expr.mrna[, gene_id[i], drop = FALSE],
-                                       annotation = annot.id.mrna[gene_id[i],],
-                                       qtl.geno = genoprobs[[chr[i]]][,,nearest.marker[i]],
-                                       covar = covar.protein)
+                                           mediator = expr.mrna[, gene_id[i], drop = FALSE],
+                                           annotation = annot.id.mrna[gene_id[i],],
+                                           qtl.geno = genoprobs[[chr[i]]][,,nearest.marker[i]],
+                                           covar = covar.protein)
         }
       
-        mrna_cis_med_lod[i,] <- cbind(paste0(med, collapse = ','), paste0(temp[,'LOD'],collapse = ','), paste0(temp.inv[,ncol(temp.inv)],collapse = ','))
+        mrna_cis_med_lod[i,] <- cbind(paste0(med, collapse = ','), 
+                                      paste0(temp[,'LOD'],collapse = ','), 
+                                      paste0(temp.inv[,ncol(temp.inv)],collapse = ','))
     }
   
   
