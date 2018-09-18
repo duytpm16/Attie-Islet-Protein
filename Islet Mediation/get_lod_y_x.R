@@ -11,8 +11,11 @@ regressionget_lod <- function(y, x, covar){
        return(LOD)
 }
 
+### Load in mRNA and protein data that are in QTL viewer format
+load("~/Desktop/Islet Mediation/attie_islet_rZ_qtl_viewer_284.RData")
 
 
+### Extract required data
 mrna <- 'dataset.islet.mrna'
 protein <- 'dataset.islet.proteins'
 
