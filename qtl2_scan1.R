@@ -67,70 +67,69 @@ stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers
 
 ### If should_rankz is true used the normalized rankz dataset, else use the normalized dataset.
 if(should_rankz){
-  expr <- rankz
+   expr <- rankz
             
 }else{
-  expr <- norm
+   expr <- norm
 }
 
 
 
 ### If running qtl scans by chunks, get chunk size and chunk number
 if(use_chunks){
-  chunk_number <- as.numeric(args[6])
-  chunk_size <- as.numeric(args[7])
+   chunk_number <- as.numeric(args[6])
+   chunk_size <- as.numeric(args[7])
 }
 
 
 
 ### If sex should be used as an interaction term
 if(use_int == TRUE & use_chunks == TRUE){
- int_name <- args[8]
- formula <- as.formula(paste0('~', int_name))
- int_mat <- model.matrix(formula, data = samples)[,-1]
+   int_name <- args[8]
+   formula <- as.formula(paste0('~', int_name))
+   int_mat <- model.matrix(formula, data = samples)[,-1]
 }
 
 if(use_int == TRUE & use_chunks == FALSE){
- int_name <- args[6]
- formula <- as.formula(paste0('~', int_name))
- int_mat <- model.matrix(formula, data = samples)[,-1]        
-            
+   int_name <- args[6]
+   formula <- as.formula(paste0('~', int_name))
+   int_mat <- model.matrix(formula, data = samples)[,-1]                 
 }
 
 if(use_int == FALSE){
- int_mat <- NULL
+   int_mat <- NULL
 }
 
 
 
 ### Running QTL2 scan1 function
 if(use_chunks == FALSE){
-    # qtl2 scan1 without chunks
-    qtl <- scan1(genoprobs = genoprobs, 
-                 pheno = expr,
-                 kinship = K, 
-                 addcovar = covar,
-                 intcovar = int_mat, 
-                 cores = num_cores)
+   # qtl2 scan1 without chunks
+   qtl <- scan1(genoprobs = genoprobs, 
+                pheno = expr,
+                kinship = K, 
+                addcovar = covar,
+                intcovar = int_mat, 
+                cores = num_cores)
     
-    # Set class of qtl matrix
-    class(qtl) = c("scan1", "matrix")
+   # Set class of qtl matrix
+   class(qtl) = c("scan1", "matrix")
 
             
-    # Save output of scan1 to current directory
-    if(use_int){
-       if(should_rankz){
-          saveRDS(qtl, file = paste0(args[1], "_",int_name,"_int_rZ_qtl_lod.rds"))
-       }else{
-          saveRDS(qtl, file = paste0(args[1], "_",int_name,"_int_norm_qtl_lod.rds"))
-       }
-    }else{
-       if(should_rankz){
-          saveRDS(qtl, file = paste0(args[1], "_rZ_qtl_lod.rds"))
-       }else{
-          saveRDS(qtl, file = paste0(args[1], "_qtl_lod.rds"))
-       }
-    }
+   # Save output of scan1 to current directory
+   if(use_int){
+      if(should_rankz){
+         saveRDS(qtl, file = paste0(args[1], "_",int_name,"_int_rZ_qtl_lod.rds"))
+      }else{
+         saveRDS(qtl, file = paste0(args[1], "_",int_name,"_int_norm_qtl_lod.rds"))
+      }
+   }else{
+      if(should_rankz){
+         saveRDS(qtl, file = paste0(args[1], "_rZ_qtl_lod.rds"))
+      }else{
+         saveRDS(qtl, file = paste0(args[1], "_qtl_lod.rds"))
+      }
+   }
     
 }else{
    # Get chunk range
@@ -147,11 +146,11 @@ if(use_chunks == FALSE){
             
    # Run QTL scan with chunks
    qtl <- scan1(genoprobs = genoprobs,
-             pheno = expr[,pheno.rng,drop = FALSE],
-             kinship = K,
-             addcovar = covar,
-             intcovar = int_mat,
-             cores = num_cores)
+                pheno = expr[,pheno.rng,drop = FALSE],
+                kinship = K,
+                addcovar = covar,
+                intcovar = int_mat,
+                cores = num_cores)
 
             
             
