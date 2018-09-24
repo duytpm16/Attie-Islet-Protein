@@ -104,6 +104,7 @@ repeat({
     
   }else{
     
+    data.cb[miss] = NA
     data.log = data.cb
     break
     
