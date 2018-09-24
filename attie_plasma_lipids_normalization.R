@@ -128,6 +128,7 @@ if(sum(is.na(raw) > 0)){
       
     }else{
       
+      data.cb[miss] = NA
       data.log = data.cb
       break
       
