@@ -48,7 +48,7 @@ prefix <- "attie_plasma_metabolite"                            # Prefix of the n
 pheno.dict <- read.delim("plasma_metabolites_pheno_dict.txt")  # Phenotype data dictionary
 genoprobs <- readRDS("attie_DO500_genoprobs_20180303.rds")     # Genoprobs data
 markers <- readRDS("marker_grid_0.02cM_plus.rds")              # Marker data
-datatype <- "phenotype"                                             # Datatype for QTL viewer
+datatype <- "phenotype"                                        # Datatype for QTL viewer
 display.name <- "Attie Plasma Metabolite"                      # Display name for QTL viewer
 
 
