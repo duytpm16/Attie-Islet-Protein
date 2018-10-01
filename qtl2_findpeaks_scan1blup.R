@@ -90,7 +90,8 @@ lod.peaks <- find_peaks(scan1_output =  scan1_data, map = map, threshold = thres
 marker.id <- paste0(as.character(lod.peaks$chr), '_', round(lod.peaks$pos * 1000000))
 annot.id <- lod.peaks[,'lodcolumn']
 lod.peaks <- cbind(annot.id, marker.id, lod.peaks[,c('lod','chr','pos')])
-lod.peaks$chr <- as.character(lod.peaks$chr)
+colnames(lod.peaks) <- c('annot.id','marker.id','lod','qtl.chr','qtl.pos')
+lod.peaks$chr <- as.character(lod.peaks$qtl.chr)
 
 
 
@@ -106,7 +107,7 @@ if(use_int == FALSE){
    # BLUP mapping.
    for(i in 1:nrow(lod.peaks)) {
   
-       chr  = lod.peaks$chr[i]
+       chr  = lod.peaks$qtl.chr[i]
        mkr  = lod.peaks$marker.id[i]
        gene = lod.peaks$annot.id[i]
   
@@ -123,9 +124,6 @@ if(use_int == FALSE){
 
 
 # Save the output of the find_peaks function
-rm(scan1_data, annot.id, marker.id, i, mkr, gene, chr, gp, blup)
-
-
 if(use_int){
   
   if(should_rankz){
