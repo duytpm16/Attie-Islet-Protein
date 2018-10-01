@@ -37,7 +37,6 @@ options(stringsAsFactors = FALSE)
 
 ### Load required library packages
 library(qtl2) 
-library(RSQLite)
 
 
 ### Command line arguments / Variables to change
