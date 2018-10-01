@@ -139,11 +139,6 @@ K = calc_kinship(probs = genoprobs, type = "loco", quiet = FALSE, cores = 4)
 
 
 
-### Removing some data
-rm(f, i, mouse.samples, prefix)
-
-
-
 ### Save to *.Rdata file
 save(norm, pheno.dict, K, map, markers, covar, covar.factors, samples, raw, rankz, datatype, display.name, genoprobs,
      file =  gathered_data)
