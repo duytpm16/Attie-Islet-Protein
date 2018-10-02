@@ -35,7 +35,8 @@ setwd("~/Desktop/pQTL_Project/data/")
 
 
 ### Read in the Uniprot ID and markers file
-uniprot_file <- read.table('~/Desktop/pQTL_Project/data/UniprotID_to_ENSMBL.txt', sep = '\t', na.strings = 'N/A', header = TRUE)
+uniprot_file <- read.table('~/Desktop/pQTL_Project/data/UniprotID_to_ENSMBL.txt', 
+                           sep = '\t', na.strings = 'N/A', header = TRUE)
 markers <- readRDS("~/Desktop/pQTL_Project/data/islet_proteins_qtl/marker_grid_0.02cM_plus.rds")
 
 
@@ -45,26 +46,23 @@ markers <- readRDS("~/Desktop/pQTL_Project/data/islet_proteins_qtl/marker_grid_0
 ### Line 51: Remove brackets and words in between the brackets if it is next to the transcript ID
 ### Line 54: Remove trailing white spaces
 uniprot_file$ENSEMBL.ID <- substr(uniprot_file$ENSEMBL.ID, 1, nchar(uniprot_file$ENSEMBL.ID)-1)
-
-uniprot_file <- uniprot_file %>% separate_rows('ENSEMBL.ID', sep = ';')
-
+uniprot_file            <- uniprot_file %>% separate_rows('ENSEMBL.ID', sep = ';')
 uniprot_file$ENSEMBL.ID <- sapply(uniprot_file$ENSEMBL.ID, 
-                                        FUN = function(x) gsub("\\[[^]]*]", "", x))
-
+                                  FUN = function(x) gsub("\\[[^]]*]", "", x))
 uniprot_file$ENSEMBL.ID <- sapply(uniprot_file$ENSEMBL.ID, 
-                                        FUN = function(x) trimws(x, which = 'right'))
+                                  FUN = function(x) trimws(x, which = 'right'))
 
 
 
 ### Load in the AnnotationHub database (db) for ENSEMBL IDs and info
-hub <- query(AnnotationHub(), c('ensembl','gtf','mus musculus'))
-hub <- hub[grep('GRCm38', hub$title)]
+hub      <- query(AnnotationHub(), c('ensembl','gtf','mus musculus'))
+hub      <- hub[grep('GRCm38', hub$title)]
 anno_hub <- hub[["AH60127"]]
 anno_hub <- as.data.frame(anno_hub)
 
 ### Subsetting the AnnotationHub db based on 'type' to extract info
-ensembl_t <- anno_hub[anno_hub$type == 'transcript',]
-ensembl_g <- anno_hub[anno_hub$type == 'gene',]
+ensembl_t   <- anno_hub[anno_hub$type == 'transcript',]
+ensembl_g   <- anno_hub[anno_hub$type == 'gene',]
 ensembl_cds <- anno_hub[anno_hub$type == 'CDS',]
 
 
@@ -72,21 +70,21 @@ ensembl_cds <- anno_hub[anno_hub$type == 'CDS',]
 ### Here I merge the gene_id column in the ensembl_t dataframe based on the transcript_id 
 #     in both the ensembl_t and uniprot_file_split dataframe.
 annots <- merge(uniprot_file, ensembl_t[,c('transcript_id','gene_id')], 
-                  by.x = 'ENSEMBL.ID', by.y = 'transcript_id', all.x = TRUE, sort = FALSE)
+                by.x = 'ENSEMBL.ID', by.y = 'transcript_id', all.x = TRUE, sort = FALSE)
 
 
 ### Next I merge the chromsome (seqnames), start, end, strand, and gene_name columns 
 #     based on the gene_id in both the ensembl_g and anno_uniprot dataframe.
 annots <- merge(annots, ensembl_g[,c('gene_id','seqnames','start','end','strand','gene_name')], 
-                  by = 'gene_id', all.x = TRUE, sort = FALSE)
+                by = 'gene_id', all.x = TRUE, sort = FALSE)
 
 
 ### Finally, I merge the protein_id based on the transcript_id 
 #     in both the ensembl_cds and anno_uniprot dataframe.
 ensembl_cds <- ensembl_cds[,c('transcript_id','protein_id')]
 ensembl_cds <- unique(ensembl_cds)
-annots <- merge(annots, ensembl_cds, by.x = 'ENSEMBL.ID', 
-                  by.y = 'transcript_id', all.x = TRUE, sort = FALSE)
+annots      <- merge(annots, ensembl_cds, by.x = 'ENSEMBL.ID', 
+                     by.y = 'transcript_id', all.x = TRUE, sort = FALSE)
 
 
 
@@ -96,14 +94,14 @@ annots <- merge(annots, ensembl_cds, by.x = 'ENSEMBL.ID',
 ### Next, I am changing some of the columns as required by QTLViewer (99-104).
 annots$Majority.protein.IDs <- gsub(';','_', annots$Majority.protein.IDs)  # Replace ';' with '_'
 annots$Majority.protein.IDs <- gsub('-','.', annots$Majority.protein.IDs)  # Replace '-' with '.'
-annots$strand <- as.character(annots$strand)  # Convert 'strand' column to character (was factor before)
-annots[annots == "+"] <- 1                    # Convert "+" strand to 1 
-annots[annots == "-"] <- -1                   # Convert "-" strand to 1 
-annots$start <- annots$start / 1000000        # Convert start position to mbs (divide by 1000000)
-annots$end <- annots$end / 1000000            # Convert end position to mbs (divide by 1000000)
-colnames(annots)[c(1,4,8)] <- c('transcript_id','chr','symbol')   # Changing column name 'ENSEMBL.ID' to 'transcript_id'
-                                                                  # Changing column name 'seqnames' to 'chr'
-                                                                  # Changing column name 'gene_name' to 'symbol'
+annots$strand <- as.character(annots$strand)                               # Convert 'strand' column to character (was factor before)
+annots[annots == "+"] <- 1                                                 # Convert "+" strand to 1 
+annots[annots == "-"] <- -1                                                # Convert "-" strand to 1 
+annots$start <- annots$start / 1000000                                     # Convert start position to mbs (divide by 1000000)
+annots$end <- annots$end / 1000000                                         # Convert end position to mbs (divide by 1000000)
+colnames(annots)[c(1,4,8)] <- c('transcript_id','chr','symbol')            # Changing column name 'ENSEMBL.ID' to 'transcript_id'
+                                                                           # Changing column name 'seqnames' to 'chr'
+                                                                           # Changing column name 'gene_name' to 'symbol'
 
 
 
@@ -114,18 +112,18 @@ annots$middle <- (annots$start + annots$end) / 2
 
 ### Here I extract the nearest marker to the Uniprot ID based on the 
 #       chromosome (anno_uniprot) and 
-#       minimum distance between the pos (markers) and middle point (anno_uniprot).
+#       minimum distance between the pos (markers) and start point (anno_uniprot).
 for(i in 1:nrow(annots)){
   
   ### Subset markers dataframe based on the chromosome of the i-th row in the anno_uniprot dataframe.
   submarkers <- subset(markers, chr == annots[i,'chr'])
   
   ### If there are no markers, store NA to the i-th row in the 'neareast.marker.id' column
-  #     else, store the marker ID with the minimum distance to the middle point.
+  #     else, store the marker ID with the minimum distance to the start point.
   
   if(nrow(submarkers) == 0){
     
-    annots[i,'nearest.marker.id'] <- NA   
+     annots[i,'nearest.marker.id'] <- NA   
     
   }else{
     
