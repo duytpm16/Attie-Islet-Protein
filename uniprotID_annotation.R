@@ -140,16 +140,16 @@ for(i in 1:nrow(annots)){
 ### Here I merge all rows with the same Uniprot IDs as one. If a Uniprot ID has multiple rows, 
 #     the value in each row for a particular column will be separated by ';'.
 annots <- annots %>% group_by(Majority.protein.IDs) %>%
-                     summarise(transcript_id = paste0(unique(transcript_id), collapse=";"),
-                                protein_id = paste0(unique(protein_id), collapse=";"),
-                                gene_id = paste0(unique(gene_id), collapse=";"),
-                                symbol = paste0(unique(symbol), collapse =";"),
-                                chr = paste0(unique(chr), collapse=";"),
-                                start = paste0(unique(start), collapse=";"),
-                                end = paste0(unique(end), collapse=";"),
-                                strand = paste0(unique(strand), collapse=";"),
-                                middle = paste0(unique(middle), collapse=";"),
-                                nearest.marker.id = paste0(unique(nearest.marker.id), collapse=";"))
+                     dplyr::summarise(transcript_id = paste0(unique(transcript_id), collapse=";"),
+                                      protein_id = paste0(unique(protein_id), collapse=";"),
+                                      gene_id = paste0(unique(gene_id), collapse=";"),
+                                      symbol = paste0(unique(symbol), collapse =";"),
+                                      chr = paste0(unique(chr), collapse=";"),
+                                      start = paste0(unique(start), collapse=";"),
+                                      end = paste0(unique(end), collapse=";"),
+                                      strand = paste0(unique(strand), collapse=";"),
+                                      middle = paste0(unique(middle), collapse=";"),
+                                      nearest.marker.id = paste0(unique(nearest.marker.id), collapse=";"))
 
 
 
