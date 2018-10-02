@@ -1,5 +1,5 @@
 ### This script takes in the raw protein abundance data file and normalizes 
-#     the data by imputing missing values using pca and comBat normalization.
+#     the data by imputing missing values using pca and comBat for normalization.
 #     Additionally, a samples dataframe is created by reading two additional files below.
 #
 ### Input:
