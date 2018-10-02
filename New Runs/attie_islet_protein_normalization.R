@@ -39,31 +39,31 @@ options(stringsAsFactors = FALSE)
 
 
 ### Variables to change
-#     1.) Prefix to describe the data 
+#     1.) Prefix to describe that describes the data and will be used to get files in the pipeline
 #     2.) sample annotation file for the data
 #     3.) Chr M and Y files.
 #         
 #     islet_protein_raw: 439 x 8239
 #     samples:           500 x 7
 #     chr:               498 x 5
-prefix <- "attie_islet_protein"
-raw <- read.table("~/Desktop/Attie Final/Islet/Proteins/DO_islet_proteomics_non_normalized.txt", sep = '\t', header = TRUE)
+prefix  <- "attie_islet_protein"
+raw     <- read.table("~/Desktop/Attie Final/Islet/Proteins/DO_islet_proteomics_non_normalized.txt", sep = '\t', header = TRUE)
 samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
 chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
 
 
 
 ### Variable names to store the data
-raw_file <- paste0(prefix,"_filtered_raw.rds")
-norm_file <- paste0(prefix,"_normalized.rds")
+raw_file     <- paste0(prefix,"_filtered_raw.rds")
+norm_file    <- paste0(prefix,"_normalized.rds")
 norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
-samples_file <-  paste0(prefix, "_samples_annot.rds")
+samples_file <- paste0(prefix, "_samples_annot.rds")
 
 
 
 ### Fixing the name of two columns: 1 in the samples and 1 in raw dataframe to match a data dictionary that will be used later in other scripts
 colnames(samples)[grep('wave', colnames(samples))] <- 'DOwave'
-colnames(raw)[grep('Batch', colnames(raw))] <- 'batch'
+colnames(raw)[grep('Batch', colnames(raw))]        <- 'batch'
 
 samples$Mouse.ID  <- gsub('-', '', samples$Mouse.ID)
 raw$Mouse.ID      <- gsub('-', '', raw$Mouse.ID)
@@ -86,7 +86,7 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 #       Number of controls: 64 with some duplicates
 #       Number of DOs: 375 with some duplicates (DO-174, DO-374)
 ctrl <- raw[grep("Std", raw$Mouse.ID),]
-raw <- raw[grep('DO', raw$Mouse.ID),]
+raw  <- raw[grep('DO', raw$Mouse.ID),]
 
 
 
@@ -111,7 +111,7 @@ samples = samples[keep,]
 
 
 ### Make row names the mouse ID
-rownames(raw) <- raw$Mouse.ID
+rownames(raw)     <- raw$Mouse.ID
 rownames(samples) <- samples$Mouse.ID
 colnames(samples)[grep('mouse.id', colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
@@ -122,7 +122,7 @@ colnames(samples)[grep('mouse.id', colnames(samples), ignore.case = TRUE)] <- 'm
 #
 #       raw: 373 x 5415
 raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","Injection_order","Plate_number","batch"))]
-raw <-  raw[,colSums(is.na(raw)) < .50 * nrow(raw)]
+raw <- raw[,colSums(is.na(raw)) < .50 * nrow(raw)]
 
 
 
@@ -188,7 +188,6 @@ rankZ = function(x) {
   x = rank(x, na.last = "keep", ties.method = "average") / (sum(!is.na(x)) + 1)
   return(qnorm(x))
 } # rankZ()
-
 
 
 data.rz = data.log
