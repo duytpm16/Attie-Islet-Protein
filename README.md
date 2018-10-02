@@ -1,4 +1,5 @@
 # Attie - Islet Protein, Lipid, and Metabolite Data Sets
+## R version 3.5.1
 
 QTL2 pipeline for the Attie Islet Protein and Cecum, Liver, and Plasma Lipid/Metabolite data.  
 
