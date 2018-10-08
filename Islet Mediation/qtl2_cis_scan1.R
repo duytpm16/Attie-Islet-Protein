@@ -116,7 +116,12 @@ cis_scan1 <- function(id, annots, genoprobs, pheno, kinship, addcovar, markers_d
       
       
       if(no.nearest.id){
-        return(list(annots = as.data.frame(annots), cis.lod = cis.lod))
+         return(list(annots = as.data.frame(annots), data.frame(id = ids, 
+                                                                id.symbol = annots$symbol, 
+                                                                chr = chr, 
+                                                                start = annots$start, 
+                                                                nearest.marker.id = nearest.marker, 
+                                                                cis.lod = cis.lod))
       
       }else{
         return(cis.lod)
