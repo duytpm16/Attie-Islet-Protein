@@ -83,7 +83,7 @@ rownames(samples) <- rownames(raw)
 
 
 
-### Log transformation of the liver lipids
+### Log transformation of the cecum lipids
 data.log = log(raw)
 
 
