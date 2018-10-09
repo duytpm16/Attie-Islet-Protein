@@ -97,7 +97,7 @@ rownames(samples) <- rownames(raw)
 
 
 ### Remove samples with more than 25% missing data.
-#     Initial dimension: 366 x 50
+#     Initial dimension: 366 x 500
 #     After dimensiom: 364 x 500
 prop.missing = rowMeans(is.na(raw))
 sum(prop.missing > 0.25)
