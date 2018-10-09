@@ -81,7 +81,7 @@ colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mo
 
 ### Removing columns that are not metabolite data except Mouse.ID column
 #       Inital Dimensions: 382 x 290
-#       After Dimensions: 382 x 284 / 283 without Mouse.ID column
+#       After Dimensions: 382 x 283 without Mouse.ID column
 raw <- raw[grep('DO', raw$Mouse.ID),]
 rownames(raw) <- raw$Mouse.ID
 raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","birthdate","sex","sac.date","coat.color","batch"))]
