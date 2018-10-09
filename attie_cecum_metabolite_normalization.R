@@ -77,7 +77,7 @@ samples <- merge(samples, chr_m_y[,c('Mouse.ID','generation','chrM','chrY')], by
 samples <- samples[,-grep('\\.x$',colnames(samples))]
 colnames(samples) <- gsub('\\.y$','',colnames(samples))
 colnames(samples) <- gsub('_','.',colnames(samples))
-
+colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
 
 ### Removing columns that are not phenotypes
