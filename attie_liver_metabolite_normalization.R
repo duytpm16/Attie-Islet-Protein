@@ -102,7 +102,7 @@ rownames(samples) <- rownames(raw)
 
 
 ### Log transformation of the liver metabolite abundance
-data.log = log(raw[,!(colnames(raw) %in% 'Mouse.ID')])
+data.log = log(raw)
 
 
 
