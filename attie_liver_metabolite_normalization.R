@@ -97,7 +97,7 @@ rownames(raw)[prop.missing > 0.25]
 
 ### 0 duplicates
 sum(duplicated(rownames(raw)))
-rownames(samples) <- rownames(raw)
+rownames(samples) <- samples$mouse.id
 
 
 
