@@ -28,10 +28,10 @@ library(sva)
 #      liver_lipid_raw: 419 x 1564
 #      samples: 500 x 7
 #      chr_m_y: 498 x 5
-prefix <- '~/Desktop/Attie/Lipids/Liver_Lipids/attie_liver_lipid'
-raw <- read.delim("~/Desktop/Attie/Lipids/Liver_Lipids/03_January_2018_DO_Liver_Lipidomics_Raw.txt")
-samples <- read.delim('~/Desktop/Attie/attie_DO_sample_annot.txt')
-chr_m_y <- read.csv("~/Desktop/Attie/attie_sample_info_ChrM_Y.csv")
+prefix <- '~/Desktop/Attie Final/Lipids/Liver/attie_liver_lipid'
+raw <- read.delim("~/Desktop/Attie Final/Lipids/Liver/03_January_2018_DO_Liver_Lipidomics_Raw.txt")
+samples <- read.delim('~/Desktop/Attie Final/attie_DO_sample_annot.txt')
+chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv")
 
 
 
