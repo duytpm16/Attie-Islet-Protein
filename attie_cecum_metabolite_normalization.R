@@ -40,10 +40,10 @@ options(stringsAsFactors = FALSE)
 #     Cecum metabolites raw: 366 x 507
 #     samples: 500 x 7
 #     chr: 498 x 5
-prefix <- 'attie_cecum_metabolite'
-raw <- read.delim("~/Desktop/Attie/Metabolites/Cecum_Metabolites/FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt")
-samples <- read.table("~/Desktop/Attie/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
-chr_m_y <- read.csv("~/Desktop/Attie/attie_sample_info_ChrM_Y.csv") 
+prefix <- '~/Desktop/Attie Final/Metabolites/Cecum/attie_cecum_metabolite'
+raw <- read.delim("~/Desktop/Attie Final/Metabolites/Cecum/FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt")
+samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
+chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
 
 
 ### Variables to store the data
