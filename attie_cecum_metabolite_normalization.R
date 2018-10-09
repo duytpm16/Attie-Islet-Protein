@@ -74,8 +74,8 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 samples <- merge(samples, raw[,c("Mouse.ID","DOwave","birthdate","sex","sac.date","coat.color","batch")], 
                  by = "Mouse.ID")
 samples <- merge(samples, chr_m_y[,c('Mouse.ID','generation','chrM','chrY')], by = "Mouse.ID")
-samples <- samples[,-grep('\\.x$',colnames(samples))]
-colnames(samples) <- gsub('\\.y$','',colnames(samples))
+samples <- samples[,-grep('\\.y$',colnames(samples))]
+colnames(samples) <- gsub('\\.x$','',colnames(samples))
 colnames(samples) <- gsub('_','.',colnames(samples))
 colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
