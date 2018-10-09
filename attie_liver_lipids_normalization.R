@@ -87,7 +87,7 @@ raw["DO373",] <- DO373[1,]
 ### 0 NAs and duplicates 
 sum(is.na(raw))
 sum(duplicated(rownames(raw)))
-rownames(samples) <- rownames(raw)
+rownames(samples) <- samples$mouse.id
 
 
 ### Log transformation of the liver lipids
