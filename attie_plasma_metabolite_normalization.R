@@ -102,7 +102,8 @@ raw = raw[keep,]
 samples = samples[keep,]
 
 
-### Log transformation of the protien abundance
+
+### Log transformation of the plasma metabolite abundance
 data.log = log(raw[,!(colnames(raw) %in% 'Mouse.ID')])
 
 
