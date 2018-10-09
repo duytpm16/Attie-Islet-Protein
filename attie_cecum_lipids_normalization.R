@@ -28,7 +28,7 @@ library(pcaMethods)
 #      samples: 500 x 7
 #      chr_m_y: 498 x 5
 prefix <- '~/Desktop/Attie Final/Lipids/Cecum/attie_cecum_lipid'
-raw <- read.delim("~/Desktop/Attie Final/Lipids/Cecum/cecum_Lipids/03_January_2018_DO_Cecum_Lipidomics_Raw.txt")
+raw <- read.delim("~/Desktop/Attie Final/Lipids/Cecum/03_January_2018_DO_Cecum_Lipidomics_Raw.txt")
 samples <- read.delim('~/Desktop/Attie Final/attie_DO_sample_annot.txt')
 chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv")
 
