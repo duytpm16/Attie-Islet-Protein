@@ -18,6 +18,10 @@
 ### Date:   July 10, 2018
 ### E-mail: duy.pham@jax.org
 #####################################################################
+options(stringsAsFactors)
+library(pcaMethods)
+library(sva)
+
 
 
 ### Variables to change
@@ -48,8 +52,8 @@ colnames(raw)[grep('batch', colnames(raw), ignore.case = TRUE)] <- 'batch'
 raw$Mouse.ID <- gsub('-', '', raw$Mouse.ID)
 samples$Mouse.ID <- gsub('-', '', samples$Mouse.ID)
 chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
-
 colnames(samples) <- gsub('_','.',colnames(samples))
+
 
 
 ### Preparing samples dataframe
@@ -62,6 +66,7 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
 
+
 ### Removing controls from raw dataframe and removing non-phenotype columns (except Mouse.ID):
 #     Initial dimensions: 439 x 1564
 #     After removing controls: 384 x 1564
@@ -72,7 +77,7 @@ raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","batch"))]
 
 
 
-### Swapping DO 343/373
+### Swapping DO 343/373 as suggested by the Coon lab.
 DO343 <- raw["DO373",]
 DO373 <- raw["DO343",]
 raw["DO343",] <- DO343[1,]
@@ -162,9 +167,3 @@ saveRDS(raw, raw_file)
 saveRDS(data.log, norm_file)
 saveRDS(data.rz, norm_rz_file)
 saveRDS(samples, samples_file)
-
-
-
-### Remove other data
-rm(chr_m_y,data.cb,mod,pc.data,batch,chg,dupl,i,rankZ, DO343, DO373,
-   iter,keep,miss,prop.missing,sample,unique.samples, data.compl, wh, norm_file, norm_rz_file, raw_file, samples_file, prefix)
