@@ -79,7 +79,7 @@ raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","batch"))]
 ### 0 NAs and duplicates 
 sum(is.na(raw))
 sum(duplicated(rownames(raw)))
-rownames(samples) <- rownames(raw)
+rownames(samples) <- samples$mouse.id
 
 
 
