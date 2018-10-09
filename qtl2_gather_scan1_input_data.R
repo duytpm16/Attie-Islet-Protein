@@ -17,7 +17,7 @@
 #     6.) display.name: Name to display on QTL viewer
 #
 ### Output:
-#     1.) Rdata file of all data above
+#     1.) .RData file of all data above
 # 
 ### Author: Duy Pham and Dan Gatti
 ### Date:   July 11, 2018
@@ -136,6 +136,19 @@ covar <- model.matrix(f, data = samples)[,-1]
 
 ### Calculate kinship matrix.
 K = calc_kinship(probs = genoprobs, type = "loco", quiet = FALSE, cores = 4)
+
+
+
+### Make sure rownames match for qtl2
+stopifnot(rownames(raw) == rownames(norm))
+stopifnot(rownames(raw) == rownames(rankz))
+stopifnot(rownames(raw) == rownames(samples))
+stopifnot(rownames(raw) == rownames(covar))
+for(i in 1:length(K)){
+    stopifnot(rownames(raw) == rownames(K[[i]]))
+    stopifnot(rownames(raw) == rownames(genoprobs[[i]]))
+}
+
 
 
 
