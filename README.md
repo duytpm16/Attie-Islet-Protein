@@ -15,7 +15,7 @@ Be consistent with the ___prefix___ variable. Use the same ___prefix___ in the n
   
 ### 1. Filter and Normalization. 
 Filter the raw data as needed. (Ex. remove data with _x_ number of _NAs_)  
-Input missing values by PCA and normalize the data by comBat.  
+Input missing values by PCA and normalize the data by comBat, then put back NAs
   
 Modify the _normalization.R_ file to save 4 output rds files:  
  1. _prefix_samples_annotation.rds_   
