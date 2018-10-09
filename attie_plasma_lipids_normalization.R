@@ -49,8 +49,8 @@ colnames(raw)[grep('batch', colnames(raw), ignore.case = TRUE)] <- 'batch'
 raw$Mouse.ID <- gsub('-', '', raw$Mouse.ID)
 samples$Mouse.ID <- gsub('-', '', samples$Mouse.ID)
 chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
-
 colnames(samples) <- gsub('_','.',colnames(samples))
+
 
 
 ### Preparing samples dataframe
@@ -63,6 +63,7 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
 
+
 ### Removing controls from raw dataframe and removing non-phenotype columns (except Mouse.ID):
 #     Initial dimensions: 419 x 1733
 #     After removing controls: 384 x 1733
@@ -70,7 +71,6 @@ colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mo
 raw <- raw[grep('DO', raw$Mouse.ID),]
 rownames(raw) <- raw$Mouse.ID
 raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","batch"))]
-
 
 
 
