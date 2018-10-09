@@ -63,8 +63,8 @@ colnames(raw)[grep('batch', colnames(raw), ignore.case = TRUE)] <- 'batch'
 raw$Mouse.ID <- gsub('-', '', raw$Mouse.ID)
 samples$Mouse.ID <- gsub('-', '', samples$Mouse.ID)
 chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
-
 colnames(samples) <- gsub('_','.',colnames(samples))
+
 
 
 ### Preparing samples dataframe
@@ -76,7 +76,6 @@ samples <- merge(samples, raw[,c("Mouse.ID","DOwave","birthdate","sex","sac.date
 samples <- merge(samples, chr_m_y[,c('Mouse.ID','generation','chrM','chrY')], by = "Mouse.ID")
 samples <- samples[,-grep('\\.x$',colnames(samples))]
 colnames(samples) <- gsub('\\.y$','',colnames(samples))
-
 colnames(samples) <- gsub('_','.',colnames(samples))
 
 
@@ -88,6 +87,12 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 raw <- raw[grep('DO', raw$Mouse.ID),]
 rownames(raw) <- raw$Mouse.ID
 raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","birthdate","sex","sac.date","coat.color","batch"))]
+
+
+
+### 0 duplicates
+sum(duplicated(rownames(raw)))
+rownames(samples) <- rownames(raw)
 
 
 
@@ -104,9 +109,6 @@ raw = raw[keep,]
 samples = samples[keep,]
 
 
-### 0 duplicates
-sum(duplicated(rownames(raw)))
-rownames(samples) <- rownames(raw)
 
 ### Log transformation of the cecum metabolite
 data.log = log(raw)
@@ -155,7 +157,7 @@ if(sum(is.na(raw) > 0)){
       iter = iter + 1    
       
     }else{
-      
+      data.cb[miss] = NA
       data.log = data.cb
       break
       
