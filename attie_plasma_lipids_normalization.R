@@ -64,7 +64,7 @@ colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mo
 
 
 ### Removing controls from raw dataframe and removing non-phenotype columns (except Mouse.ID):
-#     Initial dimensions: 439 x 1733
+#     Initial dimensions: 419 x 1733
 #     After removing controls: 384 x 1733
 #     After removing non-phenotype columns: 384 x 1733
 raw <- raw[grep('DO', raw$Mouse.ID),]
