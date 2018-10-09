@@ -100,11 +100,11 @@ rownames(raw)[prop.missing > 0.25]
 keep = which(prop.missing < 0.25)
 raw = raw[keep,]
 samples = samples[keep,]
-
+rownames(samples) <- rownames(raw)
 
 
 ### Log transformation of the plasma metabolite abundance
-data.log = log(raw[,!(colnames(raw) %in% 'Mouse.ID')])
+data.log = log(raw)
 
 
 
