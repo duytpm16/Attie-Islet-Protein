@@ -18,6 +18,9 @@
 ### Date:   July 10, 2018
 ### E-mail: duy.pham@jax.org
 #####################################################################
+options(stringsAsFactors = FALSE)
+library(sva)
+library(pcaMethods)
 
 
 ### Variables to change
@@ -48,8 +51,8 @@ colnames(raw)[grep('batch', colnames(raw), ignore.case = TRUE)] <- 'batch'
 raw$Mouse.ID <- gsub('-', '', raw$Mouse.ID)
 samples$Mouse.ID <- gsub('-', '', samples$Mouse.ID)
 chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
-
 colnames(samples) <- gsub('_','.',colnames(samples))
+
 
 
 ### Preparing samples dataframe
@@ -62,6 +65,7 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
 
+
 ### Removing controls from raw dataframe and removing non-phenotype columns:
 #     Initial dimensions: 432 x 3373
 #     After removing controls: 381 x 3371
@@ -71,10 +75,12 @@ rownames(raw) <- raw$Mouse.ID
 raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","batch"))]
 
 
+
 ### 0 NAs and duplicates 
 sum(is.na(raw))
 sum(duplicated(rownames(raw)))
 rownames(samples) <- rownames(raw)
+
 
 
 ### Log transformation of the liver lipids
@@ -136,6 +142,7 @@ if(sum(is.na(raw) > 0)){
 }
 
 
+
 ### Rank Z of normalized data.
 rankZ = function(x) {
   x = rank(x, na.last = "keep", ties.method = "average") / (sum(!is.na(x)) + 1)
@@ -147,6 +154,7 @@ data.rz = data.log
 for(i in 1:ncol(data.rz)) {
   data.rz[,i] = rankZ(data.rz[,i])
 }
+
 
 
 ### Saving the data to current working directory
