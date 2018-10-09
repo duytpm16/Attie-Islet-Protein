@@ -63,8 +63,8 @@ colnames(raw)[grep('\\batch$', colnames(raw), ignore.case = TRUE)] <- 'batch'
 raw$Mouse.ID <- gsub('-', '', raw$Mouse.ID)
 samples$Mouse.ID <- gsub('-', '', samples$Mouse.ID)
 chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
-
 colnames(samples) <- gsub('_','.',colnames(samples))
+
 
 
 ### Preparing samples dataframe
@@ -76,15 +76,19 @@ samples <- merge(samples, raw[,c("Mouse.ID","DOwave","birthdate","sex","sac.date
 samples <- merge(samples, chr_m_y[,c('Mouse.ID','generation','chrM','chrY')], by = "Mouse.ID")
 samples <- samples[,-grep('\\.x$',colnames(samples))]
 colnames(samples) <- gsub('\\.y$','',colnames(samples))
-
 colnames(samples) <- gsub('_','.',colnames(samples))
+colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
 
 
 ### Removing column that are not metabolite data
 #     Inital dimensions: 380 x 342
 #     After dimensions: 380 x 336 / 335 without Mouse.ID
-raw <- raw[,!(colnames(raw) %in% c("DOwave","birthdate","sex","sac.date","coat.color","batch"))]
+raw <- raw[grep('DO', raw$Mouse.ID),]
+rownames(raw) <- raw$Mouse.ID
+raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","birthdate","sex","sac.date","coat.color","batch"))]
+
+
 
 ### Remove samples with more than 25% missing data.
 #     Initial Dimensions: 380 x 336
@@ -145,6 +149,7 @@ if(sum(is.na(raw) > 0)){
       
     }else{
       
+      data.cb[miss] = NA
       data.log = data.cb
       break
       
