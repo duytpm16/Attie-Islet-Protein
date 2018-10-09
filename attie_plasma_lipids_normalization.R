@@ -25,10 +25,10 @@
 #      plasma_lipids_raw: 419 x 1735
 #      samples: 500 x 7
 #      chr_m_y: 498 x 5
-prefix <- '~/Desktop/Attie/Lipids/plasma_Lipids/attie_plasma_lipid'
-raw <- read.delim("~/Desktop/Attie/Lipids/Plasma_Lipids/03_January_2018_DO_Plasma_Lipidomics_Raw.txt")
-samples <- read.delim('~/Desktop/Attie/attie_DO_sample_annot.txt')
-chr_m_y <- read.csv("~/Desktop/Attie/attie_sample_info_ChrM_Y.csv")
+prefix <- '~/Desktop/Attie Final/Lipids/Plasma/attie_plasma_lipid'
+raw <- read.delim("~/Desktop/Attie Final/Lipids/Plasma/03_January_2018_DO_Plasma_Lipidomics_Raw.txt")
+samples <- read.delim('~/Desktop/Attie Final/attie_DO_sample_annot.txt')
+chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv")
 
 
 
