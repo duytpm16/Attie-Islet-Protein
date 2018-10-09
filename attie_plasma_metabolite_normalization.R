@@ -40,10 +40,10 @@ options(stringsAsFactors = FALSE)
 #     plasma_metbaolite_raw: 380 x 342
 #     samples: 500 x 7
 #     chr: 498 x 5
-prefix <- 'attie_plasma_metabolite'
-raw <- read.delim("~/Desktop/Attie/Metabolites/Plasma_Metabolites/FilterdbyR_DOPlasmaMetbolites_BatchandCovariatesAppended.txt")
-samples <- read.table("~/Desktop/Attie/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
-chr_m_y <- read.csv("~/Desktop/Attie/attie_sample_info_ChrM_Y.csv") 
+prefix <- '~/Desktop/Attie Final/Metabolites/Plasma/attie_plasma_metabolite'
+raw <- read.delim("~/Desktop/Attie Final/Metabolites/Plasma/FilterdbyR_DOPlasmaMetbolites_BatchandCovariatesAppended.txt")
+samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
+chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
 
 
 ### Variables to store the data
