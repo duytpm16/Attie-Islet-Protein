@@ -75,7 +75,7 @@ for(i in 1:ncol(pheno.dict)){
   pheno.dict[!pheno.dict$is_pheno,i] <- gsub('_','.', pheno.dict[!pheno.dict$is_pheno,i])
 }
 pheno.dict[pheno.dict == 'Mouse.ID'] <- 'mouse.id'
-samples <- samples[,match(colnames(samples), pheno.dict[!pheno.dict$is_pheno, 'data_name'])]
+samples <- samples[,match(pheno.dict[!pheno.dict$is_pheno, 'data_name'], colnames(samples))]
 
 
 
@@ -144,6 +144,7 @@ stopifnot(rownames(raw) == rownames(norm))
 stopifnot(rownames(raw) == rownames(rankz))
 stopifnot(rownames(raw) == rownames(samples))
 stopifnot(rownames(raw) == rownames(covar))
+stopifnot(length(K) == length(genoprobs))
 for(i in 1:length(K)){
     stopifnot(rownames(raw) == rownames(K[[i]]))
     stopifnot(rownames(raw) == rownames(genoprobs[[i]]))
