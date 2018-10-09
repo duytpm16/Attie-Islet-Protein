@@ -63,7 +63,6 @@ colnames(raw)[grep('\\batch$', colnames(raw), ignore.case = TRUE)] <- 'batch'
 raw$Mouse.ID <- gsub('-', '', raw$Mouse.ID)
 samples$Mouse.ID <- gsub('-', '', samples$Mouse.ID)
 chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
-
 colnames(samples) <- gsub('_','.',colnames(samples))
 
 
@@ -76,27 +75,24 @@ samples <- merge(samples, raw[,c("Mouse.ID","DOwave","birthdate","sex","sac.date
 samples <- merge(samples, chr_m_y[,c('Mouse.ID','generation','chrM','chrY')], by = "Mouse.ID")
 samples <- samples[,-grep('\\.x$',colnames(samples))]
 colnames(samples) <- gsub('\\.y$','',colnames(samples))
-
 colnames(samples) <- gsub('_','.',colnames(samples))
-
+colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
 
 ### Removing columns that are not metabolite data except Mouse.ID column
 #       Inital Dimensions: 382 x 290
 #       After Dimensions: 382 x 284 / 283 without Mouse.ID column
-raw <- raw[,!(colnames(raw) %in% c("DOwave","birthdate","sex","sac.date","coat.color","batch"))]
+raw <- raw[grep('DO', raw$Mouse.ID),]
+rownames(raw) <- raw$Mouse.ID
+raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","birthdate","sex","sac.date","coat.color","batch"))]
 
 
 
-# Remove samples with more than 25% missing data.
+# Remove samples with more than 25% missing data. There were no samples with more than .25% NAs.
 prop.missing = rowMeans(is.na(raw))
 sum(prop.missing > 0.25)
 rownames(raw)[prop.missing > 0.25]
 
-# None!
-#keep = which(prop.missing < 0.25)
-#data = data[keep,]
-#annot = annot[keep,]
 
 
 ### 0 duplicates
@@ -105,7 +101,7 @@ rownames(samples) <- rownames(raw)
 
 
 
-### Log transformation of the protien abundance
+### Log transformation of the liver metabolite abundance
 data.log = log(raw[,!(colnames(raw) %in% 'Mouse.ID')])
 
 
