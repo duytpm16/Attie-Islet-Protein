@@ -18,7 +18,7 @@
 ### Date:   July 10, 2018
 ### E-mail: duy.pham@jax.org
 #####################################################################
-options(stringsAsFactors)
+options(stringsAsFactors = FALSE)
 library(pcaMethods)
 library(sva)
 
