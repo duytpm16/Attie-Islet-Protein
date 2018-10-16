@@ -1,4 +1,4 @@
-### How I automatically generate x number of scripts to qsub.
+### How I automatically generate x number of scripts to qsub for the sparse_qtl_scan.R
 #       Don't need the #PBS lines.
 
 #PBS -l nodes=1:ppn=4
