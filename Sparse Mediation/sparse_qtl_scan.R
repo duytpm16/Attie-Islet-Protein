@@ -6,12 +6,18 @@ load('attie_islet_284_qtl_viewer.RData')
 
 
 
+
+
 ### Arguments. Number and size to break target and mediator into chunks
 args = commandArgs(trailingOnly = TRUE)
 targ.chunk_number = as.numeric(args[1])
 targ.chunk_size = as.numeric(args[2])
 med.chunk_number = as.numeric(args[3])
 med.chunk_size = as.numeric(args[4])
+
+
+
+
 
 
 
@@ -24,20 +30,27 @@ stopifnot(colnames(rankz.protein) == annot.protein$protein_id)
 
 
 
+
+
 ### Chunk Range
 # Get chunk range for mediator
 max_col = nrow(annot.protein)
 med.rng = ((med.chunk_number - 1) * med.chunk_size + 1):(med.chunk_number * med.chunk_size)
 if(med.rng[length(med.rng)] > max_col) {
- med.rng = med.rng[1]:max_col
+   med.rng = med.rng[1]:max_col
 }
 
 # Get chunk range for target
 max_col = nrow(annot.protein)
 targ.rng = ((targ.chunk_number - 1) * targ.chunk_size + 1):(targ.chunk_number * targ.chunk_size)
 if(targ.rng[length(targ.rng)] > max_col) {
- targ.rng = targ.rng[1]:max_col
+   targ.rng = targ.rng[1]:max_col
 }
+
+
+
+
+
 
 
 ### Extract mediator and target data
