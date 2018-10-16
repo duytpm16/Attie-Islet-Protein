@@ -91,7 +91,7 @@ marker.id <- paste0(as.character(lod.peaks$chr), '_', round(lod.peaks$pos * 1000
 annot.id <- lod.peaks[,'lodcolumn']
 lod.peaks <- cbind(annot.id, marker.id, lod.peaks[,c('lod','chr','pos')])
 colnames(lod.peaks) <- c('annot.id','marker.id','lod','qtl.chr','qtl.pos')
-lod.peaks$chr <- as.character(lod.peaks$qtl.chr)
+lod.peaks$qtl.chr <- as.character(lod.peaks$qtl.chr)
 
 
 
