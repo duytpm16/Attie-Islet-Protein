@@ -77,6 +77,10 @@ target.start <- target.annot$start
 sparse_data <- data.frame()
 
 
+
+
+
+
 ### QTL scan begins
 for(i in 1:nrow(target.annot)){
  
