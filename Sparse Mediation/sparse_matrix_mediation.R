@@ -48,9 +48,10 @@ inverse.mediation.lod <- numeric(length = n)
 
 
 
-
+### Mediation Begin
 for(i in 1:nrow(sparse_matrix)){
         
+        # Extracting data
         targ.pheno = rankz.protein[,target.id[i], drop = FALSE]
         med.pheno = rankz.protein[,mediator.id[i], drop = FALSE]
         kin = K[[mediator.chr[i]]]
@@ -62,8 +63,6 @@ for(i in 1:nrow(sparse_matrix)){
         
         
         
-        
-        ### Mediation Analyis
         # Find best causalMST method: best overall model and pvalue, and best triad and triad pvalue (no undecided)
         best.MST <- mediation_test(target = targ.pheno,
                                    mediator = med.pheno,
