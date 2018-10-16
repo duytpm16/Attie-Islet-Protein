@@ -1,4 +1,9 @@
 # QTL mediation of Attie DO Islet 284 
  
 This directory contains scripts to perform mediation analysis on DO mice that have both protein and RNA expressions. 
-A sparse matrix is first created, which will be used to create a binary matrix of 0 and 1.
+A sparse matrix is first created which contains mediation results from the intermediate package. 
+ 
+https://github.com/byandell/intermediate 
+ 
+ 
+A binary matrix of 0 and 1 will be created from the sparse matrix. (To be determined)
