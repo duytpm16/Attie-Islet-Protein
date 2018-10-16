@@ -85,7 +85,8 @@ for(i in 1:nrow(target.annot)){
  
     for(j in 1:nrow(mediator.annot)){ 
         # Get overlapping samples in target and mediator data ( No NAs)
-        overlap.samples <- cbind(target = rankz.protein[,target.id[i], drop = FALSE], mediator = rankz.protein[,mediator.id[j], drop = FALSE])      
+        overlap.samples <- cbind(target = rankz.protein[,target.id[i], drop = FALSE], 
+                                 mediator = rankz.protein[,mediator.id[j], drop = FALSE])      
         overlap.samples <- overlap.samples[complete.cases(overlap.samples),]
         colnames(overlap.samples) <- c(target.id[i], mediator.id[j])
         sample.size <- nrow(overlap.samples)
@@ -100,7 +101,8 @@ for(i in 1:nrow(target.annot)){
         # Mediator QTL scan
         gp = genoprobs[,mediator.chr[j]]
         gp[[1]] = gp[[1]][,,temp$marker, drop = FALSE]
-        mediator.qtl <- scan1(gp, pheno = overlap.samples[,mediator.id[j], drop = FALSE], kinship = K[[mediator.chr[[j]]]], addcovar = covar.protein, cores = 4)
+        mediator.qtl <- scan1(gp, pheno = overlap.samples[,mediator.id[j], drop = FALSE], 
+                              kinship = K[[mediator.chr[[j]]]], addcovar = covar.protein, cores = 4)
       
         # Find mediator's best marker (Highest LOD within 4Mbps of the start position)
         max_qtl <- max_scan1(mediator.qtl, map = map)
