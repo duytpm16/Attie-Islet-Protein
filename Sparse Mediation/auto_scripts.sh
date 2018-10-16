@@ -1,3 +1,6 @@
+### How I automatically generate x number of scripts to qsub.
+#       Don't need the #PBS lines.
+
 #PBS -l nodes=1:ppn=4
 #PBS -q batch
 #PBS -l walltime=72:00:00
