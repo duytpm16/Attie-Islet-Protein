@@ -80,6 +80,10 @@ for(i in 1:nrow(sparse_matrix)){
         
         
         
+        
+        
+        
+        
         # Mediation
         mediation.lod[i] <- mediation_scan(target = targ.pheno,
                                            mediator = med.pheno,
@@ -89,6 +93,12 @@ for(i in 1:nrow(sparse_matrix)){
                                            annotation = med.annot,
                                            method = 'double-lod-diff',
                                            index_name = 'start')$lod
+        
+        
+        
+        
+        
+        
         
         # Inverse Mediation
         inverse.mediation.lod[i] <- mediation_scan(target = med.pheno,
@@ -105,6 +115,8 @@ for(i in 1:nrow(sparse_matrix)){
     
 }
 
+
+### Cbind data together and save as .rds file
 sparse_matrix <- cbind(sparse_matrix, mediation.lod, inverse.mediation.lod, best.model, best.p, best.triad, best.triad.p)
 saveRDS(sparse_matrix, file = paste0('attie_islet_protein_sparse_matrix_chunk_',args[1],'.rds'))
 
