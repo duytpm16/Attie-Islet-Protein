@@ -74,7 +74,7 @@ target.start <- target.annot$start
 
 ### Create empty data.frame to store target id, mediator id, mediator chromosome, mediator's best marker, 
 #                                    sample size, target LOD and mediator LOD at mediator's best marker.
-sparse_data <- data.frame()
+sparse_data <- as.data.frame(matrix(NA, nrow = nrow(target.annot) * nrow(mediator.annot) , ncol = 9))
 
 
 
@@ -85,7 +85,7 @@ sparse_data <- data.frame()
 for(i in 1:nrow(target.annot)){
  
     # Create temporary empty data frame
-    info_data <- as.data.frame(matrix(NA, nrow = nrow(mediator.annot) , ncol = 9))
+    index <- index <- ((i - 1) * med.chunk_size + 1):(i * med.chunk_size)
  
     for(j in 1:nrow(mediator.annot)){ 
         # Get overlapping samples in target and mediator data ( No NAs)
@@ -143,11 +143,11 @@ for(i in 1:nrow(target.annot)){
      
      
         # Store the results
-        info_data[j,1:9] <- c(target.id[i], mediator.id[j], mediator.chr[j], max_marker, sample.size,
-                              target.lod, mediator.lod, pearson.cor, spearman.cor)
+        sparse_data[index[j],1:9] <- c(target.id[i], mediator.id[j], mediator.chr[j], max_marker, sample.size,
+                                       target.lod, mediator.lod, pearson.cor, spearman.cor)
     
   }
-  sparse_data <- bind_rows(sparse_data, info_data)
+  
   print(i)
   
 }
@@ -157,7 +157,9 @@ for(i in 1:nrow(target.annot)){
 
 
 ### Fixing colnames and columns that should be numeric
-colnames(sparse_data) <- c('target.id', 'mediator.id', 'chr', 'marker.id', 'target.lod', 'mediator.lod', 'pearson', 'spearman')
+colnames(sparse_data) <- c('target.id', 'mediator.id', 'chr', 'marker.id', 'sample.size',
+                           'target.lod', 'mediator.lod', 'pearson', 'spearman')
+
 sparse_data[,c(5,6,7,8,9)] <- apply(sparse_data[,c(5,6,7,8,9)], 2, as.numeric)
 
 
