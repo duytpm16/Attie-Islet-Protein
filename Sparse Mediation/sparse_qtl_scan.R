@@ -87,65 +87,51 @@ for(i in 1:nrow(target.annot)){
  
     # Create temporary index 
     index <- index <- ((i - 1) * med.chunk_size + 1):(i * med.chunk_size)
- 
+    target.name <- target.id[i]
+   
+   
     for(j in 1:nrow(mediator.annot)){ 
+        
+        current.mediator <- mediator.id[j]
+        current.mediator.chr <- mediator.chr[j]
+        kin <- K[[current.mediator.chr]]
+       
+       
+       
         # Get overlapping samples in target and mediator data ( No NAs)
-        overlap.samples <- cbind(target = rankz.protein[,target.id[i], drop = FALSE], 
-                                 mediator = rankz.protein[,mediator.id[j], drop = FALSE])      
+        # Get overlapping samples in target and mediator data
+        overlap.samples <- cbind(rankz.protein[,target.name], rankz.protein[,current.mediator])      
         overlap.samples <- overlap.samples[complete.cases(overlap.samples),]
-        colnames(overlap.samples) <- c(target.id[i], mediator.id[j])
-        sample.size <- nrow(overlap.samples)
-    
-    
+
+
         # Find markers within 4Mbps of mediator start position
-        temp <- subset(markers, markers$chr == mediator.chr[j] & abs(markers$pos - mediator.start[j]) <= 4)
-    
-    
-    
-        ### QTL scan 
-        # Mediator QTL scan
-        gp = genoprobs[,mediator.chr[j]]
+        temp <- subset(markers, markers$chr == current.mediator.chr & abs(markers$pos - mediator.start[j]) <= 4)
+
+
+
+        ### QTL scan on mediator markers
+        gp = genoprobs[,current.mediator.chr] 
         gp[[1]] = gp[[1]][,,temp$marker, drop = FALSE]
-        mediator.qtl <- scan1(gp, pheno = overlap.samples[,mediator.id[j], drop = FALSE], 
-                              kinship = K[[mediator.chr[[j]]]], addcovar = covar.protein, cores = 4)
-      
-        # Find mediator's best marker (Highest LOD within 4Mbps of the start position)
+        mediator.qtl <- scan1(gp, pheno = overlap.samples[,2, drop = FALSE], kinship = kin, addcovar = covar.protein, cores = 4)
+
+
+        # Find maximum marker position and ID
         max_qtl <- max_scan1(mediator.qtl, map = map)
         max_marker <- rownames(max_qtl)
+
+
         gp[[1]] = gp[[1]][,,max_marker, drop = FALSE]
-     
-     
-     
-     
-     
         # QTL scan on target at mediator's best marker
-        target.qtl <- scan1(gp, pheno = overlap.samples[,target.id[i],drop = FALSE], kinship = K[[mediator.chr[j]]], addcovar = covar.protein, cores = 4)
-    
-        
-     
-     
-     
-     
-        # Store LOD scores
-        target.lod <- target.qtl[max_marker,]
-        mediator.lod <- mediator.qtl[max_marker,]
-    
-    
-    
-     
-     
-     
-        # Compute pearson and spearman correlation between the target and mediator
-        pearson.cor <- cor(overlap.samples)[1,2]
-        spearman.cor <- cor(overlap.samples, method = 'spearman')[1,2]
-    
-    
-     
+        target.qtl <- scan1(gp, pheno = overlap.samples[,1,drop = FALSE], kinship = kin, addcovar = covar.protein, cores = 4)
+
+
      
      
         # Store the results
-        sparse_data[index[j],1:9] <- c(target.id[i], mediator.id[j], mediator.chr[j], max_marker, sample.size,
-                                       target.lod, mediator.lod, pearson.cor, spearman.cor)
+        sparse_data[index[j],1:9] <- c(target.id[i], mediator.id[j], mediator.chr[j],               # Save IDs 
+                                       max_marker, nrow(overlap.samples),                           # Save mediator's best marker and sample size
+                                       target.qtl[1,1], mediator.qtl[max_marker,],                  # Save LOD scores at mediator's best marker
+                                       cor(overlap.samples)[1,2], cor(overlap.samples, method = 'spearman')[1,2])  # Save pearson and spearman correlations
     
   }
   
