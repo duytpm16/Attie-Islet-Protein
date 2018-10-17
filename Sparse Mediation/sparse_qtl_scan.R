@@ -73,7 +73,8 @@ target.start <- target.annot$start
 
 
 ### Create empty data.frame to store target id, mediator id, mediator chromosome, mediator's best marker, 
-#                                    sample size, target LOD and mediator LOD at mediator's best marker.
+#                                    sample size, target LOD and mediator LOD at mediator's best marker, and
+#                                    pearson and spearman correlations.
 sparse_data <- as.data.frame(matrix(NA, nrow = nrow(target.annot) * nrow(mediator.annot) , ncol = 9))
 
 
