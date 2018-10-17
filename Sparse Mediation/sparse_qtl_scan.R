@@ -84,7 +84,7 @@ sparse_data <- as.data.frame(matrix(NA, nrow = nrow(target.annot) * nrow(mediato
 ### QTL scan begins
 for(i in 1:nrow(target.annot)){
  
-    # Create temporary empty data frame
+    # Create temporary index 
     index <- index <- ((i - 1) * med.chunk_size + 1):(i * med.chunk_size)
  
     for(j in 1:nrow(mediator.annot)){ 
