@@ -128,7 +128,7 @@ for(i in 1:nrow(target.annot)){
      
      
         # Store the results
-        sparse_data[index[j],1:9] <- c(target.id[i], mediator.id[j], mediator.chr[j],               # Save IDs 
+        sparse_data[index[j],1:9] <- c(target.name, current.mediator, current.mediator.chr,               # Save IDs 
                                        max_marker, nrow(overlap.samples),                           # Save mediator's best marker and sample size
                                        target.qtl[1,1], mediator.qtl[max_marker,],                  # Save LOD scores at mediator's best marker
                                        cor(overlap.samples)[1,2], cor(overlap.samples, method = 'spearman')[1,2])  # Save pearson and spearman correlations
