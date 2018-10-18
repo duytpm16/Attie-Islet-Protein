@@ -197,4 +197,4 @@ sparse_data <- cbind(target_and_mediator, best.marker, sample.size, pearson, spe
 
 
 ### Save data as .rds file
-#saveRDS(sparse_data, file = paste0('attie_islet_protein_mrna_sparse_matrix_chunk_',args[1],'_',args[3],'.rds'))
+saveRDS(sparse_data, file = paste0('attie_islet_protein_mrna_sparse_matrix_chunk_',args[1],'_',args[3],'.rds'))
