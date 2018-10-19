@@ -132,8 +132,8 @@ for(i in 1:nrow(target_and_mediator)){
       
       
     # Find maximum marker position and ID
-    max_qtl <- max_scan1(mediator.qtl, map = map)
-    max_marker <- rownames(max_qtl)
+    max_marker <- rownames(max_scan1(mediator.qtl, map = map))
+     
       
       
     gp[[1]] = gp[[1]][,,max_marker, drop = FALSE]
