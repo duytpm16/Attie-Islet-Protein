@@ -31,6 +31,10 @@ annot.targ <- get(targ)$annots
 annot.med <- get(med)$annots
 annot.targ <- annot.targ %>% dplyr::rename(id = targ_id)
 annot.med <- annot.med %>% dplyr::rename(id = med_id)
+annot.med$chr <- as.character(annot.med$chr)
+annot.med <- annot.med %>% filter(chr %in% c(1:19,'X'))
+rownames(annot.med) <- annot.med$id
+rankz.med <- rankz.med[,annot.med$id]
 covar.targ <- get(targ)$covar
 covar.med <- get(med)$covar
 stopifnot(colnames(rankz.targ) == annot.targ$id)
