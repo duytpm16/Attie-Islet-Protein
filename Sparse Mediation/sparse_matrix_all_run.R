@@ -139,19 +139,26 @@ for(i in 1:nrow(target_and_mediator)){
     # Find markers within 4Mbps of mediator start position
     temp <- subset(markers, markers$chr == current.mediator.chr & abs(markers$pos - mediator.start[i]) <= 4)
       
+  
+  
+  
+  
+  
     ### QTL scan on mediator markers
     gp = genoprobs[,current.mediator.chr] 
     gp[[1]] = gp[[1]][,,temp$marker, drop = FALSE]
     mediator.qtl <- scan1(gp, pheno = overlap.samples[,current.mediator, drop = FALSE], kinship = kin, addcovar = covar.med, cores = 4)
       
-      
     # Find maximum marker position and ID
     max_marker <- rownames(max_scan1(mediator.qtl, map = map))
      
       
-      
-    gp[[1]] = gp[[1]][,,max_marker, drop = FALSE]
+  
+  
+  
+  
     # QTL scan on target at mediator's best marker
+    gp[[1]] = gp[[1]][,,max_marker, drop = FALSE]
     target.qtl <- scan1(gp, pheno = overlap.samples[,target.name,drop = FALSE], kinship = kin, addcovar = covar.targ, cores = 4)
       
         
@@ -161,7 +168,14 @@ for(i in 1:nrow(target_and_mediator)){
     med.pheno = overlap.samples[,current.mediator,drop = FALSE]
     driver = gp[[1]][,,1]
       
-      
+    
+  
+  
+  
+  
+  
+  
+    # Mediation test
     best.MST <- mediation_test(target = targ.pheno,
                                mediator = med.pheno,
                                driver = driver,
@@ -172,6 +186,16 @@ for(i in 1:nrow(target_and_mediator)){
     test <- as.data.frame(best.MST$test)
       
     
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    # Store results
     best.marker[i] <- max_marker                                          # Mediator's best cis marker
     sample.size[i] <- nrow(overlap.samples)                               # Sample size between the two
     target.lod[i] <- target.qtl[1,1]                                      # Target LOD score at mediator's best cis marker
@@ -182,6 +206,16 @@ for(i in 1:nrow(target_and_mediator)){
     best.model.p[i] <-  test[which.min(test$pvalue),'pvalue']             # Best model p-value
     best.triad[i] <- as.character(best.MST$best$triad)                    # Best triad          
     best.triad.p[i] <- best.MST$best$pvalue                               # Best triad p-value
+    causal.p[i] <- test[test$model == 'causal', 'pvalue']                 # Causal test p-value
+    reactive.p[i] <- test[test$model == 'reactive', 'pvalue']             # Reactive test p-value
+    independent.p[i] <- test[test$model == 'independent', 'pvalue']       # Independent test p-value
+    undecided.p[i] <- test[test$model == 'undecided', 'pvalue']           # Undecided test p-value
+    t.d_t[i] <- best.MST$fitsLR$t.d_t                                     # t.d_t LR score
+    m.d_m[i] <- best.MST$fitsLR$m.d_m                                     # m.d_m LR score
+    t.m_t[i] <- best.MST$fitsLR$t.m_t                                     # t.m_t LR score
+    m.t_m[i] <- best.MST$fitsLR$m.t_m                                     # m.t_m LR score
+    t.md_t.m[i] <- best.MST$fitsLR$t.md_t.m                               # t.md_t.m LR score
+    t.md_t[i] <- best.MST$fitsLR$t.md_t                                   # t.md_t LR score
     mediation.lod[i] <- mediation_scan(target = targ.pheno,               # Mediation LOD
                                        mediator = med.pheno,               
                                        driver = driver, 
@@ -206,8 +240,17 @@ for(i in 1:nrow(target_and_mediator)){
 }
 
 
+
+
+
+
+
+
+
+# Save all data as one data frame
 sparse_data <- cbind(target_and_mediator, best.marker, sample.size, pearson, spearman, target.lod, mediator.lod,
-                     mediation.lod, inverse.mediation.lod, best.model,best.model.p, best.triad, best.triad.p)
+                     mediation.lod, inverse.mediation.lod, best.model,best.model.p, best.triad, best.triad.p, 
+                    causal.p, reactive.p, independent.p,undecided.p,t.d_t,m.d_m,t.m_t,m.t_m, t.md_t.m, t.md_t)
 
 
 ### Save data as .rds file
