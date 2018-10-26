@@ -81,13 +81,14 @@ target.annot <- annot.targ[targ.rng,]
 
 #     Create dataframe containing all possible combinations of target and mediator. Then add mediator's chromosome and start position
 target_and_mediator = crossing(target.annot$id, mediator.annot$id)
-target_and_mediator$chr = mediator.annot$chr[match(target_and_mediator$`mediator.annot$id`, mediator.annot$id)]
-target_and_mediator$start = mediator.annot$start[match(target_and_mediator$`mediator.annot$id`, mediator.annot$id)]
+colnames(target_and_mediator) = c('target.id', 'mediator.id')
+target_and_mediator$chr = mediator.annot$chr[match(target_and_mediator$target.id, mediator.annot$id)]
+target_and_mediator$start = mediator.annot$start[match(target_and_mediator$mediator.id, mediator.annot$id)]
 
 
 #     Create vector of the ids 
-target.id <- target_and_mediator$`target.annot$id`
-mediator.id <- target_and_mediator$`mediator.annot$id`
+target.id <- target_and_mediator$target.id
+mediator.id <- target_and_mediator$mediator.id
 mediator.chr <- target_and_mediator$chr
 mediator.start <- target_and_mediator$start
 
