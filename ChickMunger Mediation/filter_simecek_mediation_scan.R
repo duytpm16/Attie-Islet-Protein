@@ -55,11 +55,6 @@ n <- nrow(mediation_data)
 
 
 
-
-
-
-
-# Extract 1 row from mediation_data and turn it into a dataframe by splitting some columns by ,
 new_mediation_df <- data.frame()
 for(i in 1:n){
   
