@@ -29,12 +29,12 @@ library(qtl2)
 # Get QTL viewer formatted data
 annot.id.targ <- get(target_data)$annots
 annot.id.targ <- annot.id.targ %>% dplyr::rename(pos = start) %>% as.data.frame()
-annot.id.med <- get(mediator_data)$annots
-annot.id.med <- annot.id.med %>% dplyr::rename(pos = start) %>% as.data.frame()
-covar.targ <- get(target_data)$covar
-covar.med <- get(mediator_data)$covar
-expr.targ <- get(target_data)$rankz
-expr.med <- get(mediator_data)$rankz
+annot.id.med  <- get(mediator_data)$annots
+annot.id.med  <- annot.id.med %>% dplyr::rename(pos = start) %>% as.data.frame()
+covar.targ    <- get(target_data)$covar
+covar.med     <- get(mediator_data)$covar
+expr.targ     <- get(target_data)$rankz
+expr.med      <- get(mediator_data)$rankz
 
   
   
@@ -107,8 +107,8 @@ for(i in 1:n){
       
        
        # Calculate target and mediator lod drop and lod drop proportion
-       mediation_df$target.drop <- mediation_df$target.lod - mediation_df$mediation.lod
-       mediation_df$target.prop <- mediation_df$target.drop / mediation_df$target.lod
+       mediation_df$target.drop   <- mediation_df$target.lod - mediation_df$mediation.lod
+       mediation_df$target.prop   <- mediation_df$target.drop / mediation_df$target.lod
        mediation_df$mediator.drop <- mediation_df$mediator.lod - mediation_df$inv.mediation.lod
        mediation_df$mediator.prop <- mediation_df$mediator.drop / mediation_df$mediator.lod
       
