@@ -9,14 +9,14 @@ library(qtl2)
 
 
 ### Command line arguments/variables to change
-# args <- commandArgs(trailingOnly = TRUE)
-# load(args[1])
-# mediation_data <- args[2]
-# threshold      <- args[3]
-# target_id      <- args[4]
-# target_data    <- args[5]
-# mediator_id    <- args[6]
-# mediator_data  <- args[7]
+args <- commandArgs(trailingOnly = TRUE)
+load(args[1])
+mediation_data <- args[2]
+threshold      <- args[3]
+target_id      <- args[4]
+target_data    <- args[5]
+mediator_id    <- args[6]
+mediator_data  <- args[7]
 
 
 
