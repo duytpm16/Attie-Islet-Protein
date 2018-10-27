@@ -22,7 +22,7 @@ annot.id.targ <- get(target_data)$annots                                        
 annot.id.targ <- annot.id.targ %>% dplyr::rename(id = target_id) %>% as.data.frame()     # Rename target_id column to id for mediation_scan     
 annot.id.med  <- get(mediator_data)$annots                                               # Get mediator's annotation dataframe in dataset.*      (mediator_data)
 annot.id.med  <- annot.id.med %>% dplyr::rename(id = mediator_id) %>% as.data.frame()    # Rename mediator_id column to id for mediation_scan
-ovar.targ     <- get(target_data)$covar                                                  # Get target's covariate matrix in dataset.*            (target_data)
+covar.targ     <- get(target_data)$covar                                                  # Get target's covariate matrix in dataset.*            (target_data)
 covar.med     <- get(mediator_data)$covar                                                # Get mediator's covariate matrix in dataset.*          (mediator_data)
 expr.targ     <- get(target_data)$rankz                                                  # Get target's rankZ matrix in dataset.*                (target_data)
 expr.med      <- get(mediator_data)$rankz                                                # Get mediator's rankZ matrix in dataset.*              (mediator_data)
