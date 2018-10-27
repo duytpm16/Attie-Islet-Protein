@@ -29,12 +29,12 @@ mediator_data  <- args[7]
 # Get QTL viewer formatted data
 annot.id.targ <- get(target_data)$annots
 annot.id.targ <- annot.id.targ %>% dplyr::rename(id = target_id) %>% as.data.frame()
-annot.id.med <- get(mediator_data)$annots
-annot.id.med <- annot.id.med %>% dplyr::rename(id = mediator_id) %>% as.data.frame()
-covar.targ <- get(target_data)$covar
-covar.med <- get(mediator_data)$covar
-expr.targ <- get(target_data)$rankz
-expr.med <- get(mediator_data)$rankz
+annot.id.med  <- get(mediator_data)$annots
+annot.id.med  <- annot.id.med %>% dplyr::rename(id = mediator_id) %>% as.data.frame()
+covar.targ    <- get(target_data)$covar
+covar.med     <- get(mediator_data)$covar
+expr.targ     <- get(target_data)$rankz
+expr.med      <- get(mediator_data)$rankz
 
 
 
@@ -110,8 +110,8 @@ for(i in 1:n){
       
       
       # Calculate target and mediator lod drop and lod drop proportion
-      mediation_df$target.drop <- mediation_df$target.lod - mediation_df$mediation.lod
-      mediation_df$target.prop <- mediation_df$target.drop / mediation_df$target.lod
+      mediation_df$target.drop   <- mediation_df$target.lod - mediation_df$mediation.lod
+      mediation_df$target.prop   <- mediation_df$target.drop / mediation_df$target.lod
       mediation_df$mediator.drop <- mediation_df$mediator.lod - mediation_df$inv.mediation.lod
       mediation_df$mediator.prop <- mediation_df$mediator.drop / mediation_df$mediator.lod
       
@@ -151,5 +151,5 @@ file_name <- gsub('_id','',file_name)
 file_name <- gsub('gene','mrna', file_name)
 
 
-saveRDS(new_mediation_df, paste0('attie_islet_',file_name[1],'_filtered_simecek_intermediate_',file_name[2],'.rds'))
+saveRDS(new_mediation_df, paste0('attie_islet_',file_name[1],'_filtered_yandell_intermediate_',file_name[2],'.rds'))
 
