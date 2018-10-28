@@ -19,7 +19,8 @@ target_id      <- args[3]
 target_data    <- args[4]
 mediator_id    <- args[5]
 mediator_data  <- args[6]
-
+chunk_number   <- args[7]
+chunk_size     <- args[8]
 
 
 
