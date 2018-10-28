@@ -9,7 +9,8 @@ http://doi.org/10.1038/nature18270.
  
  
  
- ### 1.) Use Yandell or Simecek mediation scan
+ ### 1.) Use Yandell or Simecek mediation scan 
+ Simecek's script does not perform mediation with kinship
  
  
  ### 2.) Use Yandell or Simecek filtering script
