@@ -84,7 +84,7 @@ mediator.chr    <- character(length = n)
 mediator.start  <- character(length = n)
 mediator.end    <- character(length = n)
 mediator.symbol <- character(length = n)
-mediator.lod    <- character(length = n)
+mediation.lod    <- character(length = n)
 
 
 
