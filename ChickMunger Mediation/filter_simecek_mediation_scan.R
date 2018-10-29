@@ -12,7 +12,7 @@ library(qtl2)
 args <- commandArgs(trailingOnly = TRUE)
 load(args[1])                             # Load QTL Viewer .RData file
 mediation_data <- readRDS(args[2])        # Load mediation .rds file
-threshold      <- as.nuemric(args[3])     # Z-score threshold
+threshold      <- as.numeric(args[3])     # Z-score threshold
 target_id      <- args[4]                 # Either protein_id/gene_id
 target_data    <- args[5]                 # Which dataset.* to use as target
 mediator_id    <- args[6]                 # Either protein_id/gene_id
