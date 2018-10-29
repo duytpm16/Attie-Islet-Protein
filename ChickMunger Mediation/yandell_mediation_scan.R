@@ -112,12 +112,12 @@ for(i in 1:n){
     
     
     # Save results
-    mediator.id[i]     <- paste0(med$id, collapse = ',')
-    mediator.chr[i]    <- paste0(med$chr, collapse = ',')
-    mediator.start[i]  <- paste0(med$pos, collapse = ',')
-    mediator.end[i]    <- paste0(med$end, collapse = ',')
+    mediator.id[i]     <- paste0(med$id,     collapse = ',')
+    mediator.chr[i]    <- paste0(med$chr,    collapse = ',')
+    mediator.start[i]  <- paste0(med$start,  collapse = ',')
+    mediator.end[i]    <- paste0(med$end,    collapse = ',')
     mediator.symbol[i] <- paste0(med$symbol, collapse = ',')
-    mediation.lod[i]   <- paste0(med$lod, collapse = ',')
+    mediation.lod[i]   <- paste0(med$lod,    collapse = ',')
 
 
 
