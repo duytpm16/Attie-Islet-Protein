@@ -162,10 +162,14 @@ new_mediation_df <- new_mediation_df %>% select(target.id, target.chr, target.st
 
 
 ### Save data as .rds
+### Save data as .rds
 file_name <- c(target_id, mediator_id)      # Just for naming conventions
 file_name <- gsub('_id','',file_name)
 file_name <- gsub('gene','mrna', file_name)
 
 
-saveRDS(new_mediation_df, paste0('attie_islet_',file_name[1],'_filtered_simecek_intermediate_',file_name[2],'.rds'))
-
+if(!is.null(chunk_number)){
+   saveRDS(mediation_results, paste0('attie_islet_',file_name[1],'_filter_simecek_intermediate_',file_name[2],'_chunk_',chunk_number,'.rds'))
+}else{
+   saveRDS(mediation_results, paste0('attie_islet_',file_name[1],'_filter_simecek_intermediate_',file_name[2],'.rds'))
+}
