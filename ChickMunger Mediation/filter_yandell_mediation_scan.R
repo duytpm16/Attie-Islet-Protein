@@ -104,14 +104,7 @@ for(i in 1:n){
                                               kinship = K[[mediation_df$target.qtl.chr[j]]],
                                               addcovar = covar.med)
       }     
-      
-      
-      # Calculate target and mediator lod drop and lod drop proportion
-      mediation_df$target.drop   <- mediation_df$target.lod - mediation_df$mediation.lod
-      mediation_df$target.prop   <- mediation_df$target.drop / mediation_df$target.lod
-      mediation_df$mediator.drop <- mediation_df$mediator.lod - mediation_df$inv.mediation.lod
-      mediation_df$mediator.prop <- mediation_df$mediator.drop / mediation_df$mediator.lod
-      
+       
       new_mediation_df <- bind_rows(new_mediation_df, mediation_df)
     }
   
@@ -121,7 +114,12 @@ for(i in 1:n){
 
 
 
-
+      
+# Calculate target and mediator lod drop and lod drop proportion
+new_mediation_df$target.drop   <- new_mediation_df$target.lod - new_mediation_df$mediation.lod
+new_mediation_df$target.prop   <- new_mediation_df$target.drop / new_mediation_df$target.lod
+new_mediation_df$mediator.drop <- new_mediation_df$mediator.lod - new_mediation_df$inv.mediation.lod
+new_mediation_df$mediator.prop <- new_mediation_df$mediator.drop / new_mediation_df$mediator.lod
 
 
 
