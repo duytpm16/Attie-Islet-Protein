@@ -10,13 +10,13 @@ library(qtl2)
 
 ### Command line arguments/variables to change
 args <- commandArgs(trailingOnly = TRUE)
-load(args[1])
-mediation_data <- readRDS(args[2])
-threshold      <- args[3]
-target_id      <- args[4]
-target_data    <- args[5]
-mediator_id    <- args[6]
-mediator_data  <- args[7]
+load(args[1])                             # Load QTL Viewer .RData file
+mediation_data <- readRDS(args[2])        # Load mediation .rds file
+threshold      <- args[3]                 # Z-score threshold
+target_id      <- args[4]                 # Either protein_id/gene_id
+target_data    <- args[5]                 # Which dataset.* to use as target
+mediator_id    <- args[6]                 # Either protein_id/gene_id
+mediator_data  <- args[7]                 # Which dataset.* to use as mediator
 
 
 
