@@ -14,13 +14,13 @@ library(dplyr)
 ### Command line arguments/variables to change
 args <- commandArgs(trailingOnly = TRUE)
 load(args[1])
-mediation_data <- args[2]
+mediation_data <- readRDS(args[2])
 target_id      <- args[3]
 target_data    <- args[4]
 mediator_id    <- args[5]
 mediator_data  <- args[6]
-chunk_number   <- args[7]
-chunk_size     <- args[8]
+chunk_number   <- as.numeric(args[7])
+chunk_size     <- as.numeric(args[8])
 
 
 
