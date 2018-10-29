@@ -17,6 +17,32 @@ target_id      <- args[4]                 # Either protein_id/gene_id
 target_data    <- args[5]                 # Which dataset.* to use as target
 mediator_id    <- args[6]                 # Either protein_id/gene_id
 mediator_data  <- args[7]                 # Which dataset.* to use as mediator
+chunk_number   <- as.numeric(args[8])
+chunk_size     <- as.numeric(args[9])
+
+
+
+
+
+
+
+
+
+# Get range of index if chunk_numer and chunk_size is specified
+rng <- 1:nrow(mediation_data)
+
+if(!is.null(chunk_number)){
+   max_col = nrow(mediation_data)
+   rng = ((chunk_number - 1) * chunk_size + 1):(chunk_number * chunk_size)
+
+   if(rng[length(rng)] > max_col) {
+      rng = rng[1]:max_col
+   }
+}
+
+
+mediation_data <- mediation_data[rng,]
+
 
 
 
