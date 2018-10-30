@@ -130,10 +130,10 @@ samples <- samples[overlap.samples,]
 
 
 
-### Removing columns that are not proteins
+### Removing columns that are not proteins ( 284 samples)
 #   Keep protein columns that have less than 50% NAs across samples.
-#
-#       raw: 373 x 5415
+#   284 x 8239 -> 284 x 8235 -> 284 x 5469
+#       raw: 373 x 5469
 raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","Injection_order","Plate_number","batch"))]
 raw <- raw[,colSums(is.na(raw)) < .50 * nrow(raw)]
 
@@ -142,7 +142,7 @@ raw <- raw[,colSums(is.na(raw)) < .50 * nrow(raw)]
 
 ### Log transformation of the protein abundance
 #
-#    373 x 5415
+#    373 x 5469
 data.log = log(raw)
 
 
