@@ -170,7 +170,7 @@ file_name <- gsub('_id','',file_name)
 file_name <- gsub('gene','mrna', file_name)
 
 if(!is.null(chunk_number)){
-   saveRDS(full_result, paste0('attie_islet_',file_name[1],'_full_medation_',file_name[2],'_chunk_',chunk_number,'.rds'))
+   saveRDS(full_result, paste0('attie_islet_',file_name[1],'_full_mediation_',file_name[2],'_chunk_',chunk_number,'.rds'))
 }else{
    saveRDS(full_result, paste0('attie_islet_',file_name[1],'_full_mediation_',file_name[2],'.rds'))
 }
