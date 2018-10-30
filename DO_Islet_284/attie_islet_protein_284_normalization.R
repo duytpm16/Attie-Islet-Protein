@@ -65,14 +65,19 @@ samples_file <- paste0(prefix, "_samples_annot.rds")
 
 
 
+
+
+
+
+
+
+
 ### Fixing the name of two columns: 1 in the samples and 1 in raw dataframe to match a data dictionary that will be used later in other scripts
 samples <- samples %>% dplyr::rename(DOwave = wave)
 raw     <- raw %>% dplyr::rename(batch = Batch)
 samples$Mouse.ID  <- gsub('-', '', samples$Mouse.ID)
 raw$Mouse.ID      <- gsub('-', '', raw$Mouse.ID)
 chr_m_y$Mouse.ID  <- gsub('-', '', chr_m_y$Mouse.ID)
-
-
 
 
 ### Preparing samples dataframe
@@ -86,11 +91,27 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 
 
 
+
+
+
+
+
+
+
 ### Remove control samples.
 #       Number of controls: 64 with some duplicates
 #       Number of DOs: 375 with some duplicates (DO-174, DO-374)
 ctrl <- raw[grep("Std", raw$Mouse.ID),]
 raw  <- raw[grep('DO',  raw$Mouse.ID),]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -113,8 +134,6 @@ raw <- raw[keep,]
 samples = samples[keep,]
 
 
-
-
 ### Make row names the mouse ID
 rownames(raw)     <- raw$Mouse.ID
 rownames(samples) <- samples$Mouse.ID
@@ -123,10 +142,25 @@ colnames(samples)[grep('mouse.id', colnames(samples), ignore.case = TRUE)] <- 'm
 
 
 
-### Find overlapping samples between rnaseq and protein data
-overlap.samples <- intersect(rownames(raw), rownames(dataset.islet.rnaseq$expr))
+
+
+
+
+
+
+
+### Find overlapping samples between rnaseq and protein data (284 samples)
+overlap.samples <- intersect(rownames(raw), rownames(dataset.islet.rnaseq$raw))
 raw <- raw[overlap.samples,]
 samples <- samples[overlap.samples,]
+
+
+
+
+
+
+
+
 
 
 
@@ -140,10 +174,25 @@ raw <- raw[,colSums(is.na(raw)) < .50 * nrow(raw)]
 
 
 
+
+
+
+
+
+
+
+
 ### Log transformation of the protein abundance
 #
 #    373 x 5469
 data.log = log(raw)
+
+
+
+
+
+
+
 
 
 
@@ -153,8 +202,6 @@ samples$sex  = factor(samples$sex)
 samples$DOwave = factor(samples$DOwave)
 mod = model.matrix(~sex, data = samples)
 batch = samples$batch
-
-
 
 
 ### Impute missing data and combat normalization
@@ -199,6 +246,12 @@ repeat({
 
 
 
+  
+  
+  
+  
+  
+  
 ### Rank Z of normalized data.
 rankZ = function(x) {
   x = rank(x, na.last = "keep", ties.method = "average") / (sum(!is.na(x)) + 1)
@@ -208,6 +261,12 @@ rankZ = function(x) {
 
 data.rz = data.log
 data.rz = apply(data.rz, 2, rankZ)
+
+
+
+
+
+
 
 
 
