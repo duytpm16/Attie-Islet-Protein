@@ -109,12 +109,14 @@ for(i in 1:n){
   
     # Do inverse mediation and qtl2 scan on those that pass the threshold and finally add to new_mediation_df
     if(nrow(mediation_df) != 0){
-      
+        gp = genoprobs[,mediation_df$target.qtl.chr[1]]
+        gp[[1]] = gp[[1]][,,mediation_df$marker.id[1], drop = FALSE]
+        temp.expr.targ <- expr.targ[, mediation_df$target.id[1], drop = FALSE]
       for(j in 1:nrow(mediation_df)){
         
         # Inverse mediation
         mediation_df$inv.mediation.lod[j] <- mediation_scan(target     = expr.med[, mediation_df$mediator.id[j],drop = FALSE],
-                                                            mediator   = expr.targ[, mediation_df$target.id[j], drop = FALSE],
+                                                            mediator   = temp.expr.targ,
                                                             annotation = annot.id.targ[mediation_df$target.id[j],],
                                                             driver     = genoprobs[[mediation_df$target.qtl.chr[j]]][,, mediation_df$marker.id[j]],
                                                             kinship    = K[[mediation_df$target.qtl.chr[j]]],
@@ -125,8 +127,7 @@ for(i in 1:n){
         
         
         # qtl2 scan1
-        gp = genoprobs[,mediation_df$target.qtl.chr[j]]
-        gp[[1]] = gp[[1]][,,mediation_df$marker.id[j], drop = FALSE]
+        intersect.samples <- intersect(rownames(temp.expr.targ[complete.cases(temp.expr.targ),,drop = FALSE]), rownames(expr.med[, mediation_df$mediator.id[j],drop = FALSE]))
         mediation_df$mediator.lod[j] <- scan1(pheno = expr.med[,mediation_df$mediator.id[j],drop = FALSE],
                                               genoprobs = gp,
                                               kinship = K[[mediation_df$target.qtl.chr[j]]],
