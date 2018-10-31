@@ -112,9 +112,10 @@ for(i in 1:n){
        gp = genoprobs[,mediation_df$target.qtl.chr[1]]
        gp[[1]] = gp[[1]][,,mediation_df$marker.id[1], drop = FALSE]
        temp.expr.targ <- expr.targ[, mediation_df$target.id[1], drop = FALSE]
+       
        for(j in 1:nrow(mediation_df)){
         
-           # Inverse mediation
+           # Inverse mediation on mediators that pass threshold
            mediation_df$inv.mediation.lod[j] <- mediation_scan(target     = expr.med[, mediation_df$mediator.id[j],drop = FALSE],
                                                                mediator   = temp.expr.targ,
                                                                annotation = annot.id.targ[mediation_df$target.id[j],],
@@ -126,7 +127,7 @@ for(i in 1:n){
                                                                index_name = 'start')$lod
         
         
-           # qtl2 scan1
+           # qtl2 scan1 on mediators that pass threshold
            intersect.samples <- intersect(rownames(temp.expr.targ[complete.cases(temp.expr.targ),,drop = FALSE]), rownames(expr.med[, mediation_df$mediator.id[j],drop = FALSE]))
            mediation_df$mediator.lod[j] <- scan1(pheno = expr.med[,mediation_df$mediator.id[j],drop = FALSE],
                                                  genoprobs = gp,
