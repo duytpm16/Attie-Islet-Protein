@@ -1,6 +1,6 @@
 # Mediation Chick and Munger style 
 
-Scripts to perform mediation similar to Chick and Munger 
+Scripts to perform mediation similar to Chick and Munger with causalMST
  
  
 Chick, J. M., Munger, S. C., Simecek, P., Huttlin, E. L., Choi, K., Gatti, D. M., … Gygi, S. P. (2016). 
