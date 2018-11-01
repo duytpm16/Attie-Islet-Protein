@@ -36,9 +36,9 @@ for(i in 1:length(data_names)){
   ensembl_id <- expr.annots[expr.annots$Majority.protein.IDs %in% data_names[i], 'protein_id']
   
   if(!is.na(ensembl_id)){
-    data_names[i] <- ensembl_id
+     data_names[i] <- ensembl_id
   }else{
-    data_names[i] <- data_names[i]
+     data_names[i] <- data_names[i]
   }
 }
 
@@ -72,14 +72,14 @@ raw <- as.matrix(raw)
 ### Chaning Uniprot IDs in the lod.peaks dataframe to Ensembl protein ID
 for(i in 1:nrow(lod.peaks)){
   
-  name <- lod.peaks$annot.id[i]
-  ensembl_id <- expr.annots[expr.annots$Majority.protein.IDs %in% name, 'protein_id']
+    name <- lod.peaks$annot.id[i]
+    ensembl_id <- expr.annots[expr.annots$Majority.protein.IDs %in% name, 'protein_id']
   
-  if(length(ensembl_id) !=0){
-    lod.peaks$annot.id[i] <- ensembl_id
-  }else{
-    lod.peaks$annot.id[i] <- lod.peaks$annot.id[i]
-  }
+    if(!is.na(ensembl_id)){
+       lod.peaks$annot.id[i] <- ensembl_id
+    }else{
+       lod.peaks$annot.id[i] <- lod.peaks$annot.id[i]
+    } 
 }
 
 
