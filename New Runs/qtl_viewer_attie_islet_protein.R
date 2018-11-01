@@ -35,7 +35,7 @@ for(i in 1:length(data_names)){
   
   ensembl_id <- expr.annots[expr.annots$Majority.protein.IDs %in% data_names[i], 'protein_id']
   
-  if(length(ensembl_id)!=0){
+  if(!is.na(ensembl_id)){
     data_names[i] <- ensembl_id
   }else{
     data_names[i] <- data_names[i]
