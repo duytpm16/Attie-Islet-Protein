@@ -138,7 +138,7 @@ mediation_results <- data.frame(target.id = qtl.annot,           # Save target i
                                 target.end,                      # Save the target's end position
                                 target.symbol,                   # Save the target's symbol
                                 target.cis,                      # Save the logical value (TRUE/FALSE) indicating whether the target's qtl is cis or distal
-                                mediator,                        # Save the name of all mediator as one string separated by ','
+                                mediator.id,                     # Save the name of all mediator as one string separated by ','
                                 mediator.chr,                    # Save the chromosome of all mediator as one string separated by ','
                                 mediator.start,                  # Save the start position of all mediator as one string separated by ','
                                 mediator.end,                    # Save the end position of all mediator as one string separated by ','
