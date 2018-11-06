@@ -1,6 +1,6 @@
 ######################################################################################################################
 #
-#   This script performs mediation scans given two QTL Viewer formatted datasets using
+#   This script performs mediation scans without a kinship matrix given two QTL Viewer formatted datasets using
 #        Petr Simecek's intermediate package: install_github('simecek/intermediate')
 #
 #
