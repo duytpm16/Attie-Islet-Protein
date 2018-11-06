@@ -1,24 +1,26 @@
 #########################################################################################################################################
 #
-#  This script takes in the raw plasma lipids data file and normalizes 
-#     the data by imputing missing values using pca and comBat normalization.
-#     Additionally, a samples dataframe is created by reading two additional files below.
+#   This script takes in the raw plasma lipids data file and normalizes 
+#      the data by imputing missing values using pca and comBat normalization.
+#      Additionally, a samples dataframe is created by reading two additional files below.
 #
-#  Input:
-#     1.) Prefix name to save the output files below.
-#     2.) raw Attie plasma lipids file: FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt
-#     3.) Attie sample annotation file: attie_DO_sample_annot.txt
-#     4.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
+#   Input:
+#      1.) Prefix name to save the output files below.
+#      2.) raw Attie plasma lipids file: FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt
+#      3.) Attie sample annotation file: attie_DO_sample_annot.txt
+#      4.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
 #
-#  Output:
-#     1.) Filtered raw data file as rds file
-#     2.) Normalized plasma lipids levels by pca and comBat normaliziation method as a matrix in  rds file
-#     3.) Normalized ranked z data as rds file
-#     4.) New Sample annotation dataframe as rds file
 #
-#  Author: Duy Pham
-#  Date:   July 10, 2018
-#  E-mail: duy.pham@jax.org
+#   Output:
+#      1.) Filtered raw data file as rds file
+#      2.) Normalized plasma lipids levels by pca and comBat normaliziation method as a matrix in  rds file
+#      3.) Normalized ranked z data as rds file
+#      4.) New Sample annotation dataframe as rds file
+#
+#
+#   Author: Duy Pham
+#   Date:   July 10, 2018
+#   E-mail: duy.pham@jax.org
 #
 #########################################################################################################################################
 
