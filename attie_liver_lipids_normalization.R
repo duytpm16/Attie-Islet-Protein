@@ -21,7 +21,7 @@
 #
 #
 #
-#  Author: Duy Pham, most of the codes were taken from Dan Gatti's script
+#  Author: Duy Pham
 #  Date:   July 10, 2018
 #  E-mail: duy.pham@jax.org
 #
