@@ -1,23 +1,29 @@
-### This script takes in the raw liver metabolite data file and normalizes 
+####################################################################################################################################
+#  
+#  This script takes in the raw liver metabolite data file and normalizes 
 #     the data by imputing missing values using pca and comBat normalization.
 #     Additionally, a samples dataframe is created by reading two additional files below.
 #
-### Input:
+#
+#  Input:
 #     1.) Prefix name to save the output files below.
 #     2.) raw Attie liver metabolite file: FilterdbyR_DOLiverMetbolites_BatchandCovariatesAppended.txt
 #     3.) Attie sample annotation file: attie_DO_sample_annot.txt
 #     4.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
 #
-### Output:
+#
+#  Output:
 #     1.) Filtered raw data file as rds file
 #     2.) Normalized liver metabolite levels by pca and comBat normaliziation method as a matrix in  rds file
 #     3.) Normalized ranked z data as rds file
 #     4.) New Sample annotation dataframe as rds file
 #
-### Author: Duy Pham, most of the codes were taken from Dan Gatti's script
-### Date:   July 10, 2018
-### E-mail: duy.pham@jax.org
-#####################################################################
+#
+#  Author: Duy Pham, most of the codes were taken from Dan Gatti's script
+#  Date:   July 10, 2018
+#  E-mail: duy.pham@jax.org
+#
+####################################################################################################################################
 
 
 
@@ -36,6 +42,12 @@ options(stringsAsFactors = FALSE)
 
 
 
+
+
+
+
+
+
 ### Read in the raw islet proteomic data, sample annotation, and Chr M and Y files.
 #     liver_metabolite_raw: 382 x 290
 #     samples: 500 x 7
@@ -46,11 +58,24 @@ samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header 
 chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
 
 
+
+
+
+
+
+
+
 ### Variables to store the data
 raw_file <- paste0(prefix,"_filtered_raw.rds")
 norm_file <- paste0(prefix,"_normalized.rds")
 norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
 samples_file <-  paste0(prefix, "_samples_annot.rds")
+
+
+
+
+
+
 
 
 
@@ -66,6 +91,14 @@ chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
 colnames(samples) <- gsub('_','.',colnames(samples))
 
 
+
+
+
+
+
+
+
+
 ### Preparing samples dataframe
 #   First, merge columns that are not metabolite to samples data.frame.
 #   Next merge unique columns in chr_m_y dataframe to samples dataframe.
@@ -79,12 +112,27 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
 
+
+
+
+
+
+
+
+
 ### Removing columns that are not metabolite data except Mouse.ID column
 #       Inital Dimensions: 382 x 290
 #       After Dimensions: 382 x 283 without Mouse.ID column
 raw <- raw[grep('DO', raw$Mouse.ID),]
 rownames(raw) <- raw$Mouse.ID
 raw <- raw[,!(colnames(raw) %in% c("Mouse.ID","DOwave","birthdate","sex","sac.date","coat.color","batch"))]
+
+
+
+
+
+
+
 
 
 
@@ -95,14 +143,34 @@ rownames(raw)[prop.missing > 0.25]
 
 
 
+
+
+
+
+
+
 ### 0 duplicates
 sum(duplicated(rownames(raw)))
 rownames(samples) <- samples$mouse.id
 
 
 
+
+
+
+
+
+
+
 ### Log transformation of the liver metabolite abundance
 data.log = log(raw)
+
+
+
+
+
+
+
 
 
 
@@ -161,6 +229,13 @@ if(sum(is.na(raw) > 0)){
 }
 
 
+
+
+
+
+
+
+
 ### Rank Z of normalized data.
 rankZ = function(x) {
   x = rank(x, na.last = "keep", ties.method = "average") / (sum(!is.na(x)) + 1)
@@ -172,6 +247,11 @@ data.rz = data.log
 for(i in 1:ncol(data.rz)) {
   data.rz[,i] = rankZ(data.rz[,i])
 }
+
+
+
+
+
 
 
 
