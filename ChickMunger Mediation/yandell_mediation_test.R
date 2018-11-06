@@ -1,3 +1,33 @@
+######################################################################################################################
+#
+#   This script performs causalMST with a kinship matrix given two QTL Viewer formatted datasets using
+#        Bryan Yandell's intermediate package: install_github('byandell/intermediate')
+#
+#
+#   Input:
+#      1.) Load in the QTL Viewer environment
+#      2.) mediation_data :  Filtered mediation data generated from one of the filter mediation scripts
+#      3.) target_id      :  Name of the column in annots that will be used to select the targets
+#      4.) target_data    :  dataset.* list where annots contain the column name in [2]
+#      5.) mediator_id    :  Name of the column in annots that will be used to select the mediators
+#      6.) mediator_data  :  dataset.* list where annots contain the column name in [4]
+#      7.) chunk_number   :  numeric value indicating which portion of the lod peaks table to break. Need a fixed chunk_size
+#      8.) chunk_size     :  numeric value indicating the size to break the lod peaks table
+#
+#
+#
+#   Output:
+#      1.) Dataframe with causalMST results using the mediation_test function
+#
+#
+#
+#   Author: Duy Pham
+#   Date:   November 6, 2018
+#   E-mail: duy.pham@jax.org
+#
+######################################################################################################################
+
+### Load library packages
 options(stringsAsFactors = FALSE)
 options(scipen = 999)
 
