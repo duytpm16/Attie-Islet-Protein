@@ -1,3 +1,32 @@
+######################################################################################################################
+#
+#   This script performs mediation scans with a kinship matrix given two QTL Viewer formatted datasets using
+#        Bryan Yandell's intermediate package: install_github('byandell/intermediate')
+#
+#
+#   Input:
+#      1.) Load in the QTL Viewer environment
+#      2.) target_id    :  Name of the column in annots that will be used to select the targets
+#      3.) target_data  :  dataset.* list where annots contain the column name in [2]
+#      4.) mediator_id  :  Name of the column in annots that will be used to select the mediators
+#      5.) mediator_data:  dataset.* list where annots contain the column name in [4]
+#      6.) chunk_number :  numeric value indicating which portion of the lod peaks table to break. Need a fixed chunk_size
+#      7.) chunk_size   :  numeric value indicating the size to break the lod peaks table
+#
+#
+#
+#   Output:
+#      1.) Dataframe containing the target's info and 
+#              each of the mediator's info (see lines 107-115) as a one long string separated by ','. 
+#
+#
+#
+#   Author: Duy Pham
+#   Date:   July 10, 2018
+#   E-mail: duy.pham@jax.org
+#
+######################################################################################################################
+### Load required library packages
 options(stringsAsFactors = FALSE)
 library(intermediate2)
 library(dplyr)
