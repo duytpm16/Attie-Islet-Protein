@@ -1,7 +1,12 @@
-### This script finds LOD peaks above a given threshold 
-#     and computes the allele effects at each QTL for additive scans only.
+###############################################################################################################################
 #
-### Input:
+#
+#   This script finds LOD peaks above a given threshold 
+#      and computes the allele effects at each QTL for additive scans only.
+#
+#
+#
+#   Input:
 #       1.) Path + prefix to .RData file generarted from: qtl2_gather_scan1_input.R
 #       2.) Numeric LOD threshold used to find significant QTLs.
 #       3.) Number of cores to run
@@ -9,13 +14,17 @@
 #       5.) TRUE or FALSE to use interaction lod scan data.
 #       6.) Name of the interaction term used. Not needed if 5 is FALSE
 #
-### Output:
+#
+#
+#   Output:
 #       1.) .rds file containing the lod peaks above threshold and allele effects at QTLS (Only if 5 in Input is FALSE).
 #
-### Author: Duy Pham
-### Date:   July 11, 2018
-### E-mail: duy.pham@jax.org
-################################################################################
+#
+#   Author: Duy Pham
+#   Date:   July 11, 2018
+#   E-mail: duy.pham@jax.org
+#
+###############################################################################################################################
 
 # Load libraries
 library(qtl2, lib.loc = '~/Rlibs')
@@ -42,47 +51,63 @@ use_int <- as.logical(args[5])
 
 
 
+
+
+
+
+
 ### Load in the data
 if(use_int){
-  # If using interaction scan
-  int_name <- args[6]
+   # If using interaction scan
+   int_name <- args[6]
 
-  load(paste0(prefix,"_qtl2_input.RData"))
+   load(paste0(prefix,"_qtl2_input.RData"))
   
-    stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
-            "covar.factors", "samples", "rankz", "raw","datatype") %in% ls()
-  )
+   stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
+               "covar.factors", "samples", "rankz", "raw","datatype") %in% ls())
   
-  if(should_rankz){
-    scan1_data <- readRDS(paste0(prefix,"_",int_name,"_int_rZ_qtl_lod.rds"))
-    expr <- rankz
-  }else{
-    scan1_data <- readRDS(paste0(prefix,"_",int_name,"_int_norm_qtl_lod.rds"))
-    expr <- norm
-  }
+   if(should_rankz){
+      scan1_data <- readRDS(paste0(prefix,"_",int_name,"_int_rZ_qtl_lod.rds"))
+      expr <- rankz
+   }else{
+      scan1_data <- readRDS(paste0(prefix,"_",int_name,"_int_norm_qtl_lod.rds"))
+      expr <- norm
+   }
+  
   
 }else{
-  # If using additive scan
-  load(paste0(prefix,"_qtl2_input.Rdata"))
+   # If using additive scan
+   load(paste0(prefix,"_qtl2_input.Rdata"))
     
-  # Check to see if required QTL2 data are loaded
-  stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
-            "covar.factors", "samples", "rankz", "raw","datatype") %in% ls()
-  )
+   # Check to see if required QTL2 data are loaded
+   stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
+               "covar.factors", "samples", "rankz", "raw","datatype") %in% ls())
+  
   
   if(should_rankz){
-    scan1_data <- readRDS(paste0(prefix,"_rZ_qtl_lod.rds"))
-    expr <- rankz
+     scan1_data <- readRDS(paste0(prefix,"_rZ_qtl_lod.rds"))
+     expr <- rankz
   }else{
-    scan1_data <- readRDS(paste0(prefix,"_norm_qtl_lod.rds"))
-    expr <- norm
+     scan1_data <- readRDS(paste0(prefix,"_norm_qtl_lod.rds"))
+     expr <- norm
   }
 }
 
 
 
+
+
+
+
+
+
 ### Run the find_peaks function and stores the output to a variable called "lod.peaks"
 lod.peaks <- find_peaks(scan1_output =  scan1_data, map = map, threshold = threshold, cores = num_cores)
+
+
+
+
+
 
 
 
@@ -95,16 +120,24 @@ lod.peaks$qtl.chr <- as.character(lod.peaks$qtl.chr)
 
 
 
-### Adding 8 more columns to lod.peaks for BLUP mapping on additive scans only
+
+
+
+
+
+
+
+### BLUP scan on additive scan
 if(use_int == FALSE){
+  
+  
+   # Adding 8 more columns to lod.peaks for BLUP mapping on additive scans only
    lod.peaks = cbind(lod.peaks, matrix(0, nrow = nrow(lod.peaks), ncol = 8, 
                                        dimnames = list(NULL, LETTERS[1:8])))
-}
-
-
-
-if(use_int == FALSE){
-   # BLUP mapping.
+  
+  
+  
+   # BLUP mapping begin
    for(i in 1:nrow(lod.peaks)) {
   
        chr  = lod.peaks$qtl.chr[i]
@@ -118,8 +151,19 @@ if(use_int == FALSE){
                         kinship = K[[chr]], addcovar = covar, cores = num_cores)
       
        lod.peaks[i,6:13] = blup[1,1:8]
-   }
+     
+   } # for(i)
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
