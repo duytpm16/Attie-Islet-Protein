@@ -1,8 +1,11 @@
-### This script takes in the raw protein abundance data file and normalizes 
+##########################################################################################################################
+#
+#  This script takes in the raw protein abundance data file and normalizes 
 #     the data by imputing missing values using pca and comBat for normalization.
 #     Additionally, a samples dataframe is created by reading two additional files below.
 #
-### Input:
+#
+#  Input:
 #     1.) raw Attie islet protein abundance file: DO_islet_proteomics_non_normalized.txt
 #     2.) Attie sample annotation file: attie_DO_sample_annot.txt
 #     3.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
@@ -11,16 +14,19 @@
 #     6.) Name to store the normalized rank z data as rds file
 #     7.) Name to store the new sample annotation data as rds file
 #
-### Output:
+#
+#  Output:
 #     1.) Filtered raw data file as rds file
 #     2.) Normalized protein abundance levels by pca and comBat normaliziation method as a matrix in  rds file
 #     3.) Normalized ranked z data as rds file
 #     4.) New Sample annotation dataframe as rds file
 #
-### Author: Duy Pham, most of the codes were taken from Dan Gatti's script
-### Date:   July 10, 2018
-### E-mail: duy.pham@jax.org
-#####################################################################
+#
+#
+#  Author: Duy Pham, most of the codes were taken from Dan Gatti's script
+#  Date:   July 10, 2018
+#  E-mail: duy.pham@jax.org
+##########################################################################################################################
 
 
 
@@ -35,6 +41,10 @@ library(pcaMethods)
 
 ### Options
 options(stringsAsFactors = FALSE)
+
+
+
+
 
 
 
@@ -53,11 +63,23 @@ chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv")
 
 
 
+
+
+
+
+
 ### Variable names to store the data
 raw_file     <- paste0(prefix,"_filtered_raw.rds")
 norm_file    <- paste0(prefix,"_normalized.rds")
 norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
 samples_file <- paste0(prefix, "_samples_annot.rds")
+
+
+
+
+
+
+
 
 
 
@@ -68,6 +90,12 @@ colnames(raw)[grep('Batch', colnames(raw))]        <- 'batch'
 samples$Mouse.ID  <- gsub('-', '', samples$Mouse.ID)
 raw$Mouse.ID      <- gsub('-', '', raw$Mouse.ID)
 chr_m_y$Mouse.ID  <- gsub('-', '', chr_m_y$Mouse.ID)
+
+
+
+
+
+
 
 
 
@@ -82,11 +110,24 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 
 
 
+
+
+
+
+
+
 ### Remove control samples.
 #       Number of controls: 64 with some duplicates
 #       Number of DOs: 375 with some duplicates (DO-174, DO-374)
 ctrl <- raw[grep("Std", raw$Mouse.ID),]
 raw  <- raw[grep('DO', raw$Mouse.ID),]
+
+
+
+
+
+
+
 
 
 
@@ -110,10 +151,23 @@ samples = samples[keep,]
 
 
 
+
+
+
+
+
+
 ### Make row names the mouse ID
 rownames(raw)     <- raw$Mouse.ID
 rownames(samples) <- samples$Mouse.ID
 colnames(samples)[grep('mouse.id', colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
+
+
+
+
+
+
+
 
 
 
@@ -126,10 +180,25 @@ raw <- raw[,colSums(is.na(raw)) < .50 * nrow(raw)]
 
 
 
+
+
+
+
+
+
+
 ### Log transformation of the protein abundance
 #
 #    373 x 5415
 data.log = log(raw)
+
+
+
+
+
+
+
+
 
 
 
@@ -183,6 +252,12 @@ repeat({
 
 
 
+  
+  
+  
+  
+  
+  
 ### Rank Z of normalized data.
 rankZ = function(x) {
   x = rank(x, na.last = "keep", ties.method = "average") / (sum(!is.na(x)) + 1)
@@ -194,6 +269,7 @@ data.rz = data.log
 for(i in 1:ncol(data.rz)) {
     data.rz[,i] = rankZ(data.rz[,i])
 }
+
 
 
 
