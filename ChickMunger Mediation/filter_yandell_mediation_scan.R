@@ -1,3 +1,38 @@
+######################################################################################################################
+#
+#   This script filter's the mediation dataframe generated from yandell_mediation_scan.R given a threshold. Qtl2 scans, 
+#        inverse mediation, LOD drop, and LOD drop proportion is performed on all mediators with global 
+#        mediation Z lod score < threshold.
+#
+#   Bryan Yandell's intermediate package: install_github('byandell/intermediate')
+#
+#
+#   Input:
+#      1.) Load in the QTL Viewer environment
+#      2.) mediation_data : dataframe generated from yandell_mediation_scan.R
+#      3.) threshold      : cut off theshold to filter mediators
+#      4.) target_id      : Name of the column in annots that will be used to select the targets
+#      5.) target_data    : dataset.* list where annots contain the column name in [2]
+#      6.) mediator_id    : Name of the column in annots that will be used to select the mediators
+#      7.) mediator_data  : dataset.* list where annots contain the column name in [4]
+#      8.) chunk_number   : numeric value indicating which portion of the lod peaks table to break. Need a fixed chunk_size
+#      9.) chunk_size     : numeric value indicating the size to break the lod peaks table
+#
+#
+#
+#   Output:
+#      1.) Long dataframe version of the mediation_data for all mediators that pass threshold. 
+#         
+#
+#
+#
+#   Author: Duy Pham
+#   Date:   November 6, 2018
+#   E-mail: duy.pham@jax.org
+#
+######################################################################################################################
+
+### Load required library packages
 options(stringsAsFactors = FALSE)
 options(scipen = 999)
 
