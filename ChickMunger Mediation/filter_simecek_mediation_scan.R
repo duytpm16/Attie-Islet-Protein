@@ -95,7 +95,7 @@ for(i in 1:n){
                                mediator.start = as.numeric(mediator.start),
                                mediator.end = as.numeric(mediator.end),
                                mediation.z.lod = scale(mediation.lod)) %>%
-                        subset(target.qtl.chr == mediator.chr & abs(target.qtl.pos - mediator.start) <= 10 & (abs(mediation.z.lod) > abs(threshold)))
+                        subset(target.qtl.chr == mediator.chr & abs(target.qtl.pos - mediator.start) <= 10 & mediation.z.lod < threshold)
     
     
     
