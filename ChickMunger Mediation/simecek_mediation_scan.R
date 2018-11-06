@@ -16,12 +16,13 @@
 #
 #
 #   Output:
-#      1.) Dataframe containing the target's info and each of the mediator's info as a one long string separated by ','
+#      1.) Dataframe containing the target's info and 
+#              each of the mediator's info (see lines 113-118) as a one long string separated by ','
 #
 #
 #
 #   Author: Duy Pham
-#   Date:   July 10, 2018
+#   Date:   November 6, 2018
 #   E-mail: duy.pham@jax.org
 #
 ######################################################################################################################
@@ -80,6 +81,9 @@ if(!is.null(chunk_number)){
 
 
 lod.peaks <- lod.peaks[rng,]
+
+
+
 
 
 
