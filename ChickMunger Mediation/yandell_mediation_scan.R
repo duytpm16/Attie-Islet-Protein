@@ -56,7 +56,7 @@ covar.med     <- get(mediator_data)$covar                                       
 expr.targ     <- get(target_data)$rankz                                                  # Get target's rankZ matrix in dataset.*                (target_data)
 expr.med      <- get(mediator_data)$rankz                                                # Get mediator's rankZ matrix in dataset.*              (mediator_data)
 lod.peaks     <- get(target_data)$lod.peaks$additive                                     # Get target's LOD peaks table in dataset.*             (target_data)
-stopifnot(annot.id.med[,mediator_id] == colnames(expr.med))
+stopifnot(annot.id.med[, id] == colnames(expr.med))
 
 
 
