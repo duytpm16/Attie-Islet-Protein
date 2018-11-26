@@ -39,8 +39,8 @@ target_id     <- args[2]         # protein_id or gene_id
 target_data   <- args[3]         # dataset.islet.proteins or dataset.islet.mrna. Should be the dataset that contains the target_id column in annots
 mediator_id   <- args[4]         # protein_id or gene_id
 mediator_data <- args[5]         # dataset.islet.proteins or dataset.islet.mrna. Should be the dataset that contains the mediator_id column in annots
-chunk_number  <- args[6]
-chunk_size    <- args[7]
+chunk_number  <- as.numeric(args[6])
+chunk_size    <- as.numeric(args[7])
 
 
 
