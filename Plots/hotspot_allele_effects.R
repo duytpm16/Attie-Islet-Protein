@@ -34,7 +34,7 @@ library(gplots)
 
 ### Variables to change
 load("~/Desktop/Attie Not Imputed and Sex+Wave/DO 284/attie_islet_284_nobatch_qtl_viewer.RData")
-protein   <- 'dataset.islet.proteins'
+dataset   <- 'dataset.islet.proteins'
 window    <- 4
 slide     <- 1
 
@@ -45,9 +45,8 @@ slide     <- 1
 
 
 ### Extract required data
-pheno            <- get(protein)$rankz
-annot.id.protein <- get(protein)$annots
-lod.peaks        <- get(protein)$lod.peaks$additive
+pheno            <- get(dataset)$rankz
+lod.peaks        <- get(dataset)$lod.peaks$additive
 
 
 
