@@ -33,10 +33,18 @@
 # library(devtools)
 # install_github("rqtl/qtl2", "rqtl/qtl2convert")
 
-options(stringsAsFactors = FALSE)
+
+
 
 ### Load required library packages
+options(stringsAsFactors = FALSE)
 library(qtl2) 
+
+
+
+
+
+
 
 
 ### Command line arguments / Variables to change
@@ -58,9 +66,22 @@ use_int <- as.logical(args[5])
 
 
 
+
+
+
+
+
+
 ### Check to see if required data are loaded
 stopifnot(c("norm","pheno.dict","display.name","genoprobs", "K", "map", "markers", "covar", 
             "covar.factors", "samples", "rankz", "raw","datatype") %in% ls())
+
+
+
+
+
+
+
 
 
 
@@ -74,11 +95,23 @@ if(should_rankz){
 
 
 
+
+
+
+
+
 ### If running qtl scans by chunks, get chunk size and chunk number
 if(use_chunks){
    chunk_number <- as.numeric(args[6])
    chunk_size <- as.numeric(args[7])
 }
+
+
+
+
+
+
+
 
 
 
@@ -101,8 +134,15 @@ if(use_int == FALSE){
 
 
 
+
+
+
+
+
+
 ### Running QTL2 scan1 function
 if(use_chunks == FALSE){
+            
    # qtl2 scan1 without chunks
    qtl <- scan1(genoprobs = genoprobs, 
                 pheno = expr,
@@ -131,6 +171,7 @@ if(use_chunks == FALSE){
    }
     
 }else{
+            
    # Get chunk range
    max_col = ncol(expr)
    pheno.rng = ((chunk_number - 1) * chunk_size + 1):(chunk_number * chunk_size)
@@ -151,6 +192,8 @@ if(use_chunks == FALSE){
                 intcovar = int_mat,
                 cores = num_cores)
 
+            
+            
             
             
    # Save the QTL chunk scan
