@@ -1,9 +1,27 @@
-###############################################################################
-# Given the dataframe of LODs above a threshold, make a histogram of the top QTL.
-# Duy Pham
-# duy.pham@jax.org
-# July 31, 2018
-################################################################################
+############################################################################################################################
+#
+#   This script takes the LOD peaks dataframe to find hotspots and plot a heatmap of the allele effect of each
+#       expressions within the hotspot.
+#
+#   Note*: Will have to manually select the hotspot
+#
+#
+#   Input:
+#      1.) QTL Viewer dataset
+#      2.) Which dataset to grab
+#      3.) Window of hotspot
+#      4.) Slide in MB across genome
+#
+#
+#   Output:
+#      1.) Heatmap plot of allele effects for each expression in the hotspot
+#
+#
+#  
+#   Author: Duy Pham
+#   E-mail: duy.pham@jax.org
+#   Date:   November 26, 2018
+#############################################################################################################################
 options(stringsAsFactors = F)
 options(scipen = 999)
 
@@ -17,11 +35,9 @@ library(gplots)
 ### Variables to change
 load("~/Desktop/Attie Not Imputed and Sex+Wave/DO 284/attie_islet_284_nobatch_qtl_viewer.RData")
 protein   <- 'dataset.islet.proteins'
-mrna      <- 'dataset.islet.mrna'
-window    <- as.numeric(4)
-slide     <- as.numeric(1)
-num_cores <- as.numeric(1)
-use_int   <- as.logical(FALSE)
+window    <- 4
+slide     <- 1
+
 
 
 
