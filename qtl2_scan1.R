@@ -1,5 +1,8 @@
-### This script reads in the required input data file generated from gather_qtl2_scan1_input_data.R
+####################################################################################################################
+#
+#   This script reads in the required input data file generated from gather_qtl2_scan1_input_data.R
 #       to run the qtl2 scan1 function.
+#
 #   The QTL scan can be ran in 'chunks' or all at once.
 #       Example for chunk size/number: 
 #           Suppose there are 5433 phenotype columns. If chunk size is 1000, then there should be 6 different chunks
@@ -8,7 +11,8 @@
 #
 #           If you do not want to run in chunks, set use_chunks to FALSE.
 #
-### Input:
+#
+#  Input:
 #       1: input.file:    Path + prefix to the qtl2 input data generated from gather_qtl2_scan1_input_data.R
 #       2: num_cores:     Number of cores to run
 #       3: should_rankz:  Logical value to use the rankz dataset instead of normalized
@@ -18,12 +22,14 @@
 #       7: chunk_size:    Numeric value of chunk size. Should be consistent. Not needed if use_chunks is FALSE
 #       8: int_name:      Name of the interaction term. Not needed if use_int is FALSE
 #
-### Output: 
+#
+#  Output: 
 #       1: Matrix containing LOD scoress for each of the phenotype that was given to scan1 at each marker.
 #
-### Author: Duy Pham, 'phenotype range run' was taken from Dan Gatti
-### Date:   July 10, 2018
-### E-mail: duy.pham@jax.org
+#
+#  Author: Duy Pham, 'phenotype range run' was taken from Dan Gatti
+#  Date:   July 10, 2018
+#  E-mail: duy.pham@jax.org
 ####################################################################################################################
 
 
