@@ -1,24 +1,16 @@
-
-# coding: utf-8
-
-# ### Load Libraries
-
-# In[20]:
-
-
+### Load Libraries
 from Bio import SeqIO
 import pickle
 
 
-# <br>
-# <br>
-# <br>
-# <br>
-# ### Create data dictionary for each protein in the Mus Musculus Protein Fasta File
-
-# In[25]:
 
 
+
+
+
+
+
+### Create data dictionary for each protein in the Mus Musculus Protein Fasta File
 peptide_info = {}
 
 for seq_record in SeqIO.parse('Mus_musculus.GRCm38.pep.all.fa','fasta'):
@@ -43,19 +35,15 @@ for seq_record in SeqIO.parse('Mus_musculus.GRCm38.pep.all.fa','fasta'):
         
         
 
+        
+        
+        
+        
 
-# <br>
-# <br>
-# <br>
-# <br>
-# ### Save the data dictionary
+        
 
-# In[26]:
-
-
+### Save the data dictionary
 output = open('mm_peptide_info.pkl', 'wb')
-
 pickle.dump(peptide_info, output)
-
 output.close()
 
