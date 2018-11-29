@@ -1,99 +1,57 @@
-
-# coding: utf-8
-
-# ### Load Libraries
-
-# In[197]:
-
-
+### Load Libraries
 from Bio import SeqIO
 import subprocess
 import csv
 import pandas
-import pickle
 import os
 
 
-# <br>
-# <br>
-# <br>
-# <br>
-# ### Read in MaxQuant Output File
-# ### Read in Mus Musculus peptide data dictionary as generated from MM_Protein_Data_Dictionary.py
-
-# In[198]:
 
 
+
+
+
+### Read in MaxQuant Output File
 data = pandas.read_csv('peptides_DO_islets.txt', sep = '\t', low_memory = False)
 
 
-# In[199]:
 
 
-pkl_file = open('mm_peptide_info.pkl', 'rb')
-peptide_info = pickle.load(pkl_file)
-pkl_file.close()
 
 
-#     
-
-# <br>
-# <br>
-# <br>
-# <br>
 # ### Dimension of MaxQuant File
-
-# In[200]:
-
-
 n_rows = data.shape[0]
 data.shape
 
 
-# <br>
-# <br>
-# <br>
-# <br>
-# ### Remove ROWS in MaxQuant File where SEQUENCES are not Peptides
 
-# In[201]:
-
-
+### Remove ROWS in MaxQuant File where SEQUENCES are not Peptides
 amino_acids = ['G','A','L','M','F','W','K','Q','E','S','P','V','I','C','Y','H','R','N','D','T']
 rows_to_drop = []
+
 
 for i in range(0, n_rows):
     if data['Sequence'][i][0] not in amino_acids:
         rows_to_drop.append(i)
 
+        
 data = data.drop(rows_to_drop)
-
-
-# In[202]:
-
-
 data.index = range(len(data))
 data.shape
 
 
-# <br>
-# <br>
-# <br>
-# <br>
-# ### For each Peptide Sequence:
-# > #### 1.) Create temporary fasta file
-# > #### 2.) Do blast alignment
-# > #### 3.) Find subjects that have 100% identity alignment length match to the query peptide
 
-# In[246]:
-
-
+### For each Peptide Sequence:
+#      1.) Create temporary fasta file
+#      2.) Do blast alignment
+#      3.) Find subjects that have 100% identity alignment length match to the query peptide
 peptide_sequence = []
 identity_percent = []
 blast_subject    = []
 align_length     = []
 subject_start    = []
 subject_end      = []
+
 for i in range(0,len(data['Sequence'])):
     
     # 1.) Create the temporary fasta file
@@ -188,32 +146,31 @@ for i in range(0,len(data['Sequence'])):
     
 
 
-# <br>
-# <br>
-# <br>
-# <br>
-# ### Save blast results to data.frame
 
-# In[269]:
-
-
+    
+    
+    
+    
+    
+    
+### Save blast results to data.frame
 blast_result = pandas.DataFrame({'peptide_sequence': peptide_sequence,
-                                 'subjects': blast_subject,
+                                 'subjects':         blast_subject,
                                  'identity_percent': identity_percent,
                                  'alignment_length': align_length,
-                                 'subject_start': subject_start,
-                                 'subject_end': subject_end})
+                                 'subject_start':    subject_start,
+                                 'subject_end':      subject_end})
    
 
 
-# <br>
-# <br>
-# <br>
-# <br>
-# ### Save dataframe as .txt
 
-# In[271]:
-
-
+    
+    
+    
+    
+    
+    
+    
+### Save dataframe as .txt
 blast_result.to_csv('blast_results.txt', sep = '\t', index = False, header = True)
 
