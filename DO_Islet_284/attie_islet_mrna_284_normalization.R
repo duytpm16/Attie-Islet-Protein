@@ -47,7 +47,7 @@ samples_file <-  paste0(prefix, "_samples_annot.rds")
 data.norm <- raw
 q <- apply(data.norm, 1, quantile, probs=0.75)
 data.norm <- data.norm/q                                  
-
+data.norm <- log(data.norm + 1)
 
 
 
