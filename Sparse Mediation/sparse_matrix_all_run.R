@@ -12,31 +12,31 @@ load('attie_islet_284_qtl_viewer.RData')
 ### Arguments. Number and size to break target and mediator into chunks
 args = commandArgs(trailingOnly = TRUE)
 targ.chunk_number = as.numeric(args[1])
-targ.chunk_size = as.numeric(args[2])
-med.chunk_number = as.numeric(args[3])
-med.chunk_size = as.numeric(args[4])
-targ = args[5]
-med = args[6]
-targ_id = args[7]
-med_id = args[8]
+targ.chunk_size   = as.numeric(args[2])
+med.chunk_number  = as.numeric(args[3])
+med.chunk_size    = as.numeric(args[4])
+targ              = args[5]
+med               = args[6]
+targ_id           = args[7]
+med_id            = args[8]
 
 
 
 
 
 ### Extract rankZ, annotation, and covariate data
-rankz.targ <- get(targ)$rankz
-rankz.med <- get(med)$rankz
-annot.targ <- get(targ)$annots
-annot.med <- get(med)$annots
-annot.targ <- annot.targ %>% dplyr::rename(id = targ_id)
-annot.med <- annot.med %>% dplyr::rename(id = med_id)
-annot.med$chr <- as.character(annot.med$chr)
-annot.med <- annot.med %>% filter(chr %in% c(1:19,'X'))
+rankz.targ          <- get(targ)$rankz
+rankz.med           <- get(med)$rankz
+annot.targ          <- get(targ)$annots
+annot.med           <- get(med)$annots
+annot.targ          <- annot.targ %>% dplyr::rename(id = targ_id)
+annot.med           <- annot.med %>% dplyr::rename(id = med_id)
+annot.med$chr       <- as.character(annot.med$chr)
+annot.med           <- annot.med %>% filter(chr %in% c(1:19,'X'))
 rownames(annot.med) <- annot.med$id
-rankz.med <- rankz.med[,annot.med$id]
-covar.targ <- get(targ)$covar
-covar.med <- get(med)$covar
+rankz.med           <- rankz.med[,annot.med$id]
+covar.targ          <- get(targ)$covar
+covar.med           <- get(med)$covar
 stopifnot(colnames(rankz.targ) == annot.targ$id)
 stopifnot(colnames(rankz.med) == annot.med$id)
 
@@ -72,7 +72,7 @@ if(targ.rng[length(targ.rng)] > max_col) {
 mediator.annot <- annot.med[med.rng,]
 
 # Target info
-target.annot <- annot.targ[targ.rng,]
+target.annot   <- annot.targ[targ.rng,]
 
 
 
@@ -80,41 +80,41 @@ target.annot <- annot.targ[targ.rng,]
 ### Create vectors to store the data
 
 #     Create dataframe containing all possible combinations of target and mediator. Then add mediator's chromosome and start position
-target_and_mediator = crossing(target.annot$id, mediator.annot$id)
+target_and_mediator           = crossing(target.annot$id, mediator.annot$id)
 colnames(target_and_mediator) = c('target.id', 'mediator.id')
-target_and_mediator$chr = mediator.annot$chr[match(target_and_mediator$mediator.id, mediator.annot$id)]
-target_and_mediator$start = mediator.annot$start[match(target_and_mediator$mediator.id, mediator.annot$id)]
+target_and_mediator$chr       = mediator.annot$chr[match(target_and_mediator$mediator.id, mediator.annot$id)]
+target_and_mediator$start     = mediator.annot$start[match(target_and_mediator$mediator.id, mediator.annot$id)]
 
 
 #     Create vector of the ids 
-target.id <- target_and_mediator$target.id
-mediator.id <- target_and_mediator$mediator.id
-mediator.chr <- target_and_mediator$chr
+target.id      <- target_and_mediator$target.id
+mediator.id    <- target_and_mediator$mediator.id
+mediator.chr   <- target_and_mediator$chr
 mediator.start <- target_and_mediator$start
 
 
 #     Initialize empty vectors to store info
-n <- nrow(target_and_mediator)
-best.marker <- character(length = n)
-sample.size <- numeric(length = n)
-target.lod <- numeric(length = n)
-mediator.lod <- numeric(length = n)
-pearson <- numeric(length = n)
-spearman <- numeric(length = n)
-best.model <- character(length = n)
-best.model.p <- numeric(length = n)
-best.triad <- character(length = n)
-best.triad.p <- numeric(length = n)
-causal.p <- numeric(length = n)
-reactive.p <- numeric(length = n)
+n             <- nrow(target_and_mediator)
+best.marker   <- character(length = n)
+sample.size   <- numeric(length = n)
+target.lod    <- numeric(length = n)
+mediator.lod  <- numeric(length = n)
+pearson       <- numeric(length = n)
+spearman      <- numeric(length = n)
+best.model    <- character(length = n)
+best.model.p  <- numeric(length = n)
+best.triad    <- character(length = n)
+best.triad.p  <- numeric(length = n)
+causal.p      <- numeric(length = n)
+reactive.p    <- numeric(length = n)
 independent.p <- numeric(length = n)
-undecided.p <- numeric(length = n)
-t.d_t <- numeric(length = n)
-m.d_m <- numeric(length = n)
-t.m_t <- numeric(length = n)
-m.t_m <- numeric(length = n)
-t.md_t.m <- numeric(length = n)
-t.md_t <- numeric(length = n)
+undecided.p   <- numeric(length = n)
+t.d_t         <- numeric(length = n)
+m.d_m         <- numeric(length = n)
+t.m_t         <- numeric(length = n)
+m.t_m         <- numeric(length = n)
+t.md_t.m      <- numeric(length = n)
+t.md_t        <- numeric(length = n)
 mediation.lod <- numeric(length = n)
 inverse.mediation.lod <- numeric(length = n)
 
