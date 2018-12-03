@@ -26,28 +26,31 @@ intersect.samples <- intersect(rownames(dataset.islet.rnaseq$expr), rownames(dat
 
 
 ### Extract raw and samples data based on overlap data
-raw <- dataset.islet.rnaseq$raw[intersect.samples,]
-samples <- dataset.islet.rnaseq$samples[intersect.samples,]
+raw            <- dataset.islet.rnaseq$raw[intersect.samples,]
+samples        <- dataset.islet.rnaseq$samples[intersect.samples,]
 samples$DOwave <- as.factor(samples$DOwave)
-samples$sex <- as.factor(samples$sex)
+samples$sex    <- as.factor(samples$sex)
 
 
 
 ### Prefix to save name of .rds data
 prefix <- 'attie_islet_mrna_284'
 
-raw_file <- paste0(prefix,"_filtered_raw.rds")
-norm_file <- paste0(prefix,"_normalized.rds")
+raw_file     <- paste0(prefix,"_filtered_raw.rds")
+norm_file    <- paste0(prefix,"_normalized.rds")
 norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
 samples_file <-  paste0(prefix, "_samples_annot.rds")
 
 
 
-### Normalize raw data by upper quantile for each subject
+### Normalize raw data by upper quantile for each subject, then log transform
 data.norm <- raw
-q <- apply(data.norm, 1, quantile, probs=0.75)
+q         <- apply(data.norm, 1, quantile, probs=0.75)
 data.norm <- data.norm/q                                  
 data.norm <- log(data.norm + 1)
+
+
+
 
 
 
@@ -61,6 +64,11 @@ rankZ = function(x) {
 ### Rankz across genes
 data.rz <- data.norm
 data.rz <- apply(data.rz, 2, rankZ)
+
+
+
+
+
 
 
 
