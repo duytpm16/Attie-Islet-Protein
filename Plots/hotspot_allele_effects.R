@@ -45,8 +45,8 @@ slide     <- 1
 
 
 ### Extract required data
-pheno            <- get(dataset)$rankz
-lod.peaks        <- get(dataset)$lod.peaks$additive
+pheno     <- get(dataset)$rankz
+lod.peaks <- get(dataset)$lod.peaks$additive
 
 
 
@@ -61,7 +61,7 @@ lod.peaks        <- get(dataset)$lod.peaks$additive
 
 ### Counting number of LOD above 6 within a 4MB window across each chromosome
 lod.peaks <- lod.peaks[lod.peaks$cis == FALSE,]
-lod_df <- list()
+lod_df    <- list()
 for(i in unique(markers$chr)){
   
   
@@ -73,7 +73,7 @@ for(i in unique(markers$chr)){
   
     # Creating x-axis scale. min to max with slide (or 'by' in seq function)
     x_axis_scale <- seq(min, max, slide)
-    chr <- rep(i, length(x_axis_scale))
+    chr          <- rep(i, length(x_axis_scale))
   
     
     # Getting LOD peaks from chromosome i
@@ -82,7 +82,7 @@ for(i in unique(markers$chr)){
     
     # Creating dataframe of counts of lod peaks above threshold 
     count <- vector()
-    pos <- ((x_axis_scale+window)+x_axis_scale)/2
+    pos   <- ((x_axis_scale+window)+x_axis_scale)/2
     for(j in 1:length(pos)){
         count[j] <- sum((abs(sub$qtl.pos - pos[j])  <= window/2))
     }
@@ -139,9 +139,9 @@ for(i in c(3,8,10,14,22,25,34,38,46,51,54)){
     
     
     # 2
-    expr.cor = cor(pheno[,sub$annot.id], use = 'pairwise.complete.obs')
-    cl = hclust(as.dist(1.0 - expr.cor), method = "average")
-    sub = sub[cl$order,]
+    expr.cor      <- cor(pheno[,sub$annot.id], use = 'pairwise.complete.obs')
+    cl            <- hclust(as.dist(1.0 - expr.cor), method = "average")
+    sub           <- sub[cl$order,]
     rownames(sub) <- sub$gene.symbol
 
     
