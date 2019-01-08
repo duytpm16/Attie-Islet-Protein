@@ -146,6 +146,9 @@ for(i in c(2,8,10,14,19,25,33,39,43,54,56,57)){
   colnames(expr.cor) <- sub$gene.symbol
   rownames(expr.cor) <- sub$gene.symbol
   
+  
+  
+  # 3
   png(paste0('attie_islet_proteins_',hotspot$chr[i],'_',hotspot$pos[i],'_correlation.png'), width = 960, 960)
   corrplot(expr.cor, method = 'color', tl.srt = 45)
   dev.off()
