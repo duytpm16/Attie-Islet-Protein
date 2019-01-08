@@ -55,8 +55,8 @@ stopifnot(colnames(norm) == colnames(rankz))
 
 
 ### Removing columns without Ensembl protein IDs
-norm <- norm[,grep('ENSMUSP', colnames(norm))]       # 373 x 5433 -> 373 x 4808
-rankz <- rankz[,grep('ENSMUSP', colnames(rankz))]    # 373 x 5433 -> 373 x 4808
+norm <- norm[,grep('ENSMUSP', colnames(norm))]       # 373 x 5415 -> 373 x 4808
+rankz <- rankz[,grep('ENSMUSP', colnames(rankz))]    # 373 x 5415 -> 373 x 4808
 
 
 
