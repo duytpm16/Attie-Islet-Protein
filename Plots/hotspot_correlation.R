@@ -84,7 +84,7 @@ for(i in unique(markers$chr)){
   count <- vector()
   pos   <- ((x_axis_scale+window)+x_axis_scale)/2
   for(j in 1:length(pos)){
-    count[j] <- sum((abs(sub$qtl.pos - pos[j])  <= window/2))
+      count[j] <- sum((abs(sub$qtl.pos - pos[j])  <= window/2))
   }
   
   lod_df[[i]] <- data.frame(chr = chr, pos = pos, count = count)
