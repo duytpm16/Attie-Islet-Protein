@@ -67,29 +67,27 @@ lod_df <- lod_df %>% filter(chr %in% c('2','4','5','7','10','14') & pos %in% c(1
 
 
 bg <- batchGenes(ids = unique(as.list(annots$gene.id)), version = 91)
-
-
 for(i in 1:nrow(lod_df)){
   
-  sub_lodpeaks <- lod.peaks %>% subset(qtl.chr == lod_df$chr[i] & abs(qtl.pos - lod_df$pos[i]) <= 2)
-  sub_lodpeaks$gene.id <- annots$gene.id[match(sub_lodpeaks$protein.id, annots$protein.id)]
-  sub_lodpeaks$entrez.id <- bg$entrez_id[match(sub_lodpeaks$gene.id, bg$gene_id)]
-  
-  assign(paste0('chr_', lod_df$chr[i],'_',lod_df$pos[i],'_BP'),
-         enrichGO(sub_lodpeaks$gene.id, universe = annots$gene.id, OrgDb = 'org.Mm.eg.db', keyType = 'ENSEMBL', ont = 'BP', pAdjustMethod = 'fdr', readable = TRUE))
-
-  assign(paste0('chr_', lod_df$chr[i],'_',lod_df$pos[i],'_CC'),
-         enrichGO(sub_lodpeaks$gene.id, universe = annots$gene.id, OrgDb = 'org.Mm.eg.db', keyType = 'ENSEMBL', ont = 'CC', pAdjustMethod = 'fdr', readable = TRUE))
-
-  assign(paste0('chr_', lod_df$chr[i],'_',lod_df$pos[i],'_MF'),
-         enrichGO(sub_lodpeaks$gene.id, universe = annots$gene.id, OrgDb = 'org.Mm.eg.db', keyType = 'ENSEMBL', ont = 'MF', pAdjustMethod = 'fdr', readable = TRUE))
-
-  
-  kegg <- enrichKEGG(sub_lodpeaks$entrez.id, universe = bg$entrez_id, organism = 'mmu', keyType = 'kegg', pAdjustMethod = 'fdr')
-  for(j in 1:nrow(kegg@result)){
+    sub_lodpeaks <- lod.peaks %>% subset(qtl.chr == lod_df$chr[i] & abs(qtl.pos - lod_df$pos[i]) <= 2)
+    sub_lodpeaks$gene.id <- annots$gene.id[match(sub_lodpeaks$protein.id, annots$protein.id)]
+    sub_lodpeaks$entrez.id <- bg$entrez_id[match(sub_lodpeaks$gene.id, bg$gene_id)]
+    
+    assign(paste0('chr_', lod_df$chr[i],'_',lod_df$pos[i],'_BP'),
+           enrichGO(sub_lodpeaks$gene.id, universe = annots$gene.id, OrgDb = 'org.Mm.eg.db', keyType = 'ENSEMBL', ont = 'BP', pAdjustMethod = 'fdr', readable = TRUE))
+    
+    assign(paste0('chr_', lod_df$chr[i],'_',lod_df$pos[i],'_CC'),
+           enrichGO(sub_lodpeaks$gene.id, universe = annots$gene.id, OrgDb = 'org.Mm.eg.db', keyType = 'ENSEMBL', ont = 'CC', pAdjustMethod = 'fdr', readable = TRUE))
+    
+    assign(paste0('chr_', lod_df$chr[i],'_',lod_df$pos[i],'_MF'),
+           enrichGO(sub_lodpeaks$gene.id, universe = annots$gene.id, OrgDb = 'org.Mm.eg.db', keyType = 'ENSEMBL', ont = 'MF', pAdjustMethod = 'fdr', readable = TRUE))
+    
+    
+    kegg <- enrichKEGG(sub_lodpeaks$entrez.id, universe = bg$entrez_id, organism = 'mmu', keyType = 'kegg', pAdjustMethod = 'fdr')
+    for(j in 1:nrow(kegg@result)){
       kegg@result$geneID[j] <- paste0(bg$symbol[match(strsplit(kegg@result$geneID[j], split = '/')[[1]], bg$entrez_id)], collapse = '/')
-  }
-  assign(paste0('chr_', lod_df$chr[i],'_',lod_df$pos[i],'_KEGG'), kegg)
+    }
+    assign(paste0('chr_', lod_df$chr[i],'_',lod_df$pos[i],'_KEGG'), kegg)
 }
 
 
@@ -100,4 +98,3 @@ for(i in 1:nrow(lod_df)){
 
 rm(list = ls()[!ls() %in% grep('chr_',ls(),value = TRUE)])
 save.image("~/Desktop/Attie Mass Spectrometry/Islet/Proteins/Version 2/attie_islet_protein_hotspot_clusterprofiler.RData")
-
