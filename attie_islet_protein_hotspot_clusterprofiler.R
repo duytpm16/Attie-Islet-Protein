@@ -1,3 +1,4 @@
+### Options and Libraries
 options(stringsAsFactors = FALSE)
 library(dplyr)
 library(ggplot2)
@@ -7,6 +8,13 @@ library(data.table)
 library(ensimplR)
 
 
+
+
+
+
+
+
+### Load and extract data
 load("~/Desktop/Attie Mass Spectrometry/QTL Viewers/attie_all_qtl_viewer_v5.RData")
 lod.peaks <- dataset.islet.proteins$lod.peaks$additive
 lod.peaks <- lod.peaks[!lod.peaks$cis,]
@@ -18,7 +26,12 @@ annots <- dataset.islet.proteins$annot.protein
 
 
 
-## Counting number of cis LOD above 6 within a 4MB window across each chromosome
+
+
+
+
+
+## Counting number of distal LOD above 6 within a 4MB window across each chromosome
 lod_df <- list()
 slide <- 1
 window <- 4
@@ -52,6 +65,9 @@ lod_df     <- rbindlist(lod_df)
 
 
 
+
+
+### Get hotspots
 lod_df <- lod_df[lod_df$count > 45,]
 lod_df <- lod_df %>% filter(chr %in% c('2','4','5','7','10','14') & pos %in% c(164, 14, 139, 146, 45, 82, 41, 101))
 
@@ -65,7 +81,7 @@ lod_df <- lod_df %>% filter(chr %in% c('2','4','5','7','10','14') & pos %in% c(1
 
 
 
-
+### ClusterProfiler Enrichment Analysis
 bg <- batchGenes(ids = unique(as.list(annots$gene.id)), version = 91)
 for(i in 1:nrow(lod_df)){
   
@@ -96,5 +112,8 @@ for(i in 1:nrow(lod_df)){
 
 
 
+
+
+### Save results
 rm(list = ls()[!ls() %in% grep('chr_',ls(),value = TRUE)])
 save.image("~/Desktop/Attie Mass Spectrometry/Islet/Proteins/Version 2/attie_islet_protein_hotspot_clusterprofiler.RData")
