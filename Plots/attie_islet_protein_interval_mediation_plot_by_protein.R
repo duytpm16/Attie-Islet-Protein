@@ -16,17 +16,15 @@ mediator_ds <- 'dataset.islet.rnaseq'
 target_id   <- 'protein.id'
 mediator_id <- 'gene.id'
 
-overlap <- intersect(get(target_ds)$annot.samples$mouse.id, get(mediator_ds)$annot.samples$mouse.id)
-
 lod.peaks <- get(target_ds)$lod.peaks$additive
 lod.peaks <- lod.peaks[!lod.peaks$cis,]
-expr      <- get(target_ds)$data$rz[overlap,]
-covar     <- get(target_ds)$covar.matrix[overlap,,drop = FALSE]
+expr      <- get(target_ds)$data$rz
+covar     <- get(target_ds)$covar.matrix
 
 
 
 annot <- switch(get(mediator_ds)$datatype,"mRNA" = 'annot.mrna', "mrna" = 'annot.mrna', "protein" = 'annot.protein') 
-med_expr  <- get(mediator_ds)$data$rz[overlap,]
+med_expr  <- get(mediator_ds)$data$rz
 med_annot <- get(mediator_ds)[[annot]] %>% dplyr::rename(pos = start)
 med_expr  <- med_expr[rownames(expr), med_annot[,mediator_id, drop = TRUE]]
 med_type  <- get(mediator_ds)$datatype
