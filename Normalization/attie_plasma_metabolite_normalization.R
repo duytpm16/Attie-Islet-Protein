@@ -45,8 +45,8 @@ options(stringsAsFactors = FALSE)
 #     plasma_metbaolite_raw: 380 x 342
 #     samples: 500 x 7
 #     chr: 498 x 5
-prefix <- '~/Desktop/Attie Final/Metabolites/Plasma/attie_plasma_metabolite'
-raw <- read.delim("~/Desktop/Attie Final/Metabolites/Plasma/FilterdbyR_DOPlasmaMetbolites_BatchandCovariatesAppended.txt")
+prefix   <- '~/Desktop/Attie Final/Metabolites/Plasma/attie_plasma_metabolite'
+raw     <- read.delim("~/Desktop/Attie Final/Metabolites/Plasma/FilterdbyR_DOPlasmaMetbolites_BatchandCovariatesAppended.txt")
 samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
 chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
 
@@ -59,10 +59,10 @@ chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv")
 
 
 ### Variables to store the data
-raw_file <- paste0(prefix,"_filtered_raw.rds")
-norm_file <- paste0(prefix,"_normalized.rds")
+raw_file     <- paste0(prefix,"_filtered_raw.rds")
+norm_file    <- paste0(prefix,"_normalized.rds")
 norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
-samples_file <-  paste0(prefix, "_samples_annot.rds")
+samples_file <- paste0(prefix, "_samples_annot.rds")
 
 
 
@@ -73,14 +73,14 @@ samples_file <-  paste0(prefix, "_samples_annot.rds")
 
 
 ### Fixing the name of two columns in the samples dataframe to match a data dictionary that will be used later in other scripts
-colnames(samples)[grep('wave',colnames(samples), ignore.case = TRUE)] <- 'DOwave'
+colnames(samples)[grep('wave',colnames(samples), ignore.case = TRUE)]  <- 'DOwave'
 colnames(samples)[grep('batch',colnames(samples), ignore.case = TRUE)] <- 'batch'
-colnames(raw)[grep('\\wave$', colnames(raw), ignore.case = TRUE)] <- 'DOwave'
+colnames(raw)[grep('\\wave$', colnames(raw), ignore.case = TRUE)]  <- 'DOwave'
 colnames(raw)[grep('\\batch$', colnames(raw), ignore.case = TRUE)] <- 'batch'
 
-raw$Mouse.ID <- gsub('-', '', raw$Mouse.ID)
-samples$Mouse.ID <- gsub('-', '', samples$Mouse.ID)
-chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
+raw$Mouse.ID      <- gsub('-', '', raw$Mouse.ID)
+samples$Mouse.ID  <- gsub('-', '', samples$Mouse.ID)
+chr_m_y$Mouse.ID  <- gsub('-', '', chr_m_y$Mouse.ID)
 colnames(samples) <- gsub('_','.',colnames(samples))
 
 
@@ -194,15 +194,15 @@ if(sum(is.na(raw) > 0)){
     # Put the missing data back in and impute again.
     if(chg > 5 & iter < 20) {
       
-      data.cb[miss] = NA
-      data.log = data.cb
-      iter = iter + 1    
+       data.cb[miss] = NA
+       data.log = data.cb
+       iter = iter + 1    
       
     }else{
       
-      data.cb[miss] = NA
-      data.log = data.cb
-      break
+       data.cb[miss] = NA
+       data.log = data.cb
+       break
       
     }
   })
