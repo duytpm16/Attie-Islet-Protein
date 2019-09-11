@@ -9,10 +9,8 @@ QTL2 pipeline for the Attie Islet Protein and Cecum, Liver, and Plasma Lipid/Met
  3. sample annotation text file: "attie_DO_sample_annot.txt"  
  4. sample ChrM_Y info csv file: "attie_sample_info_ChrM_Y.csv"  
  5. rds dataframe of marker map: "marker_grid_0.02cM_plus.rds"  
-  
-Be consistent with the ___prefix___ variable. Use the same ___prefix___ in the normalization.R file with other scripts.  
-  
-  
+
+
 ### 1. Filter and Normalization. 
 Filter the raw data as needed. (Ex. remove data with _x_ number of _NAs_)  
 Input missing values by PCA and normalize the data by comBat, then put back NAs
