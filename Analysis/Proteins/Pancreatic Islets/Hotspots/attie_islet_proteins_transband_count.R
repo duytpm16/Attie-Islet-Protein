@@ -34,7 +34,8 @@ peaks   <- get(dataset)$lod.peaks$additive
 #           slide   - Mbp to slide across genome
 #           window  - Width of window in Mbps
 #
-#       Note*: Warning is due to 'X' chromosome conversion to numeric. Need this to reorder 'chr' column (line 51).
+#       Note*: 
+#           Warning is due to 'X' chromosome conversion to numeric. Need this to reorder 'chr' column (line 52).
 transband_count <- function(markers, peaks, slide, window){
 
     counts_df <- markers %>% 
@@ -80,6 +81,10 @@ counts_lod7.3 <- counts_lod7.3 %>%
                     filter(counts >= 15) %>% 
                     filter(chr %in% c('2', '4', '5', '7')) %>%
                     filter(pos %in% c(163, 13, 139, 146, 45, 82))
+
+
+
+
 
 
 
