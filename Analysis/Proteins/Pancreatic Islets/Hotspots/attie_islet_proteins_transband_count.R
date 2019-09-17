@@ -25,9 +25,16 @@ peaks   <- get(dataset)$lod.peaks$additive
 
 
 
-
-### Count number of QTLs within slide and window paramters. 
-#     Note*: Warning is due to 'X' chromosome conversion to numeric. Need this to reorder 'chr' column.
+### Help function:
+#       Counts number of QTLs within certain window across genome.
+#       
+#       Parameters:
+#           markers - marker's dataframe
+#           peaks   - QTL peaks dataframe with 'qtl.chr' and 'qtl.pos' at least in the column names
+#           slide   - Mbp to slide across genome
+#           window  - Width of window in Mbps
+#
+#       Note*: Warning is due to 'X' chromosome conversion to numeric. Need this to reorder 'chr' column.
 transband_count <- function(markers, peaks, slide, window){
 
     counts_df <- markers %>% 
@@ -52,6 +59,11 @@ transband_count <- function(markers, peaks, slide, window){
 
 
 
+
+
+
+
+
 ### Count number of qtls within tranband using LOD 6
 peaks <- peaks %>% filter(!cis & lod > 6)
 counts_lod6   <- transband_count(marker = markers, peaks = peaks, slide = 1, window = 4)
@@ -60,6 +72,7 @@ counts_lod6   <- transband_count(marker = markers, peaks = peaks, slide = 1, win
 ### Count number of qtls within tranband using LOD 7.3
 peaks <- peaks %>% filter(!cis & lod > 7.3)
 counts_lod7.3 <- transband_count(marker = markers, peaks = peaks, slide = 1, window = 4)
+
 
 
 
