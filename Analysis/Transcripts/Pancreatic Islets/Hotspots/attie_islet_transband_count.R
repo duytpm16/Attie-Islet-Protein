@@ -38,16 +38,16 @@ peaks   <- get(dataset)$lod.peaks$additive
 #           Warning is due to 'X' chromosome conversion to numeric. Need this to reorder 'chr' column (line 52).
 transband_count <- function(markers, peaks, slide, window){
   
-  markers %>% 
-      group_by(chr) %>% 
-      summarise(min = plyr::round_any(min(pos), accuracy = 1, f = floor),
-                max = plyr::round_any(max(pos), accuracy = window, f = ceiling),
-                len = length(seq(min, max, slide))) %>%
-      uncount(len) %>% group_by(chr) %>%
-      mutate(pos = seq(unique(min), unique(max), slide), pos = ((pos + window) + pos)/2) %>%
-      select(-min, -max) %>% group_by(chr, pos) %>%
-      mutate(counts = sum(peaks$qtl.chr == chr & abs(peaks$qtl.pos - pos) <= window /2)) %>%
-      arrange(as.numeric(chr), chr)
+      markers %>% 
+          group_by(chr) %>% 
+          summarise(min = plyr::round_any(min(pos), accuracy = 1, f = floor),
+                    max = plyr::round_any(max(pos), accuracy = window, f = ceiling),
+                    len = length(seq(min, max, slide))) %>%
+          uncount(len) %>% group_by(chr) %>%
+          mutate(pos = seq(unique(min), unique(max), slide), pos = ((pos + window) + pos)/2) %>%
+          select(-min, -max) %>% group_by(chr, pos) %>%
+          mutate(counts = sum(peaks$qtl.chr == chr & abs(peaks$qtl.pos - pos) <= window /2)) %>%
+          arrange(as.numeric(chr), chr)
   
 }      
 
