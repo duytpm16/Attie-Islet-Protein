@@ -67,18 +67,18 @@ transband_count <- function(markers, peaks, slide, window){
 peaks6 <- peaks %>% filter(!cis & lod > 6)
 counts_lod6   <- transband_count(marker = markers, peaks = peaks6, slide = 1, window = 4)
 counts_lod6   <- counts_lod6 %>% 
-  filter(counts >= 45) %>% 
-  filter(chr %in% c('2', '4', '5', '7', '10', '14')) %>%
-  filter(pos %in% c(164, 14, 139, 146, 45, 82, 41, 101))
+                    filter(counts >= 45) %>% 
+                    filter(chr %in% c('2', '4', '5', '7', '10', '14')) %>%
+                    filter(pos %in% c(164, 14, 139, 146, 45, 82, 41, 101))
 
 
 ### Count number of qtls with LOD 7.3 in 4Mbp windows and 1 Mbp step across genome. Finally select windows with highest counts
 peaks7.3 <- peaks %>% filter(!cis & lod > 7.3)
 counts_lod7.3 <- transband_count(marker = markers, peaks = peaks7.3, slide = 1, window = 4)
 counts_lod7.3 <- counts_lod7.3 %>% 
-  filter(counts >= 15) %>% 
-  filter(chr %in% c('2', '4', '5', '7')) %>%
-  filter(pos %in% c(163, 13, 139, 146, 45, 82))
+                    filter(counts >= 15) %>% 
+                    filter(chr %in% c('2', '4', '5', '7')) %>%
+                    filter(pos %in% c(163, 13, 139, 146, 45, 82))
 
 
 
