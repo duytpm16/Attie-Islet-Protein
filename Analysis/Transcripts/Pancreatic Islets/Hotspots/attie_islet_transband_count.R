@@ -39,15 +39,15 @@ peaks   <- get(dataset)$lod.peaks$additive
 transband_count <- function(markers, peaks, slide, window){
   
   markers %>% 
-    group_by(chr) %>% 
-    summarise(min = plyr::round_any(min(pos), accuracy = 1, f = floor),
-              max = plyr::round_any(max(pos), accuracy = window, f = ceiling),
-              len = length(seq(min, max, slide))) %>%
-    uncount(len) %>% group_by(chr) %>%
-    mutate(pos = seq(unique(min), unique(max), slide), pos = ((pos + window) + pos)/2) %>%
-    select(-min, -max) %>% group_by(chr, pos) %>%
-    mutate(counts = sum(peaks$qtl.chr == chr & abs(peaks$qtl.pos - pos) <= window /2)) %>%
-    arrange(as.numeric(chr), chr)
+      group_by(chr) %>% 
+      summarise(min = plyr::round_any(min(pos), accuracy = 1, f = floor),
+                max = plyr::round_any(max(pos), accuracy = window, f = ceiling),
+                len = length(seq(min, max, slide))) %>%
+      uncount(len) %>% group_by(chr) %>%
+      mutate(pos = seq(unique(min), unique(max), slide), pos = ((pos + window) + pos)/2) %>%
+      select(-min, -max) %>% group_by(chr, pos) %>%
+      mutate(counts = sum(peaks$qtl.chr == chr & abs(peaks$qtl.pos - pos) <= window /2)) %>%
+      arrange(as.numeric(chr), chr)
   
 }      
 
@@ -65,7 +65,7 @@ transband_count <- function(markers, peaks, slide, window){
 
 
 
-### Count number of qtls with LOD 7.3 in 4Mbp windows and 1 Mbp step across genome
+### Count number of qtls with LOD 7.2 in 4Mbp windows and 1 Mbp step across genome as in Keller et al. 2018 paper
 peaks7.2 <- peaks %>% filter(!cis & lod > 7.2)
 counts_lod7.2 <- transband_count(marker = markers, peaks = peaks7.2, slide = 1, window = 4)
 counts_lod7.2 <- counts_lod7.2 %>% 
