@@ -12,10 +12,10 @@
 #
 #
 #  Output:
-#     1.) Filtered raw data file as rds file
-#     2.) Normalized cecum lipids levels by pca and comBat normaliziation method as a matrix in  rds file
-#     3.) Normalized ranked z data as rds file
-#     4.) New Sample annotation dataframe as rds file
+#     1.) Filtered raw data file 
+#     2.) Normalized cecum lipids levels by pca and comBat normaliziation method as a matrix 
+#     3.) Normalized ranked z data 
+#     4.) New Sample annotation dataframe 
 #
 #
 #  Author: Duy Pham
