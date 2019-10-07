@@ -31,22 +31,12 @@ library(pcaMethods)
 #      cecum_lipids_raw: 432 x 3373
 #      samples: 500 x 7
 #      chr_m_y: 498 x 5
-prefix <- '~/Desktop/Attie Final/Lipids/Cecum/attie_cecum_lipid'
-raw <- read.delim("~/Desktop/Attie Final/Lipids/Cecum/03_January_2018_DO_Cecum_Lipidomics_Raw.txt")
-samples <- read.delim('~/Desktop/Attie Final/attie_DO_sample_annot.txt')
-chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv")
+raw <- read.delim("~/Desktop/Attie Mass Spectrometry/Lipids/Cecum/03_January_2018_DO_Cecum_Lipidomics_Raw.txt")
+samples <- read.delim('~/Desktop/Attie Mass Spectrometry/Sample Info/attie_DO_sample_annot.txt')
+chr_m_y <- read.csv("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_sample_info_ChrM_Y.csv")
 
 
 
-
-
-
-
-### Variable names to store data
-raw_file <- paste0(prefix,"_filtered_raw.rds")
-norm_file <- paste0(prefix,"_normalized.rds")
-norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
-samples_file <-  paste0(prefix, "_samples_annot.rds")
 
 
 
@@ -61,10 +51,10 @@ colnames(samples)[grep('batch',colnames(samples), ignore.case = TRUE)] <- 'batch
 colnames(raw)[grep('wave', colnames(raw), ignore.case = TRUE)] <- 'DOwave'
 colnames(raw)[grep('batch', colnames(raw), ignore.case = TRUE)] <- 'batch'
 
-raw$Mouse.ID <- gsub('-', '', raw$Mouse.ID)
-samples$Mouse.ID <- gsub('-', '', samples$Mouse.ID)
-chr_m_y$Mouse.ID <- gsub('-', '', chr_m_y$Mouse.ID)
-colnames(samples) <- gsub('_','.',colnames(samples))
+raw$Mouse.ID      <- gsub('-', '', raw$Mouse.ID)
+samples$Mouse.ID  <- gsub('-', '', samples$Mouse.ID)
+chr_m_y$Mouse.ID  <- gsub('-', '', chr_m_y$Mouse.ID)
+colnames(samples) <- gsub('_','.', colnames(samples))
 
 
 
@@ -76,10 +66,9 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 ### Preparing samples dataframe
 #     First, merge columns that are not lipids to samples data.frame.
 #     Next merge unique columns in chr_m_y dataframe to samples dataframe.
-#         Dimension: 384 x 11
+#         Dimension: 381 x 11
 samples <- merge(samples, raw[,c("Mouse.ID","batch")], by = "Mouse.ID")
 samples <- merge(samples, chr_m_y[,c('Mouse.ID','generation','chrM','chrY')], by = "Mouse.ID")
-colnames(samples) <- gsub('_','.',colnames(samples))
 colnames(samples)[grep('Mouse.ID',colnames(samples), ignore.case = TRUE)] <- 'mouse.id'
 
 
@@ -127,7 +116,6 @@ data.log = log(raw)
 
 ### Set up batch and model for comBat
 samples$sex  = factor(samples$sex)
-samples$DOwave = factor(samples$DOwave)
 mod = model.matrix(~sex, data = samples)
 batch = samples$batch
 
@@ -206,9 +194,45 @@ for(i in 1:ncol(data.rz)) {
 
 
 
-### Saving the data to current working directory
-saveRDS(raw, raw_file)
-saveRDS(data.log, norm_file)
-saveRDS(data.rz, norm_rz_file)
-saveRDS(samples, samples_file)
 
+### Covariates
+covar <- model.matrix(~ sex + DOwave + batch, data = samples)[,-1,drop = FALSE]
+
+covar.info <- data.frame(sample.column = c('sex', 'DOwave', 'batch'),
+                         covar.column  = c('sexM', 'DOwave', 'batch'),
+                         display.name  = c('Sex', 'DO wave', 'Batch'),
+                         interactive   = c(TRUE, FALSE, FALSE),
+                         primary       = c(TRUE, FALSE, FALSE),
+                         lod.peaks     = c('sex_int', NA, NA))
+
+
+
+
+
+
+
+
+
+### QTL viewer format
+dataset.cecum.lipids <- list(annot.phenotype = data.frame(),
+                             annot.samples   = as_tibble(samples),
+                             covar.matrix    = covar,
+                             covar.info      = as_tibble(covar.info),
+                             data            = list(norm = data.log,
+                                                    raw  = raw,
+                                                    rz   = data.rz),
+                             datatype        = 'phenotype',
+                             display.name    = 'Attie Cecum Lipids',
+                             lod.peaks       = list())
+
+
+
+
+
+
+
+
+
+### Save
+rm(list = ls()[!grepl('dataset[.]', ls())])
+save(dataset.cecum.lipids, file = '~/Desktop/Attie Mass Spectrometry/Lipids/Cecum/attie_cecum_lipid_viewer.Rdata')
