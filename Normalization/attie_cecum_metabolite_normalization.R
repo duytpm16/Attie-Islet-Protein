@@ -12,10 +12,10 @@
 #
 #
 #  Output:
-#     1.) Filtered raw data file as rds file
-#     2.) Normalized cecum metabolite levels by pca and comBat normaliziation method as a matrix in  rds file
-#     3.) Normalized ranked z data as rds file
-#     4.) New Sample annotation dataframe as rds file
+#     1.) Filtered raw data file 
+#     2.) Normalized cecum metabolite levels by pca and comBat normaliziation method as a matrix
+#     3.) Normalized ranked z data 
+#     4.) New Sample annotation dataframe 
 #
 #
 #  Author: Duy Pham
@@ -23,20 +23,16 @@
 #  E-mail: duy.pham@jax.org
 ####################################################################################################################################
 
-
-
-### Install required packages
-# source("https://bioconductor.org/biocLite.R")
-# bioclite(c('sva','pcaMethods'))
-# install.packages('tidyverse')
-
 ### Load required libraries
+options(stringsAsFactors = FALSE)
 library(sva)
 library(pcaMethods)
 
 
-### Options
-options(stringsAsFactors = FALSE)
+
+
+
+
 
 
 
@@ -44,23 +40,11 @@ options(stringsAsFactors = FALSE)
 #     Cecum metabolites raw: 366 x 507
 #     samples: 500 x 7
 #     chr: 498 x 5
-prefix <- '~/Desktop/Attie Final/Metabolites/Cecum/attie_cecum_metabolite'
-raw <- read.delim("~/Desktop/Attie Final/Metabolites/Cecum/FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt")
-samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
-chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
+raw <- read.delim("~/Desktop/Attie Mass Spectrometry/Metabolites/Cecum/FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt")
+samples <- read.table("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
+chr_m_y <- read.csv("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_sample_info_ChrM_Y.csv") 
 
 
-
-
-
-
-
-
-### Variables to store the data
-raw_file <- paste0(prefix,"_filtered_raw.rds")
-norm_file <- paste0(prefix,"_normalized.rds")
-norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
-samples_file <-  paste0(prefix, "_samples_annot.rds")
 
 
 
@@ -165,7 +149,6 @@ data.log = log(raw)
 
 ### Set up batch and model for comBat
 samples$sex  = factor(samples$sex)
-samples$DOwave = factor(samples$DOwave)
 mod = model.matrix(~sex, data = samples)
 batch = samples$batch
 
@@ -243,12 +226,47 @@ for(i in 1:ncol(data.rz)) {
 
 
 
-### Saving the data to current working directory
-saveRDS(raw, raw_file)
-saveRDS(data.log, norm_file)
-saveRDS(data.rz, norm_rz_file)
-saveRDS(samples, samples_file)
+### Covariates
+covar <- model.matrix(~ sex + DOwave + batch, data = samples)[,-1,drop = FALSE]
 
+covar.info <- data.frame(sample.column = c('sex', 'DOwave', 'batch'),
+                         covar.column  = c('sexM', 'DOwave', 'batch'),
+                         display.name  = c('Sex', 'DO wave', 'Batch'),
+                         interactive   = c(TRUE, FALSE, FALSE),
+                         primary       = c(TRUE, FALSE, FALSE),
+                         lod.peaks     = c('sex_int', NA, NA))
+
+
+
+
+
+
+
+
+
+### QTL viewer format
+dataset.cecum.metabolites <- list(annot.phenotype = data.frame(),
+                                  annot.samples   = as_tibble(samples),
+                                  covar.matrix    = covar,
+                                  covar.info      = as_tibble(covar.info),
+                                  data            = list(norm = data.log,
+                                                    raw  = raw,
+                                                    rz   = data.rz),
+                                  datatype        = 'phenotype',
+                                  display.name    = 'Attie Cecum Metabolites',
+                                  lod.peaks       = list())
+
+
+
+
+
+
+
+
+
+### Save
+rm(list = ls()[!grepl('dataset[.]', ls())])
+save(dataset.cecum.metabolites, file = '~/Desktop/Attie Mass Spectrometry/Metabolites/Cecum/attie_cecum_metabolite_viewer.Rdata')
 
 
 
