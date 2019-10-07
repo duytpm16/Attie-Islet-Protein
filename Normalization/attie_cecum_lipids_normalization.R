@@ -13,7 +13,7 @@
 #
 #  Output:
 #     1.) Filtered raw data file 
-#     2.) Normalized cecum lipids levels by pca and comBat normaliziation method as a matrix 
+#     2.) Normalized cecum lipids levels by pca and comBat normaliziation method
 #     3.) Normalized ranked z data 
 #     4.) New Sample annotation dataframe 
 #
