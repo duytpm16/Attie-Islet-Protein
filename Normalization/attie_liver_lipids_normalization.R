@@ -6,10 +6,9 @@
 #
 #
 #  Input:
-#     1.) Prefix name to save the output files below.
-#     2.) Raw Attie liver lipids file: 03_January_2018_DO_Liver_Lipidomics_Raw.txt
-#     3.) Attie sample annotation file: attie_DO_sample_annot.txt
-#     4.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
+#     1.) Raw Attie liver lipids file: 03_January_2018_DO_Liver_Lipidomics_Raw.txt
+#     2.) Attie sample annotation file: attie_DO_sample_annot.txt
+#     3.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
 #
 #
 #
@@ -18,7 +17,7 @@
 #     2.) Normalized liver lipid levels by pca and comBat normaliziation method as a matrix in  rds file
 #     3.) Normalized ranked z data as rds file
 #     4.) New Sample annotation dataframe as rds file
-#
+#     5.) Covariate matrix
 #
 #
 #  Author: Duy Pham
