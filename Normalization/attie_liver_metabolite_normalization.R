@@ -266,7 +266,7 @@ dataset.liver.metabolites <- list(annot.phenotype = data.frame(),
 
 ### Save
 rm(list = ls()[!grepl('dataset[.]', ls())])
-save(dataset.cecum.metabolites, file = '~/Desktop/Attie Mass Spectrometry/Metabolites/Liver/attie_liver_metabolite_viewer.Rdata')
+save(dataset.liver.metabolites, file = '~/Desktop/Attie Mass Spectrometry/Metabolites/Liver/attie_liver_metabolite_viewer.Rdata')
 
 
 
