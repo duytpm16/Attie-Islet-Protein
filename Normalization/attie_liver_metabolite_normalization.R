@@ -89,8 +89,7 @@ colnames(samples) <- gsub('_','.',colnames(samples))
 #   First, merge columns that are not metabolite to samples data.frame.
 #   Next merge unique columns in chr_m_y dataframe to samples dataframe.
 #       samples: 
-samples <- merge(samples, raw[,c("Mouse.ID","DOwave","birthdate","sex","sac.date","coat.color","batch")], 
-                 by = "Mouse.ID")
+samples <- merge(samples, raw[,c("Mouse.ID","DOwave","birthdate","sex","sac.date","coat.color","batch")], by = "Mouse.ID")
 samples <- merge(samples, chr_m_y[,c('Mouse.ID','generation','chrM','chrY')], by = "Mouse.ID")
 samples <- samples[,-grep('\\.y$',colnames(samples))]
 colnames(samples) <- gsub('\\.x$','',colnames(samples))
