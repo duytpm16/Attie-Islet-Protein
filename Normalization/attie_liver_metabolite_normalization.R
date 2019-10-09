@@ -52,24 +52,10 @@ options(stringsAsFactors = FALSE)
 #     liver_metabolite_raw: 382 x 290
 #     samples: 500 x 7
 #     chr: 498 x 5
-prefix <- '~/Desktop/Attie Final/Metabolites/Liver/attie_liver_metabolite'
 raw <- read.delim("~/Desktop/Attie Final/Metabolites/Liver/FilterdbyR_DOLiverMetbolites_BatchandCovariatesAppended.txt")
 samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
 chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
 
-
-
-
-
-
-
-
-
-### Variables to store the data
-raw_file <- paste0(prefix,"_filtered_raw.rds")
-norm_file <- paste0(prefix,"_normalized.rds")
-norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
-samples_file <-  paste0(prefix, "_samples_annot.rds")
 
 
 
@@ -255,11 +241,36 @@ for(i in 1:ncol(data.rz)) {
 
 
 
-### Saving the data to current working directory
-saveRDS(raw, raw_file)
-saveRDS(data.log, norm_file)
-saveRDS(data.rz, norm_rz_file)
-saveRDS(samples, samples_file)
+
+
+
+### QTL viewer format
+dataset.liver.metabolites <- list(annot.phenotype = data.frame(),
+                                  annot.samples   = as_tibble(samples),
+                                  covar.matrix    = covar,
+                                  covar.info      = as_tibble(covar.info),
+                                  data            = list(norm = data.log,
+                                                    raw  = raw,
+                                                    rz   = data.rz),
+                                  datatype        = 'phenotype',
+                                  display.name    = 'Attie Liver Metabolites',
+                                  lod.peaks       = list())
+
+
+
+
+
+
+
+
+
+### Save
+rm(list = ls()[!grepl('dataset[.]', ls())])
+save(dataset.cecum.metabolites, file = '~/Desktop/Attie Mass Spectrometry/Metabolites/Liver/attie_liver_metabolite_viewer.Rdata')
+
+
+
+
 
 
 
