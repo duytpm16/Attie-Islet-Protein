@@ -45,10 +45,10 @@ options(stringsAsFactors = FALSE)
 #     plasma_metbaolite_raw: 380 x 342
 #     samples: 500 x 7
 #     chr: 498 x 5
-prefix   <- '~/Desktop/Attie Final/Metabolites/Plasma/attie_plasma_metabolite'
-raw     <- read.delim("~/Desktop/Attie Final/Metabolites/Plasma/FilterdbyR_DOPlasmaMetbolites_BatchandCovariatesAppended.txt")
-samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
-chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
+prefix   <- '~/Desktop/Attie Mass Spectrometry/Metabolites/Plasma/attie_plasma_metabolite'
+raw     <- read.delim("~/Desktop/Attie Mass Spectrometry/Metabolites/Plasma/FilterdbyR_DOPlasmaMetbolites_BatchandCovariatesAppended.txt")
+samples <- read.table("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
+chr_m_y <- read.csv("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_sample_info_ChrM_Y.csv") 
 
 
 
@@ -194,15 +194,15 @@ if(sum(is.na(raw) > 0)){
     # Put the missing data back in and impute again.
     if(chg > 5 & iter < 20) {
       
-       data.cb[miss] = NA
-       data.log = data.cb
-       iter = iter + 1    
+      data.cb[miss] = NA
+      data.log = data.cb
+      iter = iter + 1    
       
     }else{
       
-       data.cb[miss] = NA
-       data.log = data.cb
-       break
+      data.cb[miss] = NA
+      data.log = data.cb
+      break
       
     }
   })
@@ -236,10 +236,55 @@ for(i in 1:ncol(data.rz)) {
 
 
 
-### Saving the data to current working directory
-saveRDS(raw, raw_file)
-saveRDS(data.log, norm_file)
-saveRDS(data.rz, norm_rz_file)
-saveRDS(samples, samples_file)
+
+
+
+
+
+### Covariates
+covar <- model.matrix(~ sex + DOwave + batch, data = samples)[,-1,drop = FALSE]
+
+covar.info <- data.frame(sample.column = c('sex', 'DOwave', 'batch'),
+                         covar.column  = c('sexM', 'DOwave', 'batch'),
+                         display.name  = c('Sex', 'DO wave', 'Batch'),
+                         interactive   = c(TRUE, FALSE, FALSE),
+                         primary       = c(TRUE, FALSE, FALSE),
+                         lod.peaks     = c('sex_int', NA, NA))
+
+
+
+
+
+
+
+
+
+### QTL viewer format
+dataset.plasma.metabolites <- list(annot.phenotype = data.frame(),
+                                   annot.samples   = as_tibble(samples),
+                                   covar.matrix    = as.matrix(covar),
+                                   covar.info      = as_tibble(covar.info),
+                                   data            = list(norm = as.matrix(data.log),
+                                                          raw  = as.matrix(raw),
+                                                          rz   = as.matrix(data.rz)),
+                                   datatype        = 'phenotype',
+                                   display.name    = 'Attie Plasma Metabolites',
+                                   lod.peaks       = list())
+
+
+
+
+
+
+
+
+
+### Save
+rm(list = ls()[!grepl('dataset[.]', ls())])
+save(dataset.plasma.metabolites, file = '~/Desktop/Attie Mass Spectrometry/Metabolites/Plasma/attie_plasma_metabolite_viewer.Rdata')
+
+
+
+
 
 
