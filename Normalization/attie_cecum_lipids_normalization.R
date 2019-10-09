@@ -6,7 +6,7 @@
 #
 #  Input:
 #     1.) Prefix name to save the output files below
-#     1.) Raw Attie cecum lipids file: FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt
+#     1.) Raw Attie cecum lipids file: 03_January_2018_DO_Cecum_Lipidomics_Raw.txt
 #     2.) Attie sample annotation file: attie_DO_sample_annot.txt
 #     3.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
 #
@@ -216,11 +216,11 @@ covar.info <- data.frame(sample.column = c('sex', 'DOwave', 'batch'),
 ### QTL viewer format
 dataset.cecum.lipids <- list(annot.phenotype = data.frame(),
                              annot.samples   = as_tibble(samples),
-                             covar.matrix    = covar,
+                             covar.matrix    = as.matrix(covar),
                              covar.info      = as_tibble(covar.info),
-                             data            = list(norm = data.log,
-                                                    raw  = raw,
-                                                    rz   = data.rz),
+                             data            = list(norm = as.matrix(data.log),
+                                                    raw  = as.matrix(raw),
+                                                    rz   = as.matrix(data.rz)),
                              datatype        = 'phenotype',
                              display.name    = 'Attie Cecum Lipids',
                              lod.peaks       = list())
