@@ -6,16 +6,17 @@
 #
 #   Input:
 #      1.) Prefix name to save the output files below.
-#      2.) raw Attie plasma lipids file: FilterdbyR_DOCecumMetbolites_BatchandCovariatesAppended.txt
+#      2.) raw Attie plasma lipids file: 03_January_2018_DO_Plasma_Lipidomics_Raw.txt
 #      3.) Attie sample annotation file: attie_DO_sample_annot.txt
 #      4.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
 #
 #
 #   Output:
-#      1.) Filtered raw data file as rds file
-#      2.) Normalized plasma lipids levels by pca and comBat normaliziation method as a matrix in  rds file
-#      3.) Normalized ranked z data as rds file
-#      4.) New Sample annotation dataframe as rds file
+#      1.) Filtered raw data file 
+#      2.) Normalized plasma lipids levels by pca and comBat normaliziation method as a matrix
+#      3.) Normalized ranked z data e
+#      4.) New Sample annotation dataframe
+#      5.) Covariate matix
 #
 #
 #   Author: Duy Pham
@@ -28,23 +29,13 @@
 #      plasma_lipids_raw: 419 x 1735
 #      samples: 500 x 7
 #      chr_m_y: 498 x 5
-prefix <- '~/Desktop/Attie Final/Lipids/Plasma/attie_plasma_lipid'
-raw <- read.delim("~/Desktop/Attie Final/Lipids/Plasma/03_January_2018_DO_Plasma_Lipidomics_Raw.txt")
-samples <- read.delim('~/Desktop/Attie Final/attie_DO_sample_annot.txt')
-chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv")
+raw <- read.delim("~/Desktop/Attie Mass Spectrometry/Lipids/Plasma/03_January_2018_DO_Plasma_Lipidomics_Raw.txt")
+samples <- read.delim('~/Desktop/Attie Mass Spectrometry/Sample Info/attie_DO_sample_annot.txt')
+chr_m_y <- read.csv("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_sample_info_ChrM_Y.csv")
 
 
 
 
-
-
-
-
-### Variable names to store data
-raw_file <- paste0(prefix,"_filtered_raw.rds")
-norm_file <- paste0(prefix,"_normalized.rds")
-norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
-samples_file <-  paste0(prefix, "_samples_annot.rds")
 
 
 
@@ -121,7 +112,7 @@ rownames(samples) <- samples$mouse.id
 
 
 
-### Log transformation of the liver lipids
+### Log transformation of the plasma lipids
 data.log = log(raw)
 
 
@@ -211,9 +202,45 @@ for(i in 1:ncol(data.rz)) {
 
 
 
-### Saving the data to current working directory
-saveRDS(raw, raw_file)
-saveRDS(data.log, norm_file)
-saveRDS(data.rz, norm_rz_file)
-saveRDS(samples, samples_file)
 
+### Covariates
+covar <- model.matrix(~ sex + DOwave + batch, data = samples)[,-1,drop = FALSE]
+
+covar.info <- data.frame(sample.column = c('sex', 'DOwave', 'batch'),
+                         covar.column  = c('sexM', 'DOwave', 'batch'),
+                         display.name  = c('Sex', 'DO wave', 'Batch'),
+                         interactive   = c(TRUE, FALSE, FALSE),
+                         primary       = c(TRUE, FALSE, FALSE),
+                         lod.peaks     = c('sex_int', NA, NA))
+
+
+
+
+
+
+
+
+
+### QTL viewer format
+dataset.plasma.lipids <- list(annot.phenotype = data.frame(),
+                             annot.samples   = as_tibble(samples),
+                             covar.matrix    = as.matrix(covar),
+                             covar.info      = as_tibble(covar.info),
+                             data            = list(norm = as.matrix(data.log),
+                                                    raw  = as.matrix(raw),
+                                                    rz   = as.matrix(data.rz)),
+                             datatype        = 'phenotype',
+                             display.name    = 'Attie Plasma Lipids',
+                             lod.peaks       = list())
+
+
+
+
+
+
+
+
+
+### Save
+rm(list = ls()[!grepl('dataset[.]', ls())])
+save(dataset.plasma.lipids, file = '~/Desktop/Attie Mass Spectrometry/Lipids/Plasma/attie_plasma_lipid_viewer.Rdata')
