@@ -5,7 +5,6 @@
 #
 #
 #  Input:
-#     1.) Prefix name to save the output files below
 #     1.) Raw Attie cecum lipids file: 03_January_2018_DO_Cecum_Lipidomics_Raw.txt
 #     2.) Attie sample annotation file: attie_DO_sample_annot.txt
 #     3.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
@@ -16,6 +15,7 @@
 #     2.) Normalized cecum lipids levels by pca and comBat normaliziation method
 #     3.) Normalized ranked z data 
 #     4.) New Sample annotation dataframe 
+#     5.) Covariate matrix
 #
 #
 #  Author: Duy Pham
