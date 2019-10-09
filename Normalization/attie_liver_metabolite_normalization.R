@@ -6,10 +6,9 @@
 #
 #
 #  Input:
-#     1.) Prefix name to save the output files below.
-#     2.) raw Attie liver metabolite file: FilterdbyR_DOLiverMetbolites_BatchandCovariatesAppended.txt
-#     3.) Attie sample annotation file: attie_DO_sample_annot.txt
-#     4.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
+#     1.) raw Attie liver metabolite file: FilterdbyR_DOLiverMetbolites_BatchandCovariatesAppended.txt
+#     2.) Attie sample annotation file: attie_DO_sample_annot.txt
+#     3.) Sample's Chr M and Y info file: "attie_sample_info_ChrM_Y.csv"
 #
 #
 #  Output:
@@ -17,6 +16,7 @@
 #     2.) Normalized liver metabolite levels by pca and comBat normaliziation method as a matrix in  rds file
 #     3.) Normalized ranked z data as rds file
 #     4.) New Sample annotation dataframe as rds file
+#     5.) Covariate matrix
 #
 #
 #  Author: Duy Pham
@@ -258,7 +258,7 @@ covar.info <- data.frame(sample.column = c('sex', 'DOwave', 'batch'),
 ### QTL viewer format
 dataset.liver.metabolites <- list(annot.phenotype = data.frame(),
                                   annot.samples   = as_tibble(samples),
-                                  covar.matrix    = covar,
+                                  covar.matrix    = as.matrix(covar),
                                   covar.info      = as_tibble(covar.info),
                                   data            = list(norm = as.matrix(data.log),
                                                          raw  = as.matrix(raw),
