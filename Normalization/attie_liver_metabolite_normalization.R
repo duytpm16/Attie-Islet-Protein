@@ -52,9 +52,9 @@ options(stringsAsFactors = FALSE)
 #     liver_metabolite_raw: 382 x 290
 #     samples: 500 x 7
 #     chr: 498 x 5
-raw <- read.delim("~/Desktop/Attie Final/Metabolites/Liver/FilterdbyR_DOLiverMetbolites_BatchandCovariatesAppended.txt")
-samples <- read.table("~/Desktop/Attie Final/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
-chr_m_y <- read.csv("~/Desktop/Attie Final/attie_sample_info_ChrM_Y.csv") 
+raw <- read.delim("~/Desktop/Attie Mass Spectrometry/Metabolites/Liver/FilterdbyR_DOLiverMetbolites_BatchandCovariatesAppended.txt")
+samples <- read.table("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
+chr_m_y <- read.csv("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_sample_info_ChrM_Y.csv") 
 
 
 
@@ -239,6 +239,18 @@ for(i in 1:ncol(data.rz)) {
 
 
 
+### Covariates
+covar <- model.matrix(~ sex + DOwave + batch, data = samples)[,-1,drop = FALSE]
+
+covar.info <- data.frame(sample.column = c('sex', 'DOwave', 'batch'),
+                         covar.column  = c('sexM', 'DOwave', 'batch'),
+                         display.name  = c('Sex', 'DO wave', 'Batch'),
+                         interactive   = c(TRUE, FALSE, FALSE),
+                         primary       = c(TRUE, FALSE, FALSE),
+                         lod.peaks     = c('sex_int', NA, NA))
+
+
+
 
 
 
@@ -248,9 +260,9 @@ dataset.liver.metabolites <- list(annot.phenotype = data.frame(),
                                   annot.samples   = as_tibble(samples),
                                   covar.matrix    = covar,
                                   covar.info      = as_tibble(covar.info),
-                                  data            = list(norm = data.log,
-                                                    raw  = raw,
-                                                    rz   = data.rz),
+                                  data            = list(norm = as.matrix(data.log),
+                                                         raw  = as.matrix(raw),
+                                                         rz   = as.matrix(data.rz)),
                                   datatype        = 'phenotype',
                                   display.name    = 'Attie Liver Metabolites',
                                   lod.peaks       = list())
