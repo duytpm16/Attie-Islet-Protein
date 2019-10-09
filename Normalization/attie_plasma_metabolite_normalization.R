@@ -45,24 +45,12 @@ options(stringsAsFactors = FALSE)
 #     plasma_metbaolite_raw: 380 x 342
 #     samples: 500 x 7
 #     chr: 498 x 5
-prefix   <- '~/Desktop/Attie Mass Spectrometry/Metabolites/Plasma/attie_plasma_metabolite'
 raw     <- read.delim("~/Desktop/Attie Mass Spectrometry/Metabolites/Plasma/FilterdbyR_DOPlasmaMetbolites_BatchandCovariatesAppended.txt")
 samples <- read.table("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_DO_sample_annot.txt", header = TRUE ,sep = "\t")
 chr_m_y <- read.csv("~/Desktop/Attie Mass Spectrometry/Sample Info/attie_sample_info_ChrM_Y.csv") 
 
 
 
-
-
-
-
-
-
-### Variables to store the data
-raw_file     <- paste0(prefix,"_filtered_raw.rds")
-norm_file    <- paste0(prefix,"_normalized.rds")
-norm_rz_file <- paste0(prefix,"_rZ_normalized.rds")
-samples_file <- paste0(prefix, "_samples_annot.rds")
 
 
 
